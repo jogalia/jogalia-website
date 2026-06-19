@@ -15,8 +15,10 @@
       Vê os Horários
     </v-btn>
   </div>
+  <Footer />
 </template>
 
 <script lang="ts" setup>
   import Header from '@/components/Hero.vue'
+  import Footer from '@/components/Footer.vue'
 </script>
