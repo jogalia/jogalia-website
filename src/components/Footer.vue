@@ -5,99 +5,122 @@
     <div class="footer-inner">
       <!-- Brand column -->
       <div class="footer-brand">
-        <v-img src="@/assets/logo.svg" class="footer-logo" />
+        <v-img class="footer-logo" src="@/assets/logo.svg" />
+
         <p class="footer-tagline">
-          Esports · Gaming · TCG<br />
+          Esports · Gaming · TCG<br>
           9-12 Julho 2026 · Oeiras
         </p>
+
         <p class="footer-organizers">
-          Organizado por <strong>NexEra</strong> e <strong>LAGE²</strong>
+          Organizado por: <!-- <strong>NexEra</strong> e <strong>LAGE²</strong> -->
         </p>
+
+        <v-container class="p-0">
+          <v-row>
+            <v-col cols="auto">
+              <v-img src="@/assets/lage.svg" width="60" />
+            </v-col>
+
+            <v-col cols="auto">
+              <v-img class="mt-1" src="@/assets/nexera.png" width="60" />
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
 
       <!-- Links column -->
       <div class="footer-col">
         <p class="footer-col-title">Evento</p>
-        <a href="/horarios" class="footer-link">Horários</a>
-        <a href="/inscricoes" class="footer-link">Incrições</a>
-        <a href="/localizacao" class="footer-link">Mapa</a>
-        <a href="#tcg" class="footer-link">TCG</a>
-        <a href="https://twitch.tv/jogaliaoficial" class="footer-link">Transmissão ao Vivo <v-icon size="12" class="ml-1">mdi-open-in-new</v-icon> </a>
+        <a class="footer-link" href="/horarios">Horários</a>
+        <a class="footer-link" href="/inscricoes">Incrições</a>
+        <a class="footer-link" href="/localizacao">Mapa</a>
+        <a class="footer-link" href="https://twitch.tv/jogaliaoficial">Transmissão ao Vivo <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon> </a>
       </div>
 
       <!-- Info column -->
       <div class="footer-col">
         <p class="footer-col-title">Informações</p>
-        <a href="#faq" class="footer-link">FAQ</a>
-        <a href="#tickets" class="footer-link">Entradas</a>
-        <a href="#venue" class="footer-link">Local</a>
+        <a class="footer-link" href="#faq">FAQ</a>
+        <a class="footer-link" href="#tickets">Entradas</a>
+        <a class="footer-link" href="#venue">Local</a>
+
         <a
-          href="https://tecnico.ulisboa.pt"
-          target="_blank"
-          rel="noopener"
           class="footer-link footer-link--external"
+          href="https://tecnico.ulisboa.pt"
+          rel="noopener"
+          target="_blank"
         >
           Instituto Superior Técnico
-          <v-icon size="12" class="ml-1">mdi-open-in-new</v-icon>
+          <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon>
         </a>
-        <a href="#press" class="footer-link">Imprensa</a>
       </div>
 
       <!-- Social column -->
       <div class="footer-col">
         <p class="footer-col-title">Comunidade</p>
+
         <div class="footer-socials">
           <a
-            href="https://discord.gg/G2DhTbtSVD"
-            target="_blank"
-            rel="noopener"
-            class="social-btn social-btn--discord"
             aria-label="Discord"
+            class="social-btn social-btn--discord"
+            href="https://discord.gg/G2DhTbtSVD"
+            rel="noopener"
+            target="_blank"
           >
-                        <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+            <svg
+              fill="currentColor"
+              height="22"
+              viewBox="0 0 127.14 96.36"
+              width="22"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
             </svg>
+
             <span>Discord</span>
           </a>
 
           <a
-            href="https://instagram.com/jogaliaoficial/"
-            target="_blank"
-            rel="noopener"
-            class="social-btn social-btn--instagram"
             aria-label="Instagram"
+            class="social-btn social-btn--instagram"
+            href="https://instagram.com/jogaliaoficial/"
+            rel="noopener"
+            target="_blank"
           >
             <v-icon size="20">mdi-instagram</v-icon>
             <span>Instagram</span>
           </a>
 
           <a
-            href="https://x.com/jogaliaoficial"
-            target="_blank"
-            rel="noopener"
-            class="social-btn social-btn--x"
             aria-label="X (Twitter)"
+            class="social-btn social-btn--x"
+            href="https://x.com/jogaliaoficial"
+            rel="noopener"
+            target="_blank"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
+
             <span>X</span>
           </a>
 
           <a
-            href="https://twitch.tv/jogaliaoficial"
-            target="_blank"
-            rel="noopener"
-            class="social-btn social-btn--twitch"
             aria-label="Twitch"
+            class="social-btn social-btn--twitch"
+            href="https://twitch.tv/jogaliaoficial"
+            rel="noopener"
+            target="_blank"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
+            <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20">
+              <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z" />
             </svg>
+
             <span>Twitch</span>
           </a>
 
-		<!-- <a
+          <!-- <a
             href="https://youtube.com/"
             target="_blank"
             rel="noopener"
@@ -114,12 +137,13 @@
     <!-- Bottom bar -->
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 Jogália · NexEra & LAGE² · Todos os direitos reservados</span>
+
       <div class="footer-bottom-links">
-        <a href="#privacy" class="footer-bottom-link">Política de Privacidade</a>
+        <a class="footer-bottom-link" href="#privacy">Política de Privacidade</a>
         <span class="footer-dot">·</span>
-        <a href="#terms" class="footer-bottom-link">Termos e Condições</a>
+        <a class="footer-bottom-link" href="#terms">Termos e Condições</a>
         <span class="footer-dot">·</span>
-        <a href="#contact" class="footer-bottom-link">Contacto</a>
+        <a class="footer-bottom-link" href="#contact">Contacto</a>
       </div>
     </div>
   </footer>
