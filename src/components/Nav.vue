@@ -53,15 +53,20 @@
 }
 
 .nav {
-  background-color: #00072B !important;
+  background-color: rgb(var(--v-theme-midnightBlue)) !important;
   color: var(--v-theme-on-background);
 }
 
 .nav :deep(.v-btn__overlay) {
-  background: rgb(var(--v-theme-secondary)) !important;
+  background: rgb(var(--v-theme-secondary));
+  top: auto;
+  bottom: 0;
+  height: 3px;
+  width: 80%;
+  left: 10%;
 }
 
 .nav :deep(.v-btn:hover .v-btn__overlay) {
-  opacity: 0.2 !important;
+  opacity: 1;
 }
 </style>

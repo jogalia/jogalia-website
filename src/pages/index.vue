@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Hero />
 
   <div class="m-auto text-center mt-15 max-w-200">
     <v-img class="max-w-60 m-auto" src="@/assets/logo.svg" />
@@ -12,13 +12,14 @@
     </p>
 
     <v-btn color="secondary">
-      Vê os Horários
+      Consulta os Horários
     </v-btn>
   </div>
+
   <Footer />
 </template>
 
 <script lang="ts" setup>
-  import Header from '@/components/Hero.vue'
+  import Hero from '@/components/Hero.vue'
   import Footer from '@/components/Footer.vue'
 </script>
