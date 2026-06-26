@@ -46,7 +46,7 @@
         <a class="footer-link" href="#venue">Local</a>
 
         <a
-          class="footer-link footer-link--external"
+          class="footer-link"
           href="https://tecnico.ulisboa.pt"
           rel="noopener"
           target="_blank"
@@ -139,11 +139,9 @@
       <span class="footer-copy">© 2026 Jogália · NexEra & LAGE² · Todos os direitos reservados</span>
 
       <div class="footer-bottom-links">
-        <a class="footer-bottom-link" href="#privacy">Política de Privacidade</a>
+        <RouterLink class="footer-bottom-link" to="/">jogalia.pt</RouterLink>
         <span class="footer-dot">·</span>
-        <a class="footer-bottom-link" href="#terms">Termos e Condições</a>
-        <span class="footer-dot">·</span>
-        <a class="footer-bottom-link" href="#contact">Contacto</a>
+        <a class="footer-bottom-link" href="mailto:organizacao.jogalia@gmail.com">organizacao.jogalia@gmail.com</a>
       </div>
     </div>
   </footer>
@@ -216,7 +214,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7c3aed;
+  color: rgb(var(--v-theme-secondary));
   margin-bottom: 0.4rem;
 }
 
@@ -230,16 +228,7 @@
 }
 
 .footer-link:hover {
-  color: #e2e8f0;
-}
-
-.footer-link--external {
-  color: #64748b;
-  font-size: 0.8rem;
-}
-
-.footer-link--external:hover {
-  color: #06b6d4;
+  color: white;
 }
 
 /* Social buttons */
@@ -266,7 +255,7 @@
 
 .social-btn:hover {
   border-color: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  color: white;
 }
 
 .social-btn--discord:hover  { background: rgba(88, 101, 242, 0.18); color: #7289da; border-color: rgba(88,101,242,0.3); }
