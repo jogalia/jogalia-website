@@ -8,6 +8,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Index from '@/pages/index.vue'
 import Mapa from '@/pages/mapa.vue'
+import Inscricoes from '@/pages/inscricoes.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,9 +17,13 @@ const router = createRouter({
       path: '/',
       component: Index,
       meta: { isHero: true }
-    },{
+    }, {
       path: '/mapa',
       component: Mapa,
+      meta: { isHero: false }
+    }, {
+      path: '/inscricoes',
+      component: Inscricoes,
       meta: { isHero: false }
     }
   ],

@@ -16,7 +16,7 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
-        href="https://forms.gle/mbrtKiZm8ARJDs9eA"
+        to="/inscricoes"
         variant="text"
       >Inscrições</v-btn>
 
