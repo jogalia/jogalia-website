@@ -9,7 +9,7 @@
 
         <p class="footer-tagline">
           Esports · Gaming · TCG<br>
-          9-12 Julho 2026 · Oeiras
+          9 a 12 Julho 2026 · Técnico Oeiras
         </p>
 
         <p class="footer-organizers">
