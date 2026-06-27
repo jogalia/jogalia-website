@@ -36,7 +36,7 @@
     <p class="section-label mt-6">Mapa interativo — toca numa zona</p>
     <div class="map-wrapper" ref="mapWrapper" @click.self="clearZone">
       <img
-        src="@/assets/map.jpeg"
+        src="@/assets/mapaAzul.png"
         alt="Planta do recinto Jogália 2026"
         class="map-img"
       />
@@ -120,13 +120,13 @@ interface Hotspot {
   rx?: number
 }
 
-// ── Data ────────────────────────────────────────────────────────────────────
+// Data
 const zones: Zone[] = [
   { id: 'A', name: 'Palco Central',       shortName: 'Palco',    location: 'Átrio Central',            filterLabel: 'Palco & Empresas', cat: 'main',   symbolClass: 'cat-main',   tagClass: 'tag-main'   },
   { id: 'B', name: 'Bancas de Empresas',  shortName: 'Empresas', location: 'Átrio Central',            filterLabel: 'Palco & Empresas', cat: 'main',   symbolClass: 'cat-main',   tagClass: 'tag-main'   },
   { id: 'C', name: 'Casting Booth',       shortName: 'Casting',  location: 'Sala 0-65',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
   { id: 'D', name: 'Arenas',              shortName: 'Arenas',   location: 'Sala 0-65',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
-  { id: 'E', name: 'Simuladores',         shortName: 'Sims',     location: 'Sala 0-49',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
+//   { id: 'E', name: 'Simuladores',         shortName: 'Sims',     location: 'Sala 0-49',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
   { id: 'F', name: 'Bancas TCG',          shortName: 'TCG',      location: 'Átrio Norte',              filterLabel: 'TCG',              cat: 'tcg',    symbolClass: 'cat-tcg',    tagClass: 'tag-tcg'    },
   { id: 'G', name: 'Torneios TCG',        shortName: 'Torneios', location: 'Salas 0-13 / 0-15 / 0-17', filterLabel: 'TCG',             cat: 'tcg',    symbolClass: 'cat-tcg',    tagClass: 'tag-tcg'    },
   { id: 'H', name: 'Auditório 5',         shortName: 'Auditório',location: 'Auditório principal',      filterLabel: 'Auditório',        cat: 'venue',  symbolClass: 'cat-venue',  tagClass: 'tag-venue'  },
@@ -136,17 +136,17 @@ const zones: Zone[] = [
 
 // SVG hotspots - coordenadas para 905×622 viewBox
 const hotspots: Hotspot[] = [
-  { zone: 'A', x: 195, y: 230, w: 130, h: 110 },
-  { zone: 'B', x: 290, y: 265, w:  80, h:  75 },
-  { zone: 'C', x: 200, y: 370, w: 115, h:  75 },
-  { zone: 'D', x: 228, y: 315, w: 110, h:  60 },
-  { zone: 'E', x: 348, y: 298, w:  42, h:  50 },
-  { zone: 'F', x: 598, y: 138, w: 105, h:  85 },
-  { zone: 'G', x: 580, y: 242, w: 105, h:  72 },
-  { zone: 'H', x: 474, y:  82, w:  72, h:  55 },
-  { zone: '1', x:  28, y: 375, w:  72, h:  80 },
-  { zone: '1', x: 700, y: 148, w:  82, h:  80 },
-  { zone: '2', x: 393, y: 255, w:  68, h:  68 },
+  { zone: 'A', x: 240, y: 220, w: 50, h: 50 },
+  { zone: 'B', x: 310, y: 250, w: 50, h: 50 },
+  { zone: 'C', x: 220, y: 370, w: 50, h: 50 },
+  { zone: 'D', x: 275, y: 325, w: 60, h: 50 },
+//   { zone: 'E', x: 348, y: 298, w:  42, h:  50 },
+  { zone: 'F', x: 670, y: 50, w: 70, h: 70 },
+  { zone: 'G', x: 630, y: 130, w: 90, h: 70 },
+  { zone: 'H', x: 540, y: 20, w: 50, h: 50 },
+  { zone: '1', x: 28, y: 375, w: 70, h: 80 },
+  { zone: '1', x: 750, y: 100, w: 90, h: 60 },
+  { zone: '2', x: 420, y: 200, w: 60, h: 60 },
 ]
 
 const filters = [
@@ -160,7 +160,7 @@ const filters = [
 
 const legend = [
   { label: 'Palco & Empresas (A, B)', color: '#0686F3' },
-  { label: 'Gaming (C, D, E)',        color: '#FA6600' },
+  { label: 'Gaming (C, D)',        color: '#FA6600' },
   { label: 'TCG (F, G)',              color: '#00DDFE' },
   { label: 'Auditório (H)',           color: '#FFB404' },
   { label: 'Restauração (1, 2)',      color: 'rgba(0,221,254,.4)' },
@@ -233,7 +233,7 @@ function onQuickNav(id: string) {
 </script>
 
 <style scoped>
-/* vuetify.ts | tenho de pesquisar como importantar para aqui o css, nao faz sentido ter as cenas duplicadas */
+/* vuetify.ts */
 .map-page {
   --azure-blue:      #0686F3;
   --vivid-orange:    #FA6600;
@@ -249,11 +249,11 @@ function onQuickNav(id: string) {
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 100px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .section-label {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -262,7 +262,7 @@ function onQuickNav(id: string) {
   margin-bottom: 12px;
 }
 
-/* Filros */
+/* Filtros */
 .filter-row {
   display: flex;
   gap: 8px;
@@ -274,7 +274,7 @@ function onQuickNav(id: string) {
   background: var(--surface-dim);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   font-weight: 500;
   padding: 6px 14px;
@@ -335,7 +335,7 @@ function onQuickNav(id: string) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 17px;
   font-weight: 700;
   flex-shrink: 0;
@@ -351,7 +351,7 @@ function onQuickNav(id: string) {
 .zone-location { font-size: 11px; color: var(--text-muted); }
 
 .zone-tag {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -483,7 +483,7 @@ function onQuickNav(id: string) {
     background: var(--surface-dim);
     border: 1px solid var(--border);
     color: var(--text-muted);
-    font-family: 'Space Mono', monospace;
+    font-family: 'Roboto Mono', monospace;
     font-size: 10px;
     font-weight: 700;
     padding: 5px 11px;
@@ -505,5 +505,4 @@ function onQuickNav(id: string) {
   .zone-grid { grid-template-columns: 1fr; }
 }
 
-.mt-6 { margin-top: 1.5rem; }
 </style>
