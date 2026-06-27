@@ -33,8 +33,8 @@
       <div class="footer-col">
         <p class="footer-col-title">Evento</p>
         <a class="footer-link" href="/horarios">Horários</a>
-        <a class="footer-link" href="/inscricoes">Incrições</a>
-        <a class="footer-link" href="/localizacao">Mapa</a>
+        <a class="footer-link" href="https://forms.gle/mbrtKiZm8ARJDs9eA">Incrições</a>
+        <a class="footer-link" href="/mapa">Mapa</a>
         <a class="footer-link" href="https://twitch.tv/jogaliaoficial">Transmissão ao Vivo <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon> </a>
       </div>
 
