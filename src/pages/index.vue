@@ -11,7 +11,7 @@
       Engenharia e Tecnologia.
     </p>
 
-    <v-btn color="secondary">
+    <v-btn color="secondary" href="/inscricoes">
       Consulta os Horários
     </v-btn>
 
@@ -23,15 +23,15 @@
       :options="splideOptions"
     >
       <SplideSlide>
-        <v-img alt="Slide 1" src="@/assets/lage.svg" width="100" />
+        <v-img alt="Slide 1" src="@/assets/lage.svg" width="100" height="100" />
       </SplideSlide>
 
       <SplideSlide>
-        <v-img alt="Slide 2" src="@/assets/logo.svg" width="100" />
+        <v-img alt="Slide 2" src="@/assets/logo.svg" width="100" height="100" />
       </SplideSlide>
 
       <SplideSlide>
-        <v-img alt="Slide 3" src="@/assets/nexera.png" width="10v-0" />
+        <v-img alt="Slide 3" src="@/assets/nexera.png" width="100" height="100" />
       </SplideSlide>
     </Splide>
   </div>

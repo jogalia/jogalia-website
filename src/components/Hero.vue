@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="hero w-full h-screen relative">
     <div class="absolute inset-0 flex flex-col justify-center items-center">
-      <h1 class="text-6xl bold text-white text-center mt-3 mb-2">Jogália - Evento Gaming e eSports</h1>
+      <h1 class="text-6xl bold text-white text-center mt-3 mb-2">Jogália - Evento Gaming e Esports</h1>
       <h2 class="font-normal text-2xl text-white text-center uppercase">9 a 12 de Julho no Instituto Superior Técnico - Campus Oeiras</h2>
 
       <div v-if="isEventUpcoming" class="w-full max-w-3xl mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center">
