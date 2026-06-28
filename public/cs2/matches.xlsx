@@ -11,6 +11,6 @@ match_id,round,group,team1_seed,team2_seed,score1,score2,status,start_time,live
 10,2,B,0,0,0,0,pending,09 jul. 17:00,0
 11,2,C,0,0,0,0,pending,09 jul. 17:30,0
 12,2,D,0,0,0,0,pending,09 jul. 17:30,0
-13,3,,0,0,0,0,pending,10 jul. 14:00,0
-14,3,,0,0,0,0,pending,10 jul. 14:00,0
-15,4,,0,0,0,0,pending,10 jul. 17:00,0
+13,3,TBD,0,0,0,0,pending,10 jul. 14:00,0
+14,3,TBD,0,0,0,0,pending,10 jul. 14:00,0
+15,4,TBD,0,0,0,0,pending,10 jul. 17:00,0
