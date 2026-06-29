@@ -67,6 +67,7 @@
               :src="team.logo"
               :alt="team.name"
               class="team-logo"
+              :style="team.logoScale ? { transform: `scale(${team.logoScale})` } : undefined"
               @error="brokenLogos.add(team.name)"
             />
             <div v-else class="team-logo-placeholder">
@@ -111,9 +112,10 @@ interface RosterSlot {
 }
 
 interface Team {
-  name:   string
-  logo?:  string
-  roster: RosterSlot[]
+  name:       string
+  logo?:      string
+  logoScale?: number
+  roster:     RosterSlot[]
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -127,67 +129,67 @@ function makeTbd(name: string, players: number): Team {
 
 // ── CS2 ───────────────────────────────────────────────────────────────────────
 const cs2Teams: Team[] = [
-  { name: 'Kinetic', roster: [
+  { name: 'Kinetic', logo: 'https://drive.google.com/thumbnail?id=1nPFI5Jq_yJLf4VDXZ6dKtzfWfCQx4kwH&sz=w400', roster: [
     p('GR', 'Guilherme Matos'), p('RX', 'Luis Sá'), p('N0N4m33', 'Duarte Parente'),
     p('BasFerreira', 'Bruno Ferreira'), p('Joka', 'João Bento'), c('Hard3vil', 'Filipe Antunes'),
   ]},
-  { name: 'Luso Dragons', roster: [
+  { name: 'Luso Dragons', logo: 'https://drive.google.com/thumbnail?id=19hYPLDCeoL-ttJYBPT0b4z-9z_-EQJyZ&sz=w400', roster: [
     p('Mané', 'André Silva'), p('tw1sty', 'Jung Su'), p('Fanzyyyy', 'Dinis Vicente'),
     p('Truti', 'Afonso Rodrigues'), p('TiTi', 'Tiago Vaz'), c('F3M0S', 'Francisco Marques'),
   ]},
-  { name: 'NãoTroca', roster: [
+  { name: 'NãoTroca', logo: 'https://drive.google.com/thumbnail?id=1VaLxANmJ8zAogC8-n8_yfevpSXTCEtOi&sz=w400', roster: [
     p('Bruh', 'Salvador Pedroso'), p('TOTA', 'Tomás Miranda'), p('Flicker', 'Fábio Lourenço'),
     p('Mix', 'Miguel Lopes'), p('Striker', 'Tiago Raquel'),
   ]},
-  { name: 'Sussy Squad', roster: [
+  { name: 'Sussy Squad', logo: 'https://drive.google.com/thumbnail?id=1dPqLBdh37hCUeOIi-DsJ8-o46YIF_Nq9&sz=w400', roster: [
     p('smel', 'Samuel Bravo'), p('rey', 'Francisco Lourinho'), p('Phunil', 'Rafael Lopes'),
     p('LeonardoSDS', 'Leonardo Santos'), p('bolly', 'David Baçao'), c('Avestruz', 'Danilo Paula'),
   ]},
-  { name: 'LeoesdaLan', roster: [
+  { name: 'LeoesdaLan', logo: 'https://static.wikia.nocookie.net/cswikia/images/5/59/Csgo_icon_scrimcomp2v2.png/revision/latest?cb=20220207010312', roster: [
     p('androxe', 'André Bolrinhas'), p('draco', 'Vasco Conceição'), p('P1m3nt4', 'Tiago Pimenta'),
     p('Hp', 'Gustavo Graça'), p('ohni', 'Miguel Bento'),
   ]},
-  { name: 'Agua de Cevada', roster: [
+  { name: 'Agua de Cevada', logo: 'https://drive.google.com/thumbnail?id=1G-WSb7BRhKnTrJU-hlztnFGWddICdM1N&sz=w400', roster: [
     p('SlyG', 'Gonçalo Silva'), p('Shello-IWNL', 'Marcelo Pinto'), p('Fr0sTQA', 'Tomás Oliveira'),
     p('Kasmy', 'Miguel Brites'), p('Rodrster', 'Rodrigo Oliveira'),
   ]},
-  { name: 'ABT', roster: [
+  { name: 'ABT', logo: 'https://drive.google.com/thumbnail?id=1l_agQfMqMO9RdawaEWvTzquTetIvr4fm&sz=w400', roster: [
     p('BeiranZz', 'Pedro Santos'), p('thozor', 'António Ramos'), p('ruy2k', 'Rui Araújo'),
     p('blaze', 'Alexandre Alves'), p('hk', 'Diogo Mancilha'),
   ]},
-  { name: 'Unaware', roster: [
+  { name: 'Unaware', logo: 'https://drive.google.com/thumbnail?id=10W06XE4Dj2sVYFtSGP-XsZVV-FoF4vjE&sz=w400', roster: [
     p('V1rT', 'Vitor Belo'), p('zbf', 'Guilherme Coelho'), p('Rocket', 'Tomás Sales'),
     p('mxuga', 'Jose Pronto'), p('silent', 'Nuno Rodrigues'),
   ]},
-  { name: 'Reformados Pro', roster: [
+  { name: 'Reformados Pro', logo: 'https://static.wikia.nocookie.net/cswikia/images/5/59/Csgo_icon_scrimcomp2v2.png/revision/latest?cb=20220207010312', roster: [
     p('MaybeNot', 'Gustavo Kooijman'), p('Martinho2g', 'Joao Martinho'), p('C0dfish', 'Paulo Rosa'),
     p('Fluzz', 'Diogo Formosinho'), p('MikhailXGod', 'Micael Pinto'),
   ]},
-  { name: 'Task Bar Heros', roster: [
+  { name: 'Task Bar Heros', logo: 'https://static.wikia.nocookie.net/cswikia/images/5/59/Csgo_icon_scrimcomp2v2.png/revision/latest?cb=20220207010312', roster: [
     p('drn', 'Daniel Cruz'), p('X.13', 'Gonçalo Franco'), p('douradinho5', 'Rodrigo Silva'),
     p('gvpew', 'Gonçalo Padua'), p('Rocaa', 'Rodrigo Martins'),
   ]},
-  { name: 'Los Domis', roster: [
+  { name: 'Los Domis', logo: 'https://drive.google.com/thumbnail?id=16N1p6W3rY2KaJv0mJMTEIQxVLbLyvPWV&sz=w400', roster: [
     p('pereirex', 'Pereira'), p('vpx', 'Mota'), p('whose', 'Jorge'),
     p('d4rk tuga', 'Luis'), p('nival', 'Duarte'),
   ]},
-  { name: 'Los Mixzados', roster: [
+  { name: 'Los Mixzados', logo: 'https://drive.google.com/thumbnail?id=1Rohuh8r3qHNtABOl4ThBjoKvxfUGyIDs&sz=w400', roster: [
     p('sykXD', 'Diogo Falcão'), p('B0rdasss', 'Pedro Azevedo'), p('shadow999', 'Diogo Gabriel'),
     p('Ftu', 'Guilherme Duarte'), p('goncoff', 'Gonçalo Fernandes'),
   ]},
-  { name: 'Bot M1kael', roster: [
+  { name: 'Bot M1kael', logo: 'https://static.wikia.nocookie.net/cswikia/images/5/59/Csgo_icon_scrimcomp2v2.png/revision/latest?cb=20220207010312', roster: [
     p('Bllitzx', 'Matheus'), p('santux', 'Fortes'), p('nowhiis', 'Pedro'),
     p('Gancho', 'Gancho'), p('Prime_DevEats', 'Horta'), c('Bot M1kael', 'Nicollas'),
   ]},
-  { name: 'NXS', roster: [
+  { name: 'NXS', logo: 'https://drive.google.com/thumbnail?id=1btc2bdpovs3UfnHeCk9hAHg1yQ3TO4q0&sz=w400', roster: [
     p('Nexus', 'Rafael Almeida Pires'), p('amnessiia', 'Anton'), p('V4 erbus', 'Francisco Cardoso'),
     p('peoplepapiu', 'Leonardo'), p('IamSombra', 'Caliel'),
   ]},
-  { name: 'BeeHOF eSports', roster: [
+  { name: 'BeeHOF eSports', logo: 'https://drive.google.com/thumbnail?id=1MCy5Gjc5wc3kodG2CJxl0_u7FI9wC30S&sz=w400', roster: [
     p('Smilejay', 'Rafael Pereira'), p('Genius', 'Miguel Correia'), p('F1fty', 'Diogo Pereira'),
     p('Gaperj', 'Gabriel Pereira'), p('Sml', 'Samuel Monteiro'),
   ]},
-  { name: 'MidNight', roster: [
+  { name: 'MidNight', logo: 'https://drive.google.com/thumbnail?id=1QPNwcEPB4BtCTvQwzT0OGAi8gzOnuY_X&sz=w400', roster: [
     p('Stalkera', 'Carlos Pereira'), p('Yuki', 'Micaela'), p('Locals Only', 'João Carvalhão'),
     p('draken', 'Edgar Nunes'), p('-m4nu', 'Manuel Antunes'),
   ]},
@@ -195,51 +197,51 @@ const cs2Teams: Team[] = [
 
 // ── LoL ───────────────────────────────────────────────────────────────────────
 const lolTeams: Team[] = [
-  { name: 'Unstoppable Lions', roster: [
+  { name: 'Unstoppable Lions', logo: '/logos/lol/unstoppable-lions.jpg', roster: [
     p('MetroArcher', 'Filipe Dragovic'), p('Wuis', 'Luís Pereira'), p('Semide', 'Tiago Semide'),
     p('RealR', 'Rafael Vilas Boas'), p('D4rtaine', 'David Pires'),
   ]},
-  { name: 'Los Patones', roster: [
+  { name: 'Los Patones', logo: 'https://drive.google.com/thumbnail?id=1ZNqgly9r_xGTq4S52c2Js1tmjlMbH6Xc&sz=w400', roster: [
     p('Dezo', 'Afonso Saldanha'), p('O Gajo', 'André Carita'), p('Kingsley', 'Dinis Gonçalves'),
     p('arutnevjr', 'João Leitão'), p('Chaos', 'Álvaro Dória'),
   ]},
-  { name: 'Tuern23', roster: [
+  { name: 'Tuern23', logo: '/logos/lol/tuern23.png', roster: [
     p('LouLou', 'Tomás Lourenço'), p('LivroDaFloresta', 'João Basílio'), p('NGapethOfLeague', 'Guilherme Mendes'),
     p('MiguelRamos4', 'Miguel Ramos'), p('Taps', 'Manuel Ferreira'),
   ]},
-  { name: 'Vengeance Experts', roster: [
+  { name: 'Vengeance Experts', logo: 'https://drive.google.com/thumbnail?id=1JMY8aaiVVXdv_A2rBOcRNdUA-axTVbi8&sz=w400', roster: [
     p('Maestro', 'Pedro Queirós'), p('WalkOnTheShadows', 'Miguel Alexandre Relvas'), p('agat', 'Lucas Bilotti Nunes'),
     p('Mitocnorte', 'Carlos Emanuel dos Santos Norte'), p('nyxhaze', 'Tiago Bilotti Nunes'),
   ]},
-  { name: 'FF15', roster: [
+  { name: 'FF15', logo: '/logos/lol/ff15.png', roster: [
     p('Henra', 'Henrique'), p('Silence', 'João'), p('tututuru luis', 'Luís'),
     p('kenterr', 'Miguel'), p('Dudinha', 'Duarte'),
   ]},
-  { name: 'Amigos do Carros', roster: [
+  { name: 'Amigos do Carros', logo: '/logos/lol/amigos-do-carros.webp', roster: [
     p('Carros', 'Rodrigo Pinto'), p('TiaguuZ', 'Tiago Marques Gonçalves'), p('raisu', 'Ruben Pereira'),
     p('Kiko', 'Rodrigo'), p('NOMA', 'Paulo Rebocho'), c('Ayumi Shinozaki', 'Ana Monteiro'),
   ]},
-  { name: 'Low Cortisol Gaming', roster: [
+  { name: 'Low Cortisol Gaming', logo: 'https://images.icon-icons.com/3053/PNG/512/league_of_legends_alt_macos_bigsur_icon_190029.png', roster: [
     p('Luck', 'Afonso Morais'), p('Zeradyn', 'José Oliveira'), p('ALPX', 'Pedro Almeida'),
     p('Moreiraooo', 'Thiago Moreirão'), p('JuniorMafia', 'David'),
   ]},
-  { name: 'Wg Furiosos', roster: [
+  { name: 'Wg Furiosos', logo: 'https://drive.google.com/thumbnail?id=1kSjfDb3WsXabwGzk-A-azgUxJWly6obI&sz=w400', roster: [
     p('FIK', 'Tiago Santos'), p('Tobias', 'Tobias Lopes'), p('Ghost', 'Guilherme Mendes'),
     p('Rato', 'Paulo'), p('Albino', 'Andreia Martins'),
   ]},
-  { name: 'Os Fazendeiros', roster: [
+  { name: 'Os Fazendeiros', logo: '/logos/lol/os-fazendeiros.png', roster: [
     p('Elbozito', 'Guilherme Oliveira'), p('Slayer', 'Guilherme Pedro'), p('Frenzy', 'Ricardo Galvão'),
     p('Shrek', 'João Infante'), p('Babyd4rk', 'David Dias'),
   ]},
-  { name: 'KIPU Frost', roster: [
+  { name: 'KIPU Frost', logo: '/logos/lol/kipu-frost.png', roster: [
     p('aNdy', 'André Silva'), p('Dannix', 'Daniel Jesus'), p('Dans', 'Daniel Lopes'),
     p('Light', 'Tiago Ventura'), p('Ramos', 'Diogo Pereira'),
   ]},
-  { name: 'Fila do Microondas', roster: [
+  { name: 'Fila do Microondas', logo: '/logos/lol/fila-do-microondas.jpg', roster: [
     p('Palhau', 'João Palhau'), p('Dayllen', 'Diogo'), p('Chinês', 'Chinês'),
     p('Gui', 'Guilherme'), p('snatso', 'Gonçalo'),
   ]},
-  { name: 'Tás na Disney', roster: [
+  { name: 'Tás na Disney', logo: 'https://drive.google.com/thumbnail?id=1QJeb1QStvgUbSijvVhTL9aN_ngP88lP5&sz=w400', roster: [
     p('Chimyi', 'Vasco Duarte'), p('Tital', 'Luis Valencia'), p('Djelemental', 'Guilherme Campos'),
     p('DingDIng', 'Filipe Guedes'), p('Shadow', 'Vasco Cecílio'),
   ]},
@@ -251,43 +253,43 @@ const lolTeams: Team[] = [
 
 // ── Valorant ──────────────────────────────────────────────────────────────────
 const valTeams: Team[] = [
-  { name: 'DoubleSatchel', roster: [
+  { name: 'DoubleSatchel', logo: 'https://drive.google.com/thumbnail?id=1H9EC_J5JjoMdpdD4NdK7xXrnpcoTfY5x&sz=w400', roster: [
     p('ShadowJ', 'Hugo Santos'), p('gwk', 'Simão Gonçalves'), p('AVZ', 'João Vitor'),
     p('DNS', 'Dinis Biscaia'), p('Mozzy', 'Filipe Aguiar'),
   ]},
-  { name: 'ZMAC', roster: [
+  { name: 'ZMAC', logo: 'https://drive.google.com/thumbnail?id=1yH_0oPR2xJn6Y6Wym3sCNxsC237j8MX6&sz=w400', roster: [
     p('kermit', 'Tiago Bandeira'), p('zedly', 'Pedro Galego'), p('ikiru', 'Luca Cerruti'),
     p('neg', 'Miguel Simões'), p('Ensaboado', 'Hugo Adrião'),
   ]},
-  { name: 'Fãs do Xini', roster: [
+  { name: 'Fãs do Xini', logo: 'https://drive.google.com/thumbnail?id=1POuWc2qnZNbEKDn4Us6sypFDuxqsid2L&sz=w400', roster: [
     p('Xini', 'Dinis Mestre'), p('H4tee', 'Rodrigo Ribeiro'), p('Silent', 'Martim Oliveira'),
     p('Skypzz', 'Afonso Leitão'), p('Akira', 'Rui Barbosa'),
   ]},
-  { name: 'Unaware', roster: [
+  { name: 'Unaware', logo: 'https://drive.google.com/thumbnail?id=10W06XE4Dj2sVYFtSGP-XsZVV-FoF4vjE&sz=w400', roster: [
     p('V1rT', 'Vitor Belo'), p('zbf', 'Guilherme Coelho'), p('Rocket', 'Tomás Sales'),
     p('mxuga', 'Jose Pronto'), p('silent', 'Nuno Rodrigues'),
   ]},
-  { name: 'Onyx Ravens', roster: [
+  { name: 'Onyx Ravens', logo: 'https://drive.google.com/thumbnail?id=1_rgPx3FKu69ZVboiIuAH23nU6gtMIVyq&sz=w400', roster: [
     p('EgoDestroyer67', 'Rodrigo Barbosa'), p('D1go', 'Diogo Luz'), p('Afonso', 'Afonso Almeida'),
     p('UzulMarti', 'André Delgado'), p('Rafa', 'Rafael Batista'),
   ]},
-  { name: 'MIMIMI3', roster: [
+  { name: 'MIMIMI3', logo: 'https://drive.google.com/thumbnail?id=1VwiGKWbWy2n6nRiKO3s4R0FPDmarhMwf&sz=w400', roster: [
     p('kira', 'Samuel Maria'), p('l1ma', 'Miguel Lima'), p('riku', 'Ricardo Cerva'),
     p('aqu3l', 'Bruno Mendes'), p('restart51', 'David Fernandes'),
   ]},
-  { name: 'Peaky Again', roster: [
+  { name: 'Peaky Again', logo: 'https://drive.google.com/thumbnail?id=1Oa_Qkzno6l0XmJdF2QhSo3vkLxtrHSdv&sz=w400', logoScale: 1.4, roster: [
     p('pigyrr', 'Gonçalo Barbadaes'), p('Bizty', 'Gonçalo Calçadas'), p('bern', 'Bernado Dias'),
     p('Grouqueiro', 'Guilherme Rouqueiro'), p('mike', 'Miguel Silva'),
   ]},
-  { name: 'Os GABIRUS', roster: [
+  { name: 'Os GABIRUS', logo: 'https://drive.google.com/thumbnail?id=11Nf04PBZLU4ZGfnko_vREyC1zRuPf3QT&sz=w400', roster: [
     p('Happy', 'Frederico Ribeiro'), p('Natsu', 'Guilherme Pinto'), p('Gerras15', 'Filipe Serras'),
     p('Apollo', 'Miguel Monteiro'), p('GTO', 'Gabriel Monteiro'),
   ]},
-  { name: 'The Range', roster: [
+  { name: 'The Range', logo: 'https://drive.google.com/thumbnail?id=13VizKJL6OHrBGK3kpHdtKzRvPvNoXuOv&sz=w400', roster: [
     p('Moon', 'Dário Leal'), p('Txger', 'Simão Campanião'), p('Mistery', 'Lucas Rodrigues'),
     p('bisnaga', 'Gabriel Silva'), p('Gui', 'Guilherme Almeida'),
   ]},
-  { name: 'RCDM Squad', roster: [
+  { name: 'RCDM Squad', logo: 'https://drive.google.com/thumbnail?id=1d_GPkvIFWcGxHlh5umqmKK9WZiGiDinF&sz=w400', roster: [
     p('Benfialho', 'Bernardo Fialho'), p('Destroir999', 'Duarte Simões'), p('Kuwana', 'Daniel Ribeiro'),
     p('pucazz', 'Lucas'), p('Bezha', 'Rodrigo Beja'),
   ]},
@@ -295,30 +297,30 @@ const valTeams: Team[] = [
 
 // ── Rocket League ─────────────────────────────────────────────────────────────
 const rlTeams: Team[] = [
-  { name: 'Seis Sete', roster: [
+  { name: 'Seis Sete', logo: 'https://drive.google.com/thumbnail?id=17YTA6LX9Gd-2kmzmJogUV0nFLrv7hxev&sz=w400', roster: [
     p('Visse'), p('Zyra', 'Tomás Silva'), p('Acir'),
   ]},
-  { name: 'Wavers', roster: [
+  { name: 'Wavers', logo: 'https://drive.google.com/thumbnail?id=1lL4-Sb_l2l45j4IE1zIuXMuEkmHxSgAe&sz=w400', roster: [
     p('Drakxy66', 'Duarte Costa'), p('ShadoW_Verd3s', 'Guilherme Alho'), p('ShadoW_Amar3lo', 'Francisco Silva'),
   ]},
-  { name: 'Team7', roster: [
+  { name: 'Team7', logo: 'https://drive.google.com/thumbnail?id=1aguUY-2GlMVURogKTMMUanz6MVKo1NGR&sz=w400', roster: [
     p('Cena', 'Guilherme Sá'), p('geraldezz', 'Martim Geraldes'), p('Mshow', 'Martim Carvalho'),
     c('jxkez', 'Tomás'),
   ]},
-  { name: 'FTW Esports', roster: [
+  { name: 'FTW Esports', logo: 'https://drive.google.com/thumbnail?id=19mxAs7oJHy-tmsbZG4-rvz0_mF5FZfyM&sz=w400', roster: [
     p('foahxi', 'João'), p('Talisca', 'Rodrigo'), p('Carrilhow', 'Francisco'),
   ]},
-  { name: 'TI IGR', roster: [
+  { name: 'TI IGR', logo: 'https://drive.google.com/thumbnail?id=1U0eGELsu2FiaWtP9xD0LGLCgGN-zI_IU&sz=w400', roster: [
     p('TeuDarling017', 'Luis'), p('FoxComander8927', 'Gabriel'), p('Carlosplay018', 'Carlinhos'),
   ]},
-  { name: 'Vengeance Experts', roster: [
+  { name: 'Vengeance Experts', logo: 'https://drive.google.com/thumbnail?id=13SnflBsJ62iKj9S76bUpK4dhZeQgTsUI&sz=w400', roster: [
     p('J0ta', 'João Silva'), p('Kamau', 'Kamau'), p('Sleeptoken', 'Pedro Borges'),
   ]},
-  { name: 'R.B.K.', roster: [
+  { name: 'R.B.K.', logo: 'https://drive.google.com/thumbnail?id=1J4suAo8ufNrXOqoVUcMFcYHV1Looimh9&sz=w400', roster: [
     p('Goncavultos2', 'Gonçalo'), p('Silence', 'João'), p('Dimichter', 'Duarte'),
     c('L1VRAGH1', 'Francisco'),
   ]},
-  { name: 'AAA', roster: [
+  { name: 'AAA', logo: 'https://drive.google.com/thumbnail?id=1j6Loowy07PstZJIireGSKbcAZBd6l9CL&sz=w400', roster: [
     p('pipas', 'Filipe'), p('n1sa', 'Guilherme Nisa'), p('impaii', 'Luís Moreira'),
   ]},
   makeTbd('Equipa 9', 3),
