@@ -23,6 +23,13 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
+        to="/equipas"
+        variant="text"
+      >Equipas</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
         to="/horarios"
         variant="text"
       >Horários</v-btn>
