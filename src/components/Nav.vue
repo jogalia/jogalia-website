@@ -30,7 +30,7 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
-        to="/localizacao"
+        to="/mapa"
         variant="text"
       >Mapa</v-btn>
     </div>
