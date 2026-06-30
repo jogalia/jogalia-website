@@ -40,6 +40,13 @@
         to="/parceiros"
         variant="text"
       >Parceiros</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
+        to="/transmissao"
+        variant="text"
+      >Transmissão</v-btn>
     </div>
 
     <v-spacer />
