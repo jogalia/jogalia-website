@@ -241,11 +241,14 @@ const lolTeams: Team[] = [
     p('Palhau', 'João Palhau'), p('Dayllen', 'Diogo'), p('Chinês', 'Chinês'),
     p('Gui', 'Guilherme'), p('snatso', 'Gonçalo'),
   ]},
-  { name: 'Tás na Disney', logo: 'https://drive.google.com/thumbnail?id=1QJeb1QStvgUbSijvVhTL9aN_ngP88lP5&sz=w400', roster: [
+  { name: 'Tás na Disney', logo: 'https://drive.google.com/thumbnail?id=1QJeb1QStvgUbSijvVhTL9aN_ngP88lP5&sz=w400', logoScale: 1.1, roster: [
     p('Chimyi', 'Vasco Duarte'), p('Tital', 'Luis Valencia'), p('Djelemental', 'Guilherme Campos'),
     p('DingDIng', 'Filipe Guedes'), p('Shadow', 'Vasco Cecílio'),
   ]},
-  makeTbd('Equipa 13', 5),
+  { name: 'Kappa Feed Club', logo: '/logos/lol/DMC.png', logoScale: 2.3, roster: [
+    p('Pew', 'Calinas'), p('Pax', 'Joaquim'), p('Bubazz', 'Diogo'),
+    p('Dvn', 'Danilo'), p('SkyZENNN', 'Lucas'),
+  ]},
   makeTbd('Equipa 14', 5),
   makeTbd('Equipa 15', 5),
   makeTbd('Equipa 16', 5),

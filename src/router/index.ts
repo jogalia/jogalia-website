@@ -11,6 +11,7 @@ import Mapa from '@/pages/mapa.vue'
 import Inscricoes from '@/pages/inscricoes.vue'
 import Horarios from '@/pages/horarios.vue'
 import Equipas from '@/pages/equipas.vue'
+import Parceiros from '@/pages/parceiros.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,10 @@ const router = createRouter({
     }, {
       path: '/equipas',
       component: Equipas,
+      meta: { isHero: false }
+    }, {
+      path: '/parceiros',
+      component: Parceiros,
       meta: { isHero: false }
     }
   ],

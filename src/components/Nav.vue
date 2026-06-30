@@ -16,13 +16,6 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
-        to="/inscricoes"
-        variant="text"
-      >Inscrições</v-btn>
-
-      <v-btn
-        class="italic bold uppercase"
-        size="large"
         to="/equipas"
         variant="text"
       >Equipas</v-btn>
@@ -40,6 +33,13 @@
         to="/mapa"
         variant="text"
       >Mapa</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
+        to="/parceiros"
+        variant="text"
+      >Parceiros</v-btn>
     </div>
 
     <v-spacer />
