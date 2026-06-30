@@ -12,6 +12,7 @@ import Inscricoes from '@/pages/inscricoes.vue'
 import Horarios from '@/pages/horarios.vue'
 import Equipas from '@/pages/equipas.vue'
 import Parceiros from '@/pages/parceiros.vue'
+import Transmissao from '@/pages/transmissao.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,10 @@ const router = createRouter({
     }, {
       path: '/parceiros',
       component: Parceiros,
+      meta: { isHero: false }
+    }, {
+      path: '/transmissao',
+      component: Transmissao,
       meta: { isHero: false }
     }
   ],
