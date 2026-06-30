@@ -35,7 +35,7 @@
     <div v-if="!teamsLoaded || !matchesLoaded" class="empty-state">
       <v-icon size="64" color="#0686F3" class="mb-4">mdi-sword-cross</v-icon>
       <div class="empty-title">{{ syncState === 'error' ? 'Não foi possível carregar os ficheiros' : 'A carregar bracket...' }}</div>
-      <div class="empty-sub">public/{{ selectedGame }}/teams.xlsx · matches.xlsx</div>
+      <div class="empty-sub">Google Sheets · {{ selectedGame }}_teams / {{ selectedGame }}_matches</div>
     </div>
 
     <!-- ══ EA FC LEAGUE VIEW ══ -->
@@ -70,7 +70,7 @@
             <span class="lt-pos-col lt-pos-val" :class="leaguePosClass(i)">{{ i + 1 }}</span>
             <span class="lt-logo-col">
               <span class="lt-logo-wrap">
-                <img v-if="entry.team && !brokenLogos.has(logoKey(entry.team))"
+                <img v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
                   :src="logoPath(entry.team)" class="lt-logo"
                   @error="brokenLogos.add(logoKey(entry.team))" />
                 <span v-else class="lt-logo-placeholder">{{ entry.name.charAt(0) }}</span>
@@ -117,7 +117,7 @@
           </div>
           <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team1 && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
+    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
     <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
@@ -128,7 +128,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team2 && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
+    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
     <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
@@ -184,7 +184,7 @@
             >
               <span class="st-pos" :class="{ 'st-pos--advance': i < 2 && valGroupComplete(grp.id) }">{{ i + 1 }}</span>
               <span class="st-logo-wrap">
-                <img v-if="entry.team && !brokenLogos.has(logoKey(entry.team))"
+                <img v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
                   :src="logoPath(entry.team)" class="st-logo"
                   @error="brokenLogos.add(logoKey(entry.team))" />
                 <span v-else class="st-logo-placeholder">{{ entry.name.charAt(0) }}</span>
@@ -217,7 +217,7 @@
               </div>
               <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team1 && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
+    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
     <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
@@ -228,7 +228,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team2 && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
+    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
     <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
@@ -249,7 +249,7 @@
                 :class="i === 0 ? 'val-advance-row--first' : 'val-advance-row--second'"
               >
                 <v-icon size="11" :color="i === 0 ? '#FFB404' : '#94A3B8'" style="flex-shrink:0">mdi-arrow-right-circle</v-icon>
-                <img v-if="entry.team && !brokenLogos.has(logoKey(entry.team))"
+                <img v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
                   :src="logoPath(entry.team)" class="gw-logo"
                   @error="brokenLogos.add(logoKey(entry.team))" />
                 <span v-else class="gw-logo-placeholder">{{ entry.name.charAt(0) }}</span>
@@ -292,7 +292,7 @@
             </div>
             <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team1 && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
+    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
     <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
@@ -303,7 +303,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team2 && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
+    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
     <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
@@ -343,7 +343,7 @@
             </div>
             <div class="team-row" :class="[valThirdPlace.status==='done'&&valThirdPlace.winner===null?'draw':{winner:valThirdPlace.status==='done'&&valThirdPlace.winner===1,loser:valThirdPlace.status==='done'&&valThirdPlace.winner!==1,tbd:!valThirdPlace.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="valThirdPlace.team1 && !brokenLogos.has(logoKey(valThirdPlace.team1))" :src="logoPath(valThirdPlace.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(valThirdPlace.team1))" />
+    <img v-if="valThirdPlace.team1 && valThirdPlace.team1.logo && !brokenLogos.has(logoKey(valThirdPlace.team1))" :src="logoPath(valThirdPlace.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(valThirdPlace.team1))" />
     <span v-else class="team-logo-placeholder">{{ valThirdPlace.team1 ? valThirdPlace.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="valThirdPlace.team1">#{{ valThirdPlace.team1.seed }}</span>
@@ -354,7 +354,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[valThirdPlace.status==='done'&&valThirdPlace.winner===null?'draw':{winner:valThirdPlace.status==='done'&&valThirdPlace.winner===2,loser:valThirdPlace.status==='done'&&valThirdPlace.winner!==2,tbd:!valThirdPlace.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="valThirdPlace.team2 && !brokenLogos.has(logoKey(valThirdPlace.team2))" :src="logoPath(valThirdPlace.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(valThirdPlace.team2))" />
+    <img v-if="valThirdPlace.team2 && valThirdPlace.team2.logo && !brokenLogos.has(logoKey(valThirdPlace.team2))" :src="logoPath(valThirdPlace.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(valThirdPlace.team2))" />
     <span v-else class="team-logo-placeholder">{{ valThirdPlace.team2 ? valThirdPlace.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="valThirdPlace.team2">#{{ valThirdPlace.team2.seed }}</span>
@@ -372,7 +372,7 @@
           <!-- 3rd place winner -->
           <div v-if="valThirdPlaceWinner" class="val-podium-row val-podium-row--bronze">
             <v-icon size="13" color="#94A3B8" style="flex-shrink:0">mdi-medal</v-icon>
-            <img v-if="!brokenLogos.has(logoKey(valThirdPlaceWinner))"
+            <img v-if="valThirdPlaceWinner.logo && !brokenLogos.has(logoKey(valThirdPlaceWinner))"
               :src="logoPath(valThirdPlaceWinner)" class="gw-logo"
               @error="brokenLogos.add(logoKey(valThirdPlaceWinner))" />
             <span v-else class="gw-logo-placeholder">{{ valThirdPlaceWinner.name.charAt(0) }}</span>
@@ -405,7 +405,7 @@
             </div>
             <div class="team-row" :class="[valFinal.status==='done'&&valFinal.winner===null?'draw':{winner:valFinal.status==='done'&&valFinal.winner===1,loser:valFinal.status==='done'&&valFinal.winner!==1,tbd:!valFinal.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="valFinal.team1 && !brokenLogos.has(logoKey(valFinal.team1))" :src="logoPath(valFinal.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(valFinal.team1))" />
+    <img v-if="valFinal.team1 && valFinal.team1.logo && !brokenLogos.has(logoKey(valFinal.team1))" :src="logoPath(valFinal.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(valFinal.team1))" />
     <span v-else class="team-logo-placeholder">{{ valFinal.team1 ? valFinal.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="valFinal.team1">#{{ valFinal.team1.seed }}</span>
@@ -416,7 +416,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[valFinal.status==='done'&&valFinal.winner===null?'draw':{winner:valFinal.status==='done'&&valFinal.winner===2,loser:valFinal.status==='done'&&valFinal.winner!==2,tbd:!valFinal.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="valFinal.team2 && !brokenLogos.has(logoKey(valFinal.team2))" :src="logoPath(valFinal.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(valFinal.team2))" />
+    <img v-if="valFinal.team2 && valFinal.team2.logo && !brokenLogos.has(logoKey(valFinal.team2))" :src="logoPath(valFinal.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(valFinal.team2))" />
     <span v-else class="team-logo-placeholder">{{ valFinal.team2 ? valFinal.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="valFinal.team2">#{{ valFinal.team2.seed }}</span>
@@ -434,7 +434,7 @@
           <!-- Champion -->
           <div v-if="valChampion" class="champion-card" style="margin-top:12px">
             <div class="champion-glow"></div>
-            <img v-if="!brokenLogos.has(logoKey(valChampion))" :src="logoPath(valChampion)" class="champion-logo" @error="brokenLogos.add(logoKey(valChampion))" />
+            <img v-if="valChampion.logo && !brokenLogos.has(logoKey(valChampion))" :src="logoPath(valChampion)" class="champion-logo" @error="brokenLogos.add(logoKey(valChampion))" />
             <v-icon v-else size="40" color="#FFB404">mdi-trophy</v-icon>
             <div class="champion-seed">#{{ valChampion.seed }}</div>
             <div class="champion-name">{{ valChampion.name }}</div>
@@ -486,7 +486,7 @@
             >
               <span class="st-pos">{{ i + 1 }}</span>
               <span class="st-logo-wrap">
-                <img v-if="entry.team && !brokenLogos.has(logoKey(entry.team))"
+                <img v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
                   :src="logoPath(entry.team)" class="st-logo"
                   @error="brokenLogos.add(logoKey(entry.team))" />
                 <span v-else class="st-logo-placeholder">{{ entry.name.charAt(0) }}</span>
@@ -519,7 +519,7 @@
               </div>
               <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team1 && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
+    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
     <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
@@ -530,7 +530,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team2 && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
+    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
     <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
@@ -545,7 +545,7 @@
           <div class="group-winner-wrap">
             <div v-if="groupWinner(grp.id)" class="group-winner-card">
               <v-icon size="13" color="#FFB404" style="flex-shrink:0">mdi-trophy</v-icon>
-              <img v-if="!brokenLogos.has(logoKey(groupWinner(grp.id)))"
+              <img v-if="groupWinner(grp.id).logo && !brokenLogos.has(logoKey(groupWinner(grp.id)))"
                 :src="logoPath(groupWinner(grp.id))" class="gw-logo"
                 @error="brokenLogos.add(logoKey(groupWinner(grp.id)))" />
               <span v-else class="gw-logo-placeholder">{{ groupWinner(grp.id).name.charAt(0) }}</span>
@@ -589,7 +589,7 @@
                 </div>
                 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team1 && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
+    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" :src="logoPath(match.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team1))" />
     <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
@@ -600,7 +600,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="match.team2 && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
+    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" :src="logoPath(match.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(match.team2))" />
     <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
@@ -637,7 +637,7 @@
                 </div>
                 <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===1,loser:theFinal.status==='done'&&theFinal.winner!==1,tbd:!theFinal.team1}]">
   <span class="team-logo-wrap">
-    <img v-if="theFinal.team1 && !brokenLogos.has(logoKey(theFinal.team1))" :src="logoPath(theFinal.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(theFinal.team1))" />
+    <img v-if="theFinal.team1 && theFinal.team1.logo && !brokenLogos.has(logoKey(theFinal.team1))" :src="logoPath(theFinal.team1)" class="team-logo-img" @error="brokenLogos.add(logoKey(theFinal.team1))" />
     <span v-else class="team-logo-placeholder">{{ theFinal.team1 ? theFinal.team1.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="theFinal.team1">#{{ theFinal.team1.seed }}</span>
@@ -648,7 +648,7 @@
 <div class="match-divider"></div>
 <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===2,loser:theFinal.status==='done'&&theFinal.winner!==2,tbd:!theFinal.team2}]">
   <span class="team-logo-wrap">
-    <img v-if="theFinal.team2 && !brokenLogos.has(logoKey(theFinal.team2))" :src="logoPath(theFinal.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(theFinal.team2))" />
+    <img v-if="theFinal.team2 && theFinal.team2.logo && !brokenLogos.has(logoKey(theFinal.team2))" :src="logoPath(theFinal.team2)" class="team-logo-img" @error="brokenLogos.add(logoKey(theFinal.team2))" />
     <span v-else class="team-logo-placeholder">{{ theFinal.team2 ? theFinal.team2.name.charAt(0) : '?' }}</span>
   </span>
   <span class="seed" v-if="theFinal.team2">#{{ theFinal.team2.seed }}</span>
@@ -665,7 +665,7 @@
             <div class="f4-col-label">CAMPEÃO</div>
             <div class="champion-card">
               <div class="champion-glow"></div>
-              <img v-if="!brokenLogos.has(logoKey(champion))" :src="logoPath(champion)" class="champion-logo" @error="brokenLogos.add(logoKey(champion))" />
+              <img v-if="champion.logo && !brokenLogos.has(logoKey(champion))" :src="logoPath(champion)" class="champion-logo" @error="brokenLogos.add(logoKey(champion))" />
               <v-icon v-else size="40" color="#FFB404">mdi-trophy</v-icon>
               <div class="champion-seed">#{{ champion.seed }}</div>
               <div class="champion-name">{{ champion.name }}</div>
@@ -688,15 +688,14 @@ const TeamLogo = defineComponent({
   props: ['team', 'brokenLogos'],
   emits: ['broken'],
   setup(props, { emit }) {
-    function slugify(n) { return n.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') }
-    function logoPath(t) { return `/logos/${slugify(t.name)}.png` }
-    function logoKey(t)  { return logoPath(t) }
+    function logoPath(t) { return t?.logo ? String(t.logo).trim() : '' }
+    function logoKey(t)  { return t?.logo ? String(t.logo).trim() : (t?.name || 'no-logo') }
     return { logoPath, logoKey }
   },
   template: `
     <span class="team-logo-wrap">
       <template v-if="team">
-        <img v-if="!brokenLogos.has(logoKey(team))"
+        <img v-if="team.logo && !brokenLogos.has(logoKey(team))"
           :src="logoPath(team)" class="team-logo-img" :alt="team.name"
           @error="$emit('broken', logoKey(team))" />
         <span v-else class="team-logo-placeholder">{{ team.name.charAt(0).toUpperCase() }}</span>
@@ -779,10 +778,12 @@ const games = [
 ]
 
 // ── Logos ─────────────────────────────────────────────────────────────────────
+// Logos now come straight from the "logo" column in teams.xlsx (Google Sheets
+// export), which itself contains a direct image URL (e.g. a Google Drive
+// lh3.googleusercontent.com link). No more local /logos/*.png slugify lookup.
 const brokenLogos = reactive(new Set())
-function slugify(n) { return n.toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') }
-function logoPath(t) { return `/logos/${slugify(t.name)}.png` }
-function logoKey(t)  { return logoPath(t) }
+function logoPath(t) { return t?.logo ? String(t.logo).trim() : '' }
+function logoKey(t)  { return t?.logo ? String(t.logo).trim() : (t?.name || 'no-logo') }
 
 // ── Collapse state ────────────────────────────────────────────────────────────
 const collapsedGroups = reactive({ A: false, B: false, C: false, D: false })
@@ -824,52 +825,66 @@ const currentGame  = computed(() => games.find(g => g.id === selectedGame.value)
 function selectGame(id) {
   if (id === selectedGame.value) return
   selectedGame.value = id
-  teams.value = []; matches.value = []
-  teamsLoaded.value = false; matchesLoaded.value = false
-  syncState.value = 'loading'
+  if (lastWorkbook) {
+    applyGameData(lastWorkbook, id)
+    syncState.value = 'ok'
+  } else {
+    teams.value = []; matches.value = []
+    teamsLoaded.value = false; matchesLoaded.value = false
+    syncState.value = 'loading'
+  }
   refresh()
 }
 
 // ── Data ──────────────────────────────────────────────────────────────────────
+// All teams/matches for every game now live in ONE Google Sheets workbook,
+// with one sheet per game named "<gameId>_teams" / "<gameId>_matches"
+// (e.g. "cs2_teams", "cs2_matches", "fc_teams", "fc_matches", ...).
+const SHEET_ID = '1IlDuefwslDPL5kf5P63fwtwpudzlX-YoF3jS7_oeCaI'
+const XLSX_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=xlsx`
+
 const teams = ref([]); const matches = ref([])
 const teamsLoaded = ref(false); const matchesLoaded = ref(false)
 const syncState = ref('loading'); const lastSyncTime = ref('')
 let pollInterval = null
+let lastWorkbook = null
 
-async function fetchXlsx(url) {
-  const res = await fetch(`${url}?_=${Date.now()}`)
+async function fetchWorkbook() {
+  const res = await fetch(`${XLSX_URL}&_=${Date.now()}`)
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
   const buf = await res.arrayBuffer()
-  const wb = XLSX.read(buf, { type: 'array' })
-  return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
+  return XLSX.read(buf, { type: 'array' })
 }
 
-async function refreshAllGamesLive() {
-  for (const g of games) {
-    try { allGameMatches[g.id] = await fetchXlsx(`/${g.id}/matches.xlsx`) } catch {}
-  }
+function sheetToJson(wb, sheetName) {
+  const ws = wb.Sheets[sheetName]
+  return ws ? XLSX.utils.sheet_to_json(ws) : []
+}
+
+function applyGameData(wb, gameId) {
+  teams.value = sheetToJson(wb, `${gameId}_teams`)
+  matches.value = sheetToJson(wb, `${gameId}_matches`)
+  teamsLoaded.value = teams.value.length > 0
+  matchesLoaded.value = matches.value.length > 0
 }
 
 async function refresh() {
   try {
-    const [td, md] = await Promise.all([
-      fetchXlsx(`/${selectedGame.value}/teams.xlsx`),
-      fetchXlsx(`/${selectedGame.value}/matches.xlsx`),
-    ])
-    teams.value = td; matches.value = md
-    allGameMatches[selectedGame.value] = md
-    teamsLoaded.value = true; matchesLoaded.value = true
+    const wb = await fetchWorkbook()
+    lastWorkbook = wb
+    for (const g of games) {
+      allGameMatches[g.id] = sheetToJson(wb, `${g.id}_matches`)
+    }
+    applyGameData(wb, selectedGame.value)
     syncState.value = 'ok'
     lastSyncTime.value = new Date().toLocaleTimeString('pt-PT', { hour:'2-digit', minute:'2-digit', second:'2-digit' })
   } catch (e) {
     console.error('[TournamentBracket]', e)
     syncState.value = 'error'
   }
-  refreshAllGamesLive()
-  console.log('match 1 enriched:', enrichMatch(matches.value[0]))
 }
 
-onMounted(() => { refresh(); pollInterval = setInterval(refresh, 10_000) })
+onMounted(() => { refresh(); pollInterval = setInterval(refresh, 30_000) })
 onUnmounted(() => clearInterval(pollInterval))
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
