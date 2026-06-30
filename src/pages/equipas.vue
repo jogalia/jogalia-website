@@ -211,7 +211,7 @@ const lolTeams: Team[] = [
   ]},
   { name: 'Vengeance Experts', logo: 'https://drive.google.com/thumbnail?id=1JMY8aaiVVXdv_A2rBOcRNdUA-axTVbi8&sz=w400', roster: [
     p('Maestro', 'Pedro Queirós'), p('WalkOnTheShadows', 'Miguel Alexandre Relvas'), p('agat', 'Lucas Bilotti Nunes'),
-    p('Mitocnorte', 'Carlos Emanuel dos Santos Norte'), p('nyxhaze', 'Tiago Bilotti Nunes'),
+    p('Mitocnorte', 'Carlos Emanuel dos Santos'), p('nyxhaze', 'Tiago Bilotti Nunes'), c('GUINDEIRA', 'Artur Guindeira'),
   ]},
   { name: 'FF15', logo: '/logos/lol/ff15.png', roster: [
     p('Henra', 'Henrique'), p('Silence', 'João'), p('tututuru luis', 'Luís'),
@@ -238,14 +238,14 @@ const lolTeams: Team[] = [
     p('Light', 'Tiago Ventura'), p('Ramos', 'Diogo Pereira'),
   ]},
   { name: 'Fila do Microondas', logo: '/logos/lol/fila-do-microondas.jpg', roster: [
-    p('Palhau', 'João Palhau'), p('Dayllen', 'Diogo'), p('Chinês', 'Chinês'),
+    p('Palhau', 'João Palhau'), p('Dayllen', 'Diogo'), p('Chinês', 'Rodrigo Francisco'),
     p('Gui', 'Guilherme'), p('snatso', 'Gonçalo'),
   ]},
   { name: 'Tás na Disney', logo: 'https://drive.google.com/thumbnail?id=1QJeb1QStvgUbSijvVhTL9aN_ngP88lP5&sz=w400', logoScale: 1.1, roster: [
     p('Chimyi', 'Vasco Duarte'), p('Tital', 'Luis Valencia'), p('Djelemental', 'Guilherme Campos'),
     p('DingDIng', 'Filipe Guedes'), p('Shadow', 'Vasco Cecílio'),
   ]},
-  { name: 'Kappa Feed Club', logo: '/logos/lol/DMC.png', logoScale: 2.3, roster: [
+  { name: 'Demacia Fried Chicken', logo: '/logos/lol/DMC.png', logoScale: 2.3, roster: [
     p('Pew', 'Calinas'), p('Pax', 'Joaquim'), p('Bubazz', 'Diogo'),
     p('Dvn', 'Danilo'), p('SkyZENNN', 'Lucas'),
   ]},
