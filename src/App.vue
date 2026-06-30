@@ -12,8 +12,8 @@
 
 <script lang="ts" setup>
   import { useRoute } from 'vue-router'
+  import Footer from '@/components/Footer.vue'
   import Nav from '@/components/Nav.vue'
-  import Footer from "@/components/Footer.vue";
 
   const route = useRoute()
 </script>
