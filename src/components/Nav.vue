@@ -6,7 +6,7 @@
   >
     <div class="ml-6 flex-1 max-w-[150px] flex items-center"> <!-- se for isotopo eh 60px -->
       <router-link class="w-full" to="/">
-        <v-img src="@/assets/logo.svg" />
+        <v-img src="@/assets/img/brand/logo.svg" />
       </router-link>
     </div>
 
@@ -33,6 +33,13 @@
         to="/mapa"
         variant="text"
       >Mapa</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
+        to="/parceiros"
+        variant="text"
+      >Parceiros</v-btn>
     </div>
 
     <v-spacer />
