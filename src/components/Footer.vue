@@ -5,7 +5,7 @@
     <div class="footer-inner">
       <!-- Brand column -->
       <div class="footer-brand">
-        <v-img class="footer-logo" src="@/assets/logo.svg" />
+        <v-img class="footer-logo" src="@/assets/img/brand/logo.svg" />
 
         <p class="footer-tagline">
           Esports · Gaming · TCG<br>
@@ -19,11 +19,11 @@
         <v-container class="p-0">
           <v-row>
             <v-col cols="auto">
-              <v-img src="@/assets/lage.svg" width="60" />
+              <v-img src="@/assets/img/brand/lage.svg" width="60" />
             </v-col>
 
             <v-col cols="auto">
-              <v-img class="mt-1" src="@/assets/nexera.png" width="60" />
+              <v-img class="mt-1" src="@/assets/img/brand/nexera.png" width="60" />
             </v-col>
           </v-row>
         </v-container>

@@ -54,7 +54,7 @@
 
 <style scoped>
 .hero {
-  background-image: linear-gradient(to bottom, rgba(0, 7, 43, 0) 0%, rgb(var(--v-theme-midnightBlue)) 100%), url(@/assets/hero.webp);
+  background-image: linear-gradient(to bottom, rgba(0, 7, 43, 0) 0%, rgb(var(--v-theme-midnightBlue)) 100%), url(@/assets/img/hero.webp);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

@@ -40,7 +40,7 @@
       <img
         alt="Planta do recinto Jogália 2026"
         class="map-img"
-        src="@/assets/mapaAzul.png"
+        src="../assets/img/mapaAzul.png"
       >
 
       <!-- SVG hotspot overlay - viewBox e image size (905×622) -->
