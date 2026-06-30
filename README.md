@@ -79,4 +79,4 @@ This project uses Vuetify - an MIT licensed Open Source project. We are glad to 
 - Sponsor on GitHub: https://github.com/sponsors/vuetifyjs
 - Support on Open Collective: https://opencollective.com/vuetify
 
-[Guia dos Ficheiros](/GuiaFicheiros.md)
+[Google Sheets Todos](https://docs.google.com/spreadsheets/d/1IlDuefwslDPL5kf5P63fwtwpudzlX-YoF3jS7_oeCaI/edit)
