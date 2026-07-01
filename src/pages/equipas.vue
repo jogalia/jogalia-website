@@ -28,7 +28,7 @@
 
     <!-- ── LOADING OVERLAY ── -->
     <div v-if="isLoading" class="loading-state">
-      <v-progress-circular color="#F4A723" indeterminate size="48" width="4" />
+      <v-progress-circular color="secondary" indeterminate size="48" width="4" />
       <span class="loading-text">A carregar equipas...</span>
     </div>
 

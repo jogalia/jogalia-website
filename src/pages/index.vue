@@ -11,7 +11,7 @@
       Engenharia e Tecnologia.
     </p>
 
-    <v-btn color="secondary">
+    <v-btn color="secondary" to="/horarios">
       Consulta os Horários
     </v-btn>
   </div>
