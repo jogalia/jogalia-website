@@ -47,6 +47,9 @@ const router = createRouter({
       meta: { isHero: false },
     },
   ],
+  scrollBehavior (to, from, savedPosition) {
+    return savedPosition ?? { top: 0 }
+  },
 })
 
 export default router

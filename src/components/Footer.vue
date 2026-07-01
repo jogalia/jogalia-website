@@ -157,7 +157,6 @@
 <style scoped>
 .jogalia-footer {
   background: #0d0f1a;
-  //background: rgba(var(--v-theme-surface));
   border-top: 1px solid var(--v-border-color);
   color: rgba(var(--v-theme-on-surface));
   font-family: inherit;
