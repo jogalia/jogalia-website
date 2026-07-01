@@ -6,6 +6,7 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import Equipas from '@/pages/equipas.vue'
 import Index from '@/pages/index.vue'
 import Inscricoes from '@/pages/inscricoes.vue'
 import Mapa from '@/pages/mapa.vue'
@@ -19,6 +20,10 @@ const router = createRouter({
       path: '/',
       component: Index,
       meta: { isHero: true },
+    }, {
+      path: '/equipas',
+      component: Equipas,
+      meta: { isHero: false },
     }, {
       path: '/inscricoes',
       component: Inscricoes,

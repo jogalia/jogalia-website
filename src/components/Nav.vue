@@ -16,6 +16,13 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
+        to="/equipas"
+        variant="text"
+      >Equipas</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
         to="/inscricoes"
         variant="text"
       >Inscrições</v-btn>
