@@ -156,17 +156,17 @@
 
 <script setup lang="ts">
   import acTcgQueijasLogo from '@/assets/img/partners/actcgqueijas.jpg'
-  // Influencers
+  import bodaSkillsLogo from '@/assets/img/partners/bodaskills.jpeg'
   import cozysafiraLogo from '@/assets/img/partners/cozysafira.png'
+  import dredLogo from '@/assets/img/partners/dred.jpeg'
   import goncaloRaposaLogo from '@/assets/img/partners/goncaloraposa.jpg'
   import gumzoneLogo from '@/assets/img/partners/gumzone.jpg'
   import obsidianVaultLogo from '@/assets/img/partners/obsidian-vault.jpg'
   import oCardGradingLogo from '@/assets/img/partners/ocg.jpeg'
   import oGuitchoLogo from '@/assets/img/partners/oguitcho.jpg'
-  // Casters
+  import robotExtremeLogo from '@/assets/img/partners/robotextreme.jpg'
   import ruizinhoLogo from '@/assets/img/partners/ruizinho.png'
   import soflopes5Logo from '@/assets/img/partners/soflopes.png'
-  // TCGs
   import velezjoaobreaksLogo from '@/assets/img/partners/velezjoaobreaks.jpg'
   import visseLogo from '@/assets/img/partners/visse.png'
 
@@ -178,32 +178,33 @@
     logoBg?: string
   }
 
-  // ── Media Partners ────────────────────────────────────────────────────────────
-  const mediaPartners: Partner[] = [
-    { name: 'RTP Arena', logo: 'https://media.rtp.pt/empresa/wp-content/uploads/sites/31/2019/04/Institutional_RTPArena_Vertical_PositivoCor_web-1.png', url: 'https://arena.rtp.pt/', logoBg: '#ffffff' },
-  ]
-
-  // ── Main Sponsors ─────────────────────────────────────────────────────────────
+  // Main Sponsors
   const mainSponsors: Partner[] = [
     { name: 'HyperX', logo: 'https://images.seeklogo.com/logo-png/42/2/hyperx-logo-png_seeklogo-425410.png', url: 'https://hyperx.com', logoScale: 1.5 },
     { name: 'EXSAD', logo: 'https://exsadgaming.pt/wp-content/uploads/2024/03/Ativo-8-1.png', url: 'https://exsadgaming.pt' },
     { name: 'Templars Arena', logo: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/6842070f22a45a72e30f6f8a/0x0.png', url: 'https://www.instagram.com/templarsarena/' },
   ]
 
-  // ── Marcas ────────────────────────────────────────────────────────────────────
-  const brands: Partner[] = [
-    { name: 'Robot Extreme', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNRKKTNhyIHOhhnTGMiGuWywSVr4-8Y6-SXA&s' },
+  // Media Partners
+  const mediaPartners: Partner[] = [
+    { name: 'RTP Arena', logo: 'https://media.rtp.pt/empresa/wp-content/uploads/sites/31/2019/04/Institutional_RTPArena_Vertical_PositivoCor_web-1.png', url: 'https://arena.rtp.pt/', logoBg: '#ffffff' },
   ]
 
-  // ── TCGs ──────────────────────────────────────────────────────────────────────
+  // Marcas
+  const brands: Partner[] = [
+    { name: 'Robot Extreme', logo: robotExtremeLogo },
+  ]
+
+  // TCGs
   const tcgs: Partner[] = [
     { name: 'VELEZJOAOBREAKS', logo: velezjoaobreaksLogo, url: 'https://www.instagram.com/velezjoaobreaks/' },
     { name: 'Obsidian Vault', logo: obsidianVaultLogo, url: 'https://www.instagram.com/obsidianvaultpt/' },
     { name: 'O Card Grading', logo: oCardGradingLogo, url: 'https://www.instagram.com/ocg_pt/' },
     { name: 'AC TCG QUEIJAS', logo: acTcgQueijasLogo, url: 'https://www.instagram.com/ac_tcg_loja/' },
+    { name: 'BodaSkillStore', logo: bodaSkillsLogo, url: 'https://www.instagram.com/bodaskillstore' },
   ]
 
-  // ── Influencers ───────────────────────────────────────────────────────────────
+  // Influencers
   const influencers: Partner[] = [
     { name: 'cozysafira', logo: cozysafiraLogo, url: 'https://www.instagram.com/cozysafira/' },
     { name: 'Gumzone', logo: gumzoneLogo, url: 'https://www.instagram.com/gumzone__/' },
@@ -212,11 +213,11 @@
     { name: 'Visse', logo: visseLogo, url: 'https://www.instagram.com/visse04/' },
   ]
 
-  // ── Casters ───────────────────────────────────────────────────────────────────
+  // Casters
   const casters: Partner[] = [
-    { name: 'Ruizinho', logo: ruizinhoLogo },
-    { name: 'Dred' }, // Left as-is since no path was provided
-    { name: 'oGuitcho', logo: oGuitchoLogo },
+    { name: 'Ruizinho', logo: ruizinhoLogo, url: 'https://www.instagram.com/ruizinholf89/' },
+    { name: 'Dred', logo: dredLogo },
+    { name: 'oGuitcho', logo: oGuitchoLogo, url: 'https://www.instagram.com/oguitcho/' },
   ]
 </script>
 
@@ -228,7 +229,7 @@
   padding-bottom: 100px;
 }
 
-/* ── Header ─────────────────────────────────────────────────────────────────── */
+/*  Header */
 .edition-badge {
   text-align: center;
   padding: 32px 24px 0;
@@ -256,7 +257,7 @@
   letter-spacing: 0.02em;
 }
 
-/* ── Section ─────────────────────────────────────────────────────────────────── */
+/*  Section */
 .partner-section {
   max-width: 1200px;
   margin: 0 auto 64px;
@@ -304,7 +305,7 @@
   border-bottom-color: rgba(99, 179, 237, 0.2);
 }
 
-/* ── Grid ────────────────────────────────────────────────────────────────────── */
+/*  Grid */
 .partner-grid {
   display: flex;
   flex-wrap: wrap;
@@ -312,7 +313,7 @@
   justify-content: center;
 }
 
-/* ── Cards ───────────────────────────────────────────────────────────────────── */
+/*  Cards */
 .partner-card {
   display: flex;
   flex-direction: column;
@@ -416,7 +417,7 @@
   justify-content: space-between;
 }
 
-/* ── Influencer photo cards ───────────────────────────────────────────────────── */
+/*  Influencer photo cards  */
 .card-photo {
   position: relative;
   width: 150px;
@@ -478,7 +479,7 @@
   }
 }
 
-/* ── Logos ───────────────────────────────────────────────────────────────────── */
+/*  Logos */
 .partner-logo {
   object-fit: contain;
   transition: filter 0.22s;
@@ -524,7 +525,7 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
-/* ── Placeholder (sem brand) ──────────────────────────────────────────────────── */
+/*  Placeholder (sem brand)  */
 .logo-placeholder {
   display: flex;
   align-items: center;
@@ -542,7 +543,7 @@
 .placeholder-large  { width: 72px; height: 72px; font-size: 28px; }
 .placeholder-medium { width: 52px; height: 52px; font-size: 20px; }
 
-/* ── Partner name ────────────────────────────────────────────────────────────── */
+/*  Partner name */
 .partner-name {
   font-size: 11px;
   font-weight: 700;
