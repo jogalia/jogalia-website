@@ -23,13 +23,6 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
-        to="/inscricoes"
-        variant="text"
-      >Inscrições</v-btn>
-
-      <v-btn
-        class="italic bold uppercase"
-        size="large"
         to="/horarios"
         variant="text"
       >Horários</v-btn>
@@ -72,9 +65,11 @@
     temporary
   >
     <v-list class="bg-midnightBlue pt-4">
-      <v-list-item class="italic bold uppercase py-3" to="/inscricoes">Inscrições</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/equipas">Equipas</v-list-item>
       <v-list-item class="italic bold uppercase py-3" to="/horarios">Horários</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/localizacao">Mapa</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/mapa">Mapa</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/parceiros">Parceiros</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/transmissao">Transmissao</v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
