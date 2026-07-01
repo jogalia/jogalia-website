@@ -1,6 +1,6 @@
 <template>
   <div class="redirect-container">
-    <h3 class="m-0 text-3xl text-secondary">Ainda estamos a trabalhar nesta página...</h3>
+    <h3 class="m-0 text-4xl text-secondary uppercase bold italic">POR ANUNCIAR</h3>
   </div>
 </template>
 
