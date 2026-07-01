@@ -3,7 +3,6 @@
 
     <!-- Animated background orbs -->
     <div class="orb orb-1" />
-    <div class="orb orb-2" />
     <div class="orb orb-3" />
     <div class="scanlines" />
 
@@ -123,8 +122,8 @@
   border-radius: 50%;
   filter: blur(80px);
   pointer-events: none;
-  z-index: 0;
   animation: orb-drift 12s ease-in-out infinite;
+  z-index: 0;
 }
 
 .orb-1 {
@@ -134,16 +133,6 @@
   top: -100px;
   left: -150px;
   animation-duration: 14s;
-}
-
-.orb-2 {
-  width: 400px;
-  height: 400px;
-  background: rgba(99, 55, 255, 0.10);
-  bottom: 0;
-  right: -100px;
-  animation-duration: 18s;
-  animation-delay: -6s;
 }
 
 .orb-3 {
