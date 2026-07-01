@@ -7,12 +7,12 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 import Equipas from '@/pages/equipas.vue'
+import Horarios from '@/pages/horarios.vue'
 import Index from '@/pages/index.vue'
 import Inscricoes from '@/pages/inscricoes.vue'
 import Mapa from '@/pages/mapa.vue'
 import Parceiros from '@/pages/parceiros.vue'
 import Transmissao from '@/pages/transmissao.vue'
-import Horarios from "@/pages/horarios.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

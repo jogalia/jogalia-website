@@ -1,7 +1,7 @@
 <template>
   <div class="partners-page">
 
-    <div class="edition-badge">JOGÁLIA 2026</div>
+    <EditionBadge />
     <h1 class="page-title">Parceiros</h1>
     <p class="page-subtitle">As marcas e criadores que tornam este evento ainda melhor</p>
 
@@ -169,6 +169,7 @@
   import soflopes5Logo from '@/assets/img/partners/soflopes.png'
   import velezjoaobreaksLogo from '@/assets/img/partners/velezjoaobreaks.jpg'
   import visseLogo from '@/assets/img/partners/visse.png'
+  import EditionBadge from '@/components/EditionBadge.vue'
 
   interface Partner {
     name: string
@@ -224,35 +225,23 @@
 <style scoped>
 .partners-page {
   min-height: 100vh;
-  background: rgb(var(--v-theme-background));
-  color: #e8eaf0;
   padding-bottom: 100px;
 }
 
 /*  Header */
-.edition-badge {
-  text-align: center;
-  padding: 32px 24px 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
-}
-
 .page-title {
   text-align: center;
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 900;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: rgba(var(--v-theme-on-background));
   margin: 12px 0 8px;
 }
 
 .page-subtitle {
   text-align: center;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(var(--v-theme-on-surface));
   margin: 0 0 56px;
   letter-spacing: 0.02em;
 }
@@ -269,10 +258,10 @@
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(var(--v-theme-on-surface-light));
   margin-bottom: 24px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--v-border-color);
 }
 
 .section-label--gold {
@@ -321,16 +310,16 @@
   justify-content: center;
   gap: 12px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--v-border-color);
+  background: rgba(var(--v-theme-surface));
   text-decoration: none;
   transition: border-color 0.22s, background 0.22s, transform 0.22s, box-shadow 0.22s;
   cursor: pointer;
 }
 
 .partner-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--v-border-color-highlight);
+  background:  rgba(var(--v-theme-surface-light));
   transform: translateY(-3px);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
@@ -459,7 +448,7 @@
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: rgba(var(--v-theme-on-background));
   text-align: center;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85), 0 0 14px rgba(0, 0, 0, 0.6);
 }
@@ -549,7 +538,7 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(var(--v-theme-on-surface));
   text-align: center;
   line-height: 1.3;
 }

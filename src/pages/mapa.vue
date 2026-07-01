@@ -237,18 +237,8 @@
 </script>
 
 <style scoped>
-/* vuetify.ts */
 .map-page {
-  --azure-blue:      #0686F3;
-  --vivid-orange:    #FA6600;
-  --neon-blue:       #00DDFE;
-  --imperial-yellow: #FFB404;
-  --midnight-blue:   #00072B;
-  --surface-dim:     rgba(255, 255, 255, 0.06);
-  --surface-mid:     rgba(255, 255, 255, 0.10);
   --border:          rgba(0, 221, 254, 0.18);
-  --text-primary:    #ffffff;
-  --text-muted:      rgba(255, 255, 255, 0.55);
 
   max-width: 960px;
   margin: 0 auto;
@@ -259,7 +249,7 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--neon-blue);
+  color: rgba(var(--v-theme-secondary));
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -273,9 +263,9 @@
 }
 
 .filter-btn {
-  background: var(--surface-dim);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+  background: rgba(var(--v-theme-surface));
+  border: 1px solid var(--v-border-color);
+  color: rgba(var(--v-theme-on-surface));
   font-size: 12px;
   font-weight: 500;
   padding: 6px 14px;
@@ -286,14 +276,14 @@
 }
 
 .filter-btn:hover {
-  border-color: var(--neon-blue);
-  color: var(--neon-blue);
+  border-color: rgba(var(--v-theme-secondary));
+  color: rgba(var(--v-theme-secondary));
 }
 
 .filter-btn.active {
-  background: var(--neon-blue);
-  border-color: var(--neon-blue);
-  color: var(--midnight-blue);
+  background: rgba(var(--v-theme-secondary));
+  border-color: rgba(var(--v-theme-secondary));
+  color: rgba(var(--v-theme-midnightBlue));
   font-weight: 700;
 }
 
@@ -306,8 +296,8 @@
 }
 
 .zone-card {
-  background: var(--surface-dim);
-  border: 1px solid var(--border);
+  background: rgba(var(--v-theme-surface));
+  border: 1px solid var(--v-border-color);
   border-radius: 12px;
   padding: 16px;
   display: flex;
@@ -319,12 +309,12 @@
 
 .zone-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 221, 254, 0.4);
-  background: var(--surface-mid);
+  border-color: var(--v-border-color-highlight);
+  background: rgba(var(--v-theme-surface-light));
 }
 
 .zone-card.active {
-  border-color: var(--imperial-yellow);
+  border-color: rgba(var(--v-theme-imperialYellow));
   background: rgba(255, 180, 4, 0.07);
   box-shadow: 0 0 0 1px rgba(255, 180, 4, 0.2);
 }
@@ -341,14 +331,14 @@
   flex-shrink: 0;
 }
 
-.cat-main   { background: rgba(6,  134, 243, 0.18); color: var(--azure-blue);      }
-.cat-gaming { background: rgba(250, 102,   0, 0.18); color: var(--vivid-orange);   }
-.cat-tcg    { background: rgba(3,    3, 127, 0.40);  color: var(--neon-blue);      }
-.cat-venue  { background: rgba(255, 180,   4, 0.15); color: var(--imperial-yellow);}
-.cat-food   { background: rgba(0,  221, 254, 0.12);  color: var(--neon-blue);      }
+.cat-main   { background: rgba(6,  134, 243, 0.18); color: rgba(var(--v-theme-azureBlue));      }
+.cat-gaming { background: rgba(250, 102,   0, 0.18); color: rgba(var(--v-theme-vividOrange));   }
+.cat-tcg    { background: rgba(3,    3, 127, 0.40);  color: rgba(var(--v-theme-neonBlue));      }
+.cat-venue  { background: rgba(255, 180,   4, 0.15); color: rgba(var(--v-theme-imperialYellow));}
+.cat-food   { background: rgba(0,  221, 254, 0.12);  color: rgba(var(--v-theme-neonBlue));      }
 
-.zone-name     { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--text-primary); }
-.zone-location { font-size: 11px; color: var(--text-muted); }
+.zone-name     { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: rgba(var(--v-theme-on-background)); }
+.zone-location { font-size: 11px; color: rgba(var(--v-theme-on-surface)); }
 
 .zone-tag {
   font-size: 9px;
@@ -361,18 +351,18 @@
   text-transform: uppercase;
 }
 
-.tag-main   { background: rgba(6,  134, 243, 0.15); color: var(--azure-blue);       }
-.tag-gaming { background: rgba(250, 102,   0, 0.15); color: var(--vivid-orange);    }
-.tag-tcg    { background: rgba(0,  221, 254, 0.12);  color: var(--neon-blue);       }
-.tag-venue  { background: rgba(255, 180,   4, 0.12); color: var(--imperial-yellow); }
-.tag-food   { background: rgba(0,  221, 254, 0.10);  color: var(--neon-blue);       }
+.tag-main   { background: rgba(6,  134, 243, 0.15); color: rgba(var(--v-theme-azureBlue));       }
+.tag-gaming { background: rgba(250, 102,   0, 0.15); color: rgba(var(--v-theme-vividOrange));    }
+.tag-tcg    { background: rgba(0,  221, 254, 0.12);  color: rgba(var(--v-theme-neonBlue));       }
+.tag-venue  { background: rgba(255, 180,   4, 0.12); color: rgba(var(--v-theme-imperialYellow)); }
+.tag-food   { background: rgba(0,  221, 254, 0.10);  color: rgba(var(--v-theme-neonBlue));       }
 
 /* Mapa */
 .map-wrapper {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--v-border-color);
   background: #111;
   line-height: 0;
 }
@@ -403,13 +393,13 @@
 
 .zone-hit:hover {
   fill: rgba(0, 221, 254, 0.15);
-  stroke: var(--neon-blue);
+  stroke: rgba(var(--v-theme-neonBlue));
   stroke-width: 2;
 }
 
 .zone-hit.active {
   fill: rgba(255, 180, 4, 0.22);
-  stroke: var(--imperial-yellow);
+  stroke: rgba(var(--v-theme-imperialYellow));
   stroke-width: 2.5;
 }
 
@@ -417,12 +407,12 @@
 .map-tooltip {
   position: absolute;
   background: rgba(0, 7, 43, 0.92);
-  border: 1px solid var(--imperial-yellow);
+  border: 1px solid rgba(var(--v-theme-imperialYellow));
   border-radius: 8px;
   padding: 7px 12px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: rgba(var(--v-theme-on-background));
   pointer-events: none;
   white-space: nowrap;
   transform: translate(-50%, calc(-100% - 8px));
@@ -443,7 +433,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: var(--text-muted);
+  color: rgba(var(--v-theme-on-surface));
 }
 
 .legend-dot {
@@ -466,7 +456,7 @@
     left: 0;
     right: 0;
     background: rgba(0, 7, 43, 0.95);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--v-border-color);
     backdrop-filter: blur(16px);
     padding: 8px 12px 18px;
     gap: 6px;
@@ -479,9 +469,9 @@
   .quick-nav::-webkit-scrollbar { display: none; }
 
   .qn-btn {
-    background: var(--surface-dim);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
+    background: rgba(var(--v-theme-surface));
+    border: 1px solid var(--v-border-color);
+    color: rgba(var(--v-theme-on-surface));
     font-size: 10px;
     font-weight: 700;
     padding: 5px 11px;
@@ -493,9 +483,9 @@
   }
 
   .qn-btn.active {
-    background: var(--imperial-yellow);
-    border-color: var(--imperial-yellow);
-    color: var(--midnight-blue);
+    background: rgba(var(--v-theme-imperialYellow));
+    border-color: rgba(var(--v-theme-imperialYellow));
+    color: rgba(var(--v-theme-midnightBlue));
   }
 }
 

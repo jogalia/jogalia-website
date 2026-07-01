@@ -12,7 +12,7 @@
 
     <v-spacer />
 
-    <div class="hidden md:flex gap-2 items-center">
+    <div class="hidden md:flex gap-2 items-center on-background">
       <v-btn
         class="italic bold uppercase"
         size="large"

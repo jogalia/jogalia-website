@@ -1,8 +1,6 @@
 <template>
   <div class="teams-page">
-
-    <!-- Edition badge -->
-    <div class="edition-badge">JOGÁLIA 2026</div>
+    <EditionBadge />
 
     <!-- Game selector -->
     <div class="game-selector">
@@ -28,7 +26,14 @@
 
     <!-- ── LOADING OVERLAY ── -->
     <div v-if="isLoading" class="loading-state">
-      <v-progress-circular color="secondary" indeterminate size="48" width="4" />
+      <v-progress-circular
+        class="loading-spinner"
+        color="secondary"
+        indeterminate
+        size="48"
+        width="4"
+      />
+
       <span class="loading-text">A carregar equipas...</span>
     </div>
 
@@ -119,6 +124,7 @@
   import lolImage from '@/assets/img/games/lol.png'
   import rlImage from '@/assets/img/games/rl.png'
   import valImage from '@/assets/img/games/val.png'
+  import EditionBadge from '@/components/EditionBadge.vue'
   import { Game, getTeamMembers, type RosterSlot, type Team, TeamRole } from '@/sheets/sheets.ts'
 
   const p = (nick: string, fullName?: string): RosterSlot => ({ role: TeamRole.Jogador, nick, fullName })
@@ -191,31 +197,22 @@
   gap: 16px;
 }
 
+.loading-state :deep(.loading-spinner .v-progress-circular__underlay) {
+  stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
 .loading-text {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(var(--v-theme-on-surface));
   text-transform: uppercase;
 }
 
 /* ── Page ──────────────────────────────────────────────────────────────────── */
 .teams-page {
   min-height: 100vh;
-  background: rgb(var(--v-theme-background));
-  color: #e8eaf0;
   padding-bottom: 80px;
-}
-
-/* ── Edition badge ─────────────────────────────────────────────────────────── */
-.edition-badge {
-  text-align: center;
-  padding: 32px 24px 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
 }
 
 /* ── Game selector ─────────────────────────────────────────────────────────── */
@@ -236,16 +233,16 @@
   width: 120px;
   height: 88px;
   border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--v-border-color);
+  background: rgba(var(--v-theme-surface));
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
   flex-shrink: 0;
 }
 
 .game-card:hover {
-  border-color: var(--game-color, rgba(255, 255, 255, 0.3));
-  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--game-color, var(--v-border-color-highlight));
+  background: rgba(var(--v-theme-surface-light));
 }
 
 .game-card.active {
@@ -264,13 +261,13 @@
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(var(--v-theme-on-surface));
   text-align: center;
   line-height: 1.2;
 }
 
 .game-card.active .game-label {
-  color: #fff;
+  color: rgba(var(--v-theme-on-background));
 }
 
 /* ── Sub-header ────────────────────────────────────────────────────────────── */
@@ -284,7 +281,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(var(--v-theme-on-surface-light));
 }
 
 /* ── Teams grid ────────────────────────────────────────────────────────────── */
@@ -304,14 +301,14 @@
   width: 190px;
   height: 250px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--v-border-color);
+  background: rgba(var(--v-theme-surface));;
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .team-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--v-border-color-highlight);
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
 }
 
@@ -362,7 +359,7 @@
   font-size: 13px;
   font-weight: 700;
   text-align: center;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(var(--v-theme-on-background));
   letter-spacing: 0.02em;
   line-height: 1.3;
 }
@@ -388,7 +385,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
+  color: rgba(var(--v-theme-on-surface));
   margin-bottom: 8px;
   padding-bottom: 7px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -423,7 +420,7 @@
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.22);
+  color: rgba(var(--v-theme-on-surface-light));
   padding-top: 2px;
   min-width: 28px;
   flex-shrink: 0;
@@ -443,7 +440,7 @@
 .slot-nick {
   font-size: 12px;
   font-weight: 700;
-  color: #e8eaf0;
+  color: rgba(var(--v-theme-on-background));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -451,13 +448,13 @@
 }
 
 .is-tbd .slot-nick {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(var(--v-theme-on-surface-light));
   font-style: italic;
 }
 
 .slot-fullname {
   font-size: 9.5px;
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(var(--v-theme-on-surface-light));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -469,7 +466,7 @@
   max-width: 860px;
   margin: 28px auto 0;
   padding: 0 24px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--v-border-color);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -489,7 +486,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(var(--v-theme-on-surface));
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   height: 40px;
 }
@@ -510,14 +507,14 @@
 .fc-col-num {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(var(--v-theme-on-surface-light));
   text-align: center;
 }
 
 .fc-col-nick {
   font-size: 13px;
   font-weight: 700;
-  color: #e8eaf0;
+  color: rgba(var(--v-theme-on-background));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -525,7 +522,7 @@
 
 .fc-col-name {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(var(--v-theme-on-surface));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -544,12 +541,12 @@
 }
 
 .fc-coach-name {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(var(--v-theme-on-surface));
   font-size: 11px;
 }
 
 .fc-row--tbd .fc-col-nick {
-  color: rgba(255, 255, 255, 0.2);
+  color: rgba(var(--v-theme-on-surface-light));
   font-style: italic;
   font-weight: 400;
 }
