@@ -1,10 +1,29 @@
 <template>
   <v-sheet class="hero w-full h-screen relative">
     <div class="absolute inset-0 flex flex-col justify-center items-center on-background">
-      <h1 class="text-4xl md:text-6xl font-bold text-center mt-3 mb-2 px-4">Jogália - Evento Gaming e Esports</h1>
-      <h2 class="font-normal text-lg md:text-2xl text-center uppercase tracking-wide px-4 opacity-80">9 a 12 de Julho no Instituto Superior Técnico - Campus Oeiras</h2>
+      <div
+        class="flex flex-col items-center"
+      >
+        <v-img
+          alt="Jogália Logo"
+          class="w-48 md:w-110 mb-4"
+          src="@/assets/img/brand/logo.svg"
+        />
+      </div>
 
-      <div v-if="isEventUpcoming" class="w-full max-w-3xl mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center px-4">
+      <h1 class="text-xl md:text-3xl bold uppercase text-center px-4 italic mb-0 on-background">
+        <span>Esports </span>
+        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+        <span class="text-secondary"> Gaming </span>
+        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+        <span> Tecnologia </span>
+        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+        <span class="text-secondary"> TCG </span>
+      </h1>
+
+      <h2 class="font-normal text-lg md:text-2xl text-center uppercase tracking-wide px-4">9 a 12 de Julho no Instituto Superior Técnico - Campus Oeiras</h2>
+
+      <div v-if="isEventUpcoming" class="w-full max-w-3xl mt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center px-4">
         <div class="counter-card">
           <span class="counter-digit">{{ days }}</span>
           <span class="counter-label">Dias</span>
@@ -81,10 +100,9 @@
 /* Ensure digits match high-emphasis text color */
 .counter-digit {
   font-weight: 700;
-  font-style: italic;
   font-size: 3.5rem;
   line-height: 1;
-  color: rgb(var(--v-theme-secondary)); /* Makes the digits glowing blue */
+  color: rgb(var(--v-theme-on-background)); /* Makes the digits glowing blue */
 }
 
 @media (min-width: 768px) {

@@ -4,9 +4,9 @@
     scroll-behavior="elevate"
     scroll-threshold="140"
   >
-    <div class="ml-6 flex-1 max-w-[150px] flex items-center"> <!-- se for isotopo eh 60px -->
+    <div class="ml-6 flex-1 flex max-w-[50px] items-center"> <!-- se for isotopo eh 60px, logo eh 150px -->
       <router-link class="w-full" to="/">
-        <v-img src="@/assets/img/brand/logo.svg" />
+        <v-img src="@/assets/img/brand/icon.svg" width="50" />
       </router-link>
     </div>
 
@@ -51,7 +51,7 @@
 
     <v-spacer />
 
-    <div class="mr-6 flex-1 max-w-[150px] hidden md:block" />
+    <div class="mr-6 flex-1 max-w-[50px] hidden md:block" />
 
     <div class="block md:hidden">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
