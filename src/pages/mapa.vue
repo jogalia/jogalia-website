@@ -253,11 +253,9 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 100px;
-  font-family: 'Roboto', sans-serif;
 }
 
 .section-label {
-  font-family: 'Roboto Mono', monospace;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -278,7 +276,6 @@
   background: var(--surface-dim);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-family: 'Roboto', sans-serif;
   font-size: 12px;
   font-weight: 500;
   padding: 6px 14px;
@@ -339,7 +336,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Roboto Mono', monospace;
   font-size: 17px;
   font-weight: 700;
   flex-shrink: 0;
@@ -355,7 +351,6 @@
 .zone-location { font-size: 11px; color: var(--text-muted); }
 
 .zone-tag {
-  font-family: 'Roboto Mono', monospace;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -487,7 +482,6 @@
     background: var(--surface-dim);
     border: 1px solid var(--border);
     color: var(--text-muted);
-    font-family: 'Roboto Mono', monospace;
     font-size: 10px;
     font-weight: 700;
     padding: 5px 11px;
