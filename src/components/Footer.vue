@@ -32,18 +32,17 @@
       <!-- Links column -->
       <div class="footer-col">
         <p class="footer-col-title">Evento</p>
-        <a class="footer-link" href="/horarios">Horários</a>
-        <a class="footer-link" href="/inscricoes">Incrições</a>
-        <a class="footer-link" href="/mapa">Mapa</a>
+        <RouterLink class="footer-link" to="/horarios">Horários</RouterLink>
+        <RouterLink class="footer-link" to="/inscricoes">Incrições</RouterLink>
+        <RouterLink class="footer-link" to="/mapa">Mapa</RouterLink>
         <a class="footer-link" href="https://twitch.tv/jogaliaoficial">Transmissão ao Vivo <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon> </a>
       </div>
 
       <!-- Info column -->
       <div class="footer-col">
         <p class="footer-col-title">Informações</p>
-        <a class="footer-link" href="#parceiros">Parceiros</a>
+        <RouterLink class="footer-link" to="parceiros">Parceiros</RouterLink>
         <a class="footer-link" href="#faq">FAQ</a>
-        <a class="footer-link" href="#galeria">Galeria</a>
 
         <a
           class="footer-link"
