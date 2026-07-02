@@ -16,10 +16,11 @@ export default createVuetify({
 
           'surface': '#0f1637', // rgba(255, 255, 255, 0.06)
           'surface-light': '#1a2041', // rgba(255, 255, 255, 0.10)
+
           'on-surface': '#8c8f9f', // rgba(255, 255, 255, 0.55)
           'on-surface-light': '#474c66', // rgba(255, 255, 255, 0.28)
-
           'on-background': '#e8eaf0',
+          'on-secondary': '#00072B',
 
           'deepBlue': '#03037F',
           'imperialYellow': '#FFB404',

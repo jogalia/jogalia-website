@@ -13,11 +13,35 @@
 
       <h1 class="text-xl md:text-3xl bold uppercase text-center px-4 italic mb-0 on-background">
         <span>Esports </span>
-        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+
+        <img
+          alt="separator"
+          class="d-inline align-middle mx-1 mb-1"
+          height="20"
+          src="@/assets/img/separator.svg"
+          width="20"
+        >
+
         <span class="text-secondary"> Gaming </span>
-        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+
+        <img
+          alt="separator"
+          class="d-inline align-middle mx-1 mb-1"
+          height="20"
+          src="@/assets/img/separator.svg"
+          width="20"
+        >
+
         <span> Tecnologia </span>
-        <v-icon class="align-middle pb-1 on-surface-light" size="20">mdi-gamepad-circle-outline</v-icon>
+
+        <img
+          alt="separator"
+          class="d-inline align-middle mx-1 mb-1"
+          height="20"
+          src="@/assets/img/separator.svg"
+          width="20"
+        >
+
         <span class="text-secondary"> TCG </span>
       </h1>
 
