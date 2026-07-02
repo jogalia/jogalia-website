@@ -57,7 +57,7 @@
       <span class="font-bold">Campus Oeiras (Taguspark) > Sete Rios > Campus Alameda</span>.<br>
       Os seguintes horários estarão em funcionamento:
 
-      <v-data-table class="shuttle-table mt-5" hide-default-footer :items="shuttleTecnico">
+      <v-data-table class="shuttle-table rounded elevation-1 mt-5" hide-default-footer :items="shuttleTecnico">
         <template #item.partida="{ value }">
           <span class="on-background">{{ value.time }}</span> ({{ value.place }})
         </template>
@@ -104,6 +104,10 @@
 </script>
 
 <style scoped>
+.shuttle-table {
+  border: 1px solid var(--v-border-color)
+}
+
 .shuttle-table :deep(th) {
   color: rgba(var(--v-theme-secondary));
 }
