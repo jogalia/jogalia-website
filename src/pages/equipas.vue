@@ -20,7 +20,7 @@
     <!-- Sub-header -->
     <div class="teams-header">
       <div class="header-eyebrow">
-        {{ currentGame.label }} · {{ currentTeams.length }} {{ currentGame.id === 'FCSports' ? 'Atletas' : 'Equipas' }}
+        {{ currentGame.label }} · {{ currentTeams.length }} {{ currentGame.id === Game.FCSports ? 'Atletas' : 'Equipas' }}
       </div>
     </div>
 
@@ -38,7 +38,7 @@
     </div>
 
     <!-- EA FC: lista vertical -->
-    <div v-else-if="selectedGame === 'FCSports'" class="fc-list">
+    <div v-else-if="selectedGame === Game.FCSports" class="fc-list">
       <div class="fc-header">
         <span class="fc-col-num">#</span>
         <span class="fc-col-nick">Nick</span>
@@ -125,14 +125,7 @@
   import rlImage from '@/assets/img/games/rl.png'
   import valImage from '@/assets/img/games/val.png'
   import EditionBadge from '@/components/EditionBadge.vue'
-  import { Game, getTeamMembers, type RosterSlot, type Team, TeamRole } from '@/sheets/sheets.ts'
-
-  const p = (nick: string, fullName?: string): RosterSlot => ({ role: TeamRole.Jogador, nick, fullName })
-  const c = (nick: string, fullName?: string): RosterSlot => ({ role: TeamRole.Coach, nick, fullName })
-  const tbd = (): RosterSlot => ({ role: TeamRole.Jogador, nick: '' })
-  function makeTbd (name: string, players: number): Team {
-    return { name, roster: Array.from({ length: players }, tbd) }
-  }
+  import { Game, getTeamMembers, type Team } from '@/sheets/sheets.ts'
 
   const games = [
     { id: Game.CS2, label: 'CS2', color: '#F4A723', icon: cs2Image },
