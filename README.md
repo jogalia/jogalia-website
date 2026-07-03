@@ -2,6 +2,8 @@
 
 Official website for the Jogália Event that takes places in Instituto Superior Técnico - Campus Oeiras.
 
+<img src="src/assets/img/brand/logo.svg" alt="Project Logo" width="200">
+
 ## Stack
 
 - Framework: Vue 3 + Vite
@@ -55,4 +57,6 @@ yarn build
 - JustShush - IT & Produção  Coordinator
 - João Amadeu - Logística Coordinator
 
-with support from Instituto Superior Técnico.
+with support from:
+
+<img src="src/assets/img/partners/ist.svg" alt="Project Logo" width="200">
