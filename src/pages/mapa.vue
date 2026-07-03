@@ -24,6 +24,7 @@
         @click="toggleZone(zone.id)"
       >
         <div class="zone-symbol" :class="zone.symbolClass">{{ zone.id }}</div>
+
         <div>
           <div class="zone-name">{{ zone.name }}</div>
           <div class="zone-location">{{ zone.location }}</div>
@@ -34,18 +35,19 @@
 
     <!-- mapa interativo -->
     <p class="section-label mt-6">Mapa interativo — toca numa zona</p>
-    <div class="map-wrapper" ref="mapWrapper" @click.self="clearZone">
+
+    <div ref="mapWrapper" class="map-wrapper" @click.self="clearZone">
       <img
-        src="@/assets/mapaAzul.png"
         alt="Planta do recinto Jogália 2026"
         class="map-img"
-      />
+        src="@/assets/mapaAzul.png"
+      >
 
       <!-- SVG hotspot overlay - viewBox e image size (905×622) -->
       <svg
         class="map-svg"
-        viewBox="0 0 905 622"
         preserveAspectRatio="xMidYMid meet"
+        viewBox="0 0 905 622"
         xmlns="http://www.w3.org/2000/svg"
       >
         <rect
@@ -53,9 +55,11 @@
           :key="spot.zone + spot.x"
           class="zone-hit"
           :class="{ active: activeZone === spot.zone }"
-          :x="spot.x" :y="spot.y"
-          :width="spot.w" :height="spot.h"
+          :height="spot.h"
           :rx="spot.rx || 6"
+          :width="spot.w"
+          :x="spot.x"
+          :y="spot.y"
           @click.stop="toggleZone(spot.zone)"
           @mouseenter="showTooltip(spot, $event)"
           @mouseleave="hideTooltip"
@@ -97,139 +101,139 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+  import { computed, ref } from 'vue'
 
-// Types
-interface Zone {
-  id: string
-  name: string
-  shortName: string
-  location: string
-  filterLabel: string
-  cat: string
-  symbolClass: string
-  tagClass: string
-}
-
-interface Hotspot {
-  zone: string
-  x: number
-  y: number
-  w: number
-  h: number
-  rx?: number
-}
-
-// Data
-const zones: Zone[] = [
-  { id: 'A', name: 'Palco Central',       shortName: 'Palco',    location: 'Átrio Central',            filterLabel: 'Palco & Empresas', cat: 'main',   symbolClass: 'cat-main',   tagClass: 'tag-main'   },
-  { id: 'B', name: 'Bancas de Empresas',  shortName: 'Empresas', location: 'Átrio Central',            filterLabel: 'Palco & Empresas', cat: 'main',   symbolClass: 'cat-main',   tagClass: 'tag-main'   },
-  { id: 'C', name: 'Casting Booth',       shortName: 'Casting',  location: 'Sala 0-65',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
-  { id: 'D', name: 'Arenas',              shortName: 'Arenas',   location: 'Sala 0-65',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
-//   { id: 'E', name: 'Simuladores',         shortName: 'Sims',     location: 'Sala 0-49',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
-  { id: 'F', name: 'Bancas TCG',          shortName: 'TCG',      location: 'Átrio Norte',              filterLabel: 'TCG',              cat: 'tcg',    symbolClass: 'cat-tcg',    tagClass: 'tag-tcg'    },
-  { id: 'G', name: 'Torneios TCG',        shortName: 'Torneios', location: 'Salas 0-13 / 0-15 / 0-17', filterLabel: 'TCG',             cat: 'tcg',    symbolClass: 'cat-tcg',    tagClass: 'tag-tcg'    },
-  { id: 'H', name: 'Auditório 5',         shortName: 'Auditório',location: 'Auditório principal',      filterLabel: 'Auditório',        cat: 'venue',  symbolClass: 'cat-venue',  tagClass: 'tag-venue'  },
-  { id: '1', name: 'Zona de Restauração', shortName: 'Comida',   location: 'Área de alimentação',      filterLabel: 'Restauração',      cat: 'food',   symbolClass: 'cat-food',   tagClass: 'tag-food'   },
-  { id: '2', name: 'Sala de Refeições',   shortName: 'Refeições',location: 'Área de refeições',        filterLabel: 'Restauração',      cat: 'food',   symbolClass: 'cat-food',   tagClass: 'tag-food'   },
-]
-
-// SVG hotspots - coordenadas para 905×622 viewBox
-const hotspots: Hotspot[] = [
-  { zone: 'A', x: 240, y: 220, w: 50, h: 50 },
-  { zone: 'B', x: 310, y: 250, w: 50, h: 50 },
-  { zone: 'C', x: 220, y: 370, w: 50, h: 50 },
-  { zone: 'D', x: 275, y: 325, w: 60, h: 50 },
-//   { zone: 'E', x: 348, y: 298, w:  42, h:  50 },
-  { zone: 'F', x: 670, y: 50, w: 70, h: 70 },
-  { zone: 'G', x: 630, y: 130, w: 90, h: 70 },
-  { zone: 'H', x: 540, y: 20, w: 50, h: 50 },
-  { zone: '1', x: 28, y: 375, w: 70, h: 80 },
-  { zone: '1', x: 750, y: 100, w: 90, h: 60 },
-  { zone: '2', x: 420, y: 200, w: 60, h: 60 },
-]
-
-const filters = [
-  { value: 'all',    label: 'Tudo' },
-  { value: 'main',   label: 'Palco & Empresas' },
-  { value: 'gaming', label: 'Gaming' },
-  { value: 'tcg',    label: 'TCG' },
-  { value: 'venue',  label: 'Auditório' },
-  { value: 'food',   label: 'Restauração' },
-]
-
-const legend = [
-  { label: 'Palco & Empresas (A, B)', color: '#0686F3' },
-  { label: 'Gaming (C, D)',        color: '#FA6600' },
-  { label: 'TCG (F, G)',              color: '#00DDFE' },
-  { label: 'Auditório (H)',           color: '#FFB404' },
-  { label: 'Restauração (1, 2)',      color: 'rgba(0,221,254,.4)' },
-]
-
-// configs estados
-const activeFilter = ref('all')
-const activeZone   = ref<string | null>(null)
-const mapWrapper   = ref<HTMLElement | null>(null)
-
-const tooltip = ref({
-  visible: false,
-  x: 0,
-  y: 0,
-  zone: '',
-  name: '',
-})
-
-const visibleZones = computed(() =>
-  activeFilter.value === 'all'
-    ? zones
-    : zones.filter(z => z.cat === activeFilter.value)
-)
-
-// helpers
-function toggleZone(id: string) {
-  activeZone.value = activeZone.value === id ? null : id
-  if (activeZone.value === null) tooltip.value.visible = false
-}
-
-function clearZone() {
-  activeZone.value = null
-  tooltip.value.visible = false
-}
-
-function showTooltip(spot: Hotspot, event: MouseEvent) {
-  const wrapper = mapWrapper.value
-  if (!wrapper) return
-
-  // The SVG scales with the image — compute where the spot centre is in wrapper-local px
-  const svg = (event.target as SVGElement).ownerSVGElement!
-  const svgRect = svg.getBoundingClientRect()
-  const wRect   = wrapper.getBoundingClientRect()
-
-  const scaleX = svgRect.width  / 905
-  const scaleY = svgRect.height / 622
-
-  const cx = (spot.x + spot.w / 2) * scaleX + (svgRect.left - wRect.left)
-  const cy =  spot.y               * scaleY  + (svgRect.top  - wRect.top)
-
-  const zone = zones.find(z => z.id === spot.zone)
-
-  tooltip.value = {
-    visible: true,
-    x: cx,
-    y: cy,
-    zone: spot.zone,
-    name: zone?.name ?? '',
+  // Types
+  interface Zone {
+    id: string
+    name: string
+    shortName: string
+    location: string
+    filterLabel: string
+    cat: string
+    symbolClass: string
+    tagClass: string
   }
-}
 
-function hideTooltip() {
-  if (activeZone.value === null) tooltip.value.visible = false
-}
+  interface Hotspot {
+    zone: string
+    x: number
+    y: number
+    w: number
+    h: number
+    rx?: number
+  }
 
-function onQuickNav(id: string) {
-  toggleZone(id)
-  mapWrapper.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+  // Data
+  const zones: Zone[] = [
+    { id: 'A', name: 'Palco Central', shortName: 'Palco', location: 'Átrio Central', filterLabel: 'Palco & Empresas', cat: 'main', symbolClass: 'cat-main', tagClass: 'tag-main' },
+    { id: 'B', name: 'Bancas de Empresas', shortName: 'Empresas', location: 'Átrio Central', filterLabel: 'Palco & Empresas', cat: 'main', symbolClass: 'cat-main', tagClass: 'tag-main' },
+    { id: 'C', name: 'Casting Booth', shortName: 'Casting', location: 'Sala 0-65', filterLabel: 'Gaming', cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
+    { id: 'D', name: 'Arenas', shortName: 'Arenas', location: 'Sala 0-65', filterLabel: 'Gaming', cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
+    //   { id: 'E', name: 'Simuladores',         shortName: 'Sims',     location: 'Sala 0-49',                filterLabel: 'Gaming',           cat: 'gaming', symbolClass: 'cat-gaming', tagClass: 'tag-gaming' },
+    { id: 'F', name: 'Bancas TCG', shortName: 'TCG', location: 'Átrio Norte', filterLabel: 'TCG', cat: 'tcg', symbolClass: 'cat-tcg', tagClass: 'tag-tcg' },
+    { id: 'G', name: 'Torneios TCG', shortName: 'Torneios', location: 'Salas 0-13 / 0-15 / 0-17', filterLabel: 'TCG', cat: 'tcg', symbolClass: 'cat-tcg', tagClass: 'tag-tcg' },
+    { id: 'H', name: 'Auditório 5', shortName: 'Auditório', location: 'Auditório principal', filterLabel: 'Auditório', cat: 'venue', symbolClass: 'cat-venue', tagClass: 'tag-venue' },
+    { id: '1', name: 'Zona de Restauração', shortName: 'Comida', location: 'Área de alimentação', filterLabel: 'Restauração', cat: 'food', symbolClass: 'cat-food', tagClass: 'tag-food' },
+    { id: '2', name: 'Sala de Refeições', shortName: 'Refeições', location: 'Área de refeições', filterLabel: 'Restauração', cat: 'food', symbolClass: 'cat-food', tagClass: 'tag-food' },
+  ]
+
+  // SVG hotspots - coordenadas para 905×622 viewBox
+  const hotspots: Hotspot[] = [
+    { zone: 'A', x: 240, y: 220, w: 50, h: 50 },
+    { zone: 'B', x: 310, y: 250, w: 50, h: 50 },
+    { zone: 'C', x: 220, y: 370, w: 50, h: 50 },
+    { zone: 'D', x: 275, y: 325, w: 60, h: 50 },
+    //   { zone: 'E', x: 348, y: 298, w:  42, h:  50 },
+    { zone: 'F', x: 670, y: 50, w: 70, h: 70 },
+    { zone: 'G', x: 630, y: 130, w: 90, h: 70 },
+    { zone: 'H', x: 540, y: 20, w: 50, h: 50 },
+    { zone: '1', x: 28, y: 375, w: 70, h: 80 },
+    { zone: '1', x: 750, y: 100, w: 90, h: 60 },
+    { zone: '2', x: 420, y: 200, w: 60, h: 60 },
+  ]
+
+  const filters = [
+    { value: 'all', label: 'Tudo' },
+    { value: 'main', label: 'Palco & Empresas' },
+    { value: 'gaming', label: 'Gaming' },
+    { value: 'tcg', label: 'TCG' },
+    { value: 'venue', label: 'Auditório' },
+    { value: 'food', label: 'Restauração' },
+  ]
+
+  const legend = [
+    { label: 'Palco & Empresas (A, B)', color: '#0686F3' },
+    { label: 'Gaming (C, D)', color: '#FA6600' },
+    { label: 'TCG (F, G)', color: '#00DDFE' },
+    { label: 'Auditório (H)', color: '#FFB404' },
+    { label: 'Restauração (1, 2)', color: 'rgba(0,221,254,.4)' },
+  ]
+
+  // configs estados
+  const activeFilter = ref('all')
+  const activeZone = ref<string | null>(null)
+  const mapWrapper = ref<HTMLElement | null>(null)
+
+  const tooltip = ref({
+    visible: false,
+    x: 0,
+    y: 0,
+    zone: '',
+    name: '',
+  })
+
+  const visibleZones = computed(() =>
+    activeFilter.value === 'all'
+      ? zones
+      : zones.filter(z => z.cat === activeFilter.value),
+  )
+
+  // helpers
+  function toggleZone (id: string) {
+    activeZone.value = activeZone.value === id ? null : id
+    if (activeZone.value === null) tooltip.value.visible = false
+  }
+
+  function clearZone () {
+    activeZone.value = null
+    tooltip.value.visible = false
+  }
+
+  function showTooltip (spot: Hotspot, event: MouseEvent) {
+    const wrapper = mapWrapper.value
+    if (!wrapper) return
+
+    // The SVG scales with the image — compute where the spot centre is in wrapper-local px
+    const svg = (event.target as SVGElement).ownerSVGElement!
+    const svgRect = svg.getBoundingClientRect()
+    const wRect = wrapper.getBoundingClientRect()
+
+    const scaleX = svgRect.width / 905
+    const scaleY = svgRect.height / 622
+
+    const cx = (spot.x + spot.w / 2) * scaleX + (svgRect.left - wRect.left)
+    const cy = spot.y * scaleY + (svgRect.top - wRect.top)
+
+    const zone = zones.find(z => z.id === spot.zone)
+
+    tooltip.value = {
+      visible: true,
+      x: cx,
+      y: cy,
+      zone: spot.zone,
+      name: zone?.name ?? '',
+    }
+  }
+
+  function hideTooltip () {
+    if (activeZone.value === null) tooltip.value.visible = false
+  }
+
+  function onQuickNav (id: string) {
+    toggleZone(id)
+    mapWrapper.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 </script>
 
 <style scoped>

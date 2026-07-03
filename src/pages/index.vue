@@ -35,8 +35,6 @@
       </SplideSlide>
     </Splide>
   </div>
-
-  <Footer />
 </template>
 
 <script lang="ts" setup>

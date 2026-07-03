@@ -12,7 +12,7 @@
 
     <v-spacer />
 
-    <div class="flex gap-2 items-center">
+    <div class="hidden md:flex gap-2 items-center">
       <v-btn
         class="italic bold uppercase"
         size="large"
@@ -38,11 +38,30 @@
     <v-spacer />
 
     <div class="mr-6 flex-1 max-w-[150px] hidden md:block" />
+
+    <div class="block md:hidden">
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
+    </div>
   </v-app-bar>
+
+  <v-navigation-drawer
+    v-model="drawer"
+    class="bg-midnightBlue text-white"
+    location="right"
+    temporary
+  >
+    <v-list class="bg-midnightBlue pt-4">
+      <v-list-item class="italic bold uppercase py-3" to="/inscricoes">Inscrições</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/horarios">Horários</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/localizacao">Mapa</v-list-item>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue'
 
+  const drawer = ref(false)
 </script>
 
 <style scoped>

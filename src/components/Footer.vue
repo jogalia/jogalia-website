@@ -41,6 +41,7 @@
       <!-- Info column -->
       <div class="footer-col">
         <p class="footer-col-title">Informações</p>
+        <a class="footer-link" href="#parceiros">Parceiros</a>
         <a class="footer-link" href="#faq">FAQ</a>
         <a class="footer-link" href="#tickets">Entradas</a>
         <a class="footer-link" href="https://drive.google.com/file/d/1KbS_ORqzUfythkBkCd8JLCEoN2D2Pr0u/view">Regulamento</a>
