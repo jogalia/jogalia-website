@@ -1,29 +1,15 @@
 # jogalia-website
 
-Scaffolded with Vuetify CLI.
+Official website for the Jogália Event that takes places in Instituto Superior Técnico - Campus Oeiras.
 
-## ❗️ Documentation
-
-- Primary docs: https://vuetifyjs.com/
-- Getting started guide: https://vuetifyjs.com/en/getting-started/installation/
-- Community support: https://community.vuetifyjs.com/
-- Issue tracker: https://issues.vuetifyjs.com/
-
-## 🧱 Stack
+## Stack
 
 - Framework: Vue 3 + Vite
 - UI Library: Vuetify
 - Language: TypeScript
 - Package manager: yarn
 
-## 🧭 Start Here
-
-- Main entry: `src/main.ts`
-- Main app component: `src/App.vue`
-- Main styles: `src/styles/`
-- Plugin setup: `src/plugins/`
-
-## 📁 Project Structure
+## Project Structure
 
 - `src/main.ts` — application entry point
 - `src/App.vue` — root component
@@ -32,35 +18,28 @@ Scaffolded with Vuetify CLI.
 - `src/styles/` — global styles and theme settings
 - `public/` — static public files
 
-## ✨ Enabled Features
+## Install
 
-- ESLint
-- Vue I18n
-- Vue Router
-- Tailwind CSS
-
-## 💿 Install
-
-Use your selected package manager (yarn) to install dependencies:
+Use yarn package manager to install dependencies:
 
 ```bash
 yarn install
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 yarn install
 yarn dev
 ```
 
-## 🏗️ Build
+## Build
 
 ```bash
 yarn build
 ```
 
-## 🧪 Available Scripts
+## Available Scripts
 
 - `yarn dev`
 - `yarn build`
@@ -70,11 +49,10 @@ yarn build
 - `yarn lint`
 - `yarn lint:fix`
 
-## 💪 Support Vuetify Development
+## Main Contributors
 
-This project uses Vuetify - an MIT licensed Open Source project. We are glad to welcome contributors and any support for ongoing development:
+- Filipe Miranda - IT & Produção Coordinator
+- JustShush - IT & Produção  Coordinator
+- João Amadeu - Logística Coordinator
 
-- Contribute to Vuetify and ecosystem projects: https://github.com/vuetifyjs
-- Request enterprise support: https://support.vuetifyjs.com/
-- Sponsor on GitHub: https://github.com/sponsors/vuetifyjs
-- Support on Open Collective: https://opencollective.com/vuetify
+with support from Instituto Superior Técnico.
