@@ -20,7 +20,7 @@
     <!-- Sub-header -->
     <div class="teams-header">
       <div class="header-eyebrow">
-        {{ currentGame.label }} · {{ currentTeams.length }} {{ currentGame.id === 'FCSports' ? 'Atletas' : 'Equipas' }}
+        {{ currentGame.label }} · {{ currentTeams.length }} {{ currentGame.id === Game.FCSports ? 'Atletas' : 'Equipas' }}
       </div>
     </div>
 
@@ -38,7 +38,7 @@
     </div>
 
     <!-- EA FC: lista vertical -->
-    <div v-else-if="selectedGame === 'FCSports'" class="fc-list">
+    <div v-else-if="selectedGame === Game.FCSports" class="fc-list">
       <div class="fc-header">
         <span class="fc-col-num">#</span>
         <span class="fc-col-nick">Nick</span>
@@ -125,33 +125,7 @@
   import rlImage from '@/assets/img/games/rl.png'
   import valImage from '@/assets/img/games/val.png'
   import EditionBadge from '@/components/EditionBadge.vue'
-  import { Game, getTeamMembers, type RosterSlot, type Team, TeamRole } from '@/sheets/sheets.ts'
-
-  const p = (nick: string, fullName?: string): RosterSlot => ({ role: TeamRole.Jogador, nick, fullName })
-  const c = (nick: string, fullName?: string): RosterSlot => ({ role: TeamRole.Coach, nick, fullName })
-  const tbd = (): RosterSlot => ({ role: TeamRole.Jogador, nick: '' })
-  function makeTbd (name: string, players: number): Team {
-    return { name, roster: Array.from({ length: players }, tbd) }
-  }
-
-  const fcTeams: Team[] = [
-    { name: 'afonsooo', roster: [p('afonsooo', 'Afonso Pousinho')] },
-    { name: 'camuflamanau', roster: [p('camuflamanau', 'Bruno Paulino')] },
-    { name: 'GongasFF77', roster: [p('GongasFF77', 'Gonçalo Fernandes'), c('MrtiagoPt19', 'Tiago Santos')] },
-    { name: 'euettip', roster: [p('euettip', 'Etienne Pitra')] },
-    { name: 'martim0099', roster: [p('martim0099', 'Martim Coelho')] },
-    { name: 'bifanas99', roster: [p('bifanas99', 'Ivo Santos')] },
-    { name: 'Zuka12-', roster: [p('Zuka12-', 'Jeriel Lima')] },
-    { name: 'airesbaby18', roster: [p('airesbaby18', 'Márcio Aires')] },
-    makeTbd('Atleta 9', 1),
-    makeTbd('Atleta 10', 1),
-    makeTbd('Atleta 11', 1),
-    makeTbd('Atleta 12', 1),
-    makeTbd('Atleta 13', 1),
-    makeTbd('Atleta 14', 1),
-    makeTbd('Atleta 15', 1),
-    makeTbd('Atleta 16', 1),
-  ]
+  import { Game, getTeamMembers, type Team } from '@/sheets/sheets.ts'
 
   const games = [
     { id: Game.CS2, label: 'CS2', color: '#F4A723', icon: cs2Image },
@@ -177,13 +151,8 @@
     }
   })
 
-  const teamData = computed<Record<string, Team[]>>(() => ({
-    ...sheetTeams.value,
-    FCSports: fcTeams,
-  }))
-
   const currentGame = computed(() => games.find(g => g.id === selectedGame.value) ?? games[0])
-  const currentTeams = computed(() => teamData.value[selectedGame.value] ?? [])
+  const currentTeams = computed(() => sheetTeams.value[selectedGame.value] ?? [])
 </script>
 
 <style scoped>
