@@ -8,7 +8,6 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'development' ? '/' : '/jogalia/',
     plugins: [
       tailwindcss(),
       Vue({

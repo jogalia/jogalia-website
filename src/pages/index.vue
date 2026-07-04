@@ -54,7 +54,7 @@
 
     <p class="mt-5 text-left">
       O serviço gratuito de Shuttles do Instituto Superior Técnico será prolongado para o evento. O serviço passa pelos locais
-      <span class="font-bold">Campus Oeiras (Taguspark) > Sete Rios > Campus Alameda</span>.<br>
+      <span class="font-bold">Campus Oeiras (Taguspark), Sete Rios e Campus Alameda</span>.<br>
       Os seguintes horários estarão em funcionamento:
 
       <v-data-table class="shuttle-table rounded elevation-1 mt-5" hide-default-footer :items="shuttleTecnico">
@@ -96,10 +96,10 @@
   ]
 
   const shuttleTecnico = [
-    { partida: { time: '7h40', place: 'Campus Oeiras' }, chegada: { time: '8h40', place: 'Campus Alameda' } },
-    { partida: { time: '11h40', place: 'Campus Oeiras' }, chegada: { time: '12h40', place: 'Campus Alameda' } },
-    { partida: { time: '14h40', place: 'Campus Oeiras' }, chegada: { time: '15h40', place: 'Campus Alameda' } },
-    { partida: { time: '00h10', place: 'Campus Oeiras' }, chegada: { time: '00h50', place: 'Campus Alameda' } },
+    { partida: { time: '7h40', place: 'Campus Alameda' }, chegada: { time: '8h40', place: 'Campus Oeiras' } },
+    { partida: { time: '11h40', place: 'Campus Alameda' }, chegada: { time: '12h40', place: 'Campus Oeiras' } },
+    { partida: { time: '14h40', place: 'Campus Alameda' }, chegada: { time: '15h40', place: 'Campus Oeiras' } },
+    { partida: { time: '01h10', place: 'Campus Oeiras' }, chegada: { time: '01h50', place: 'Campus Alameda' } },
   ]
 </script>
 
