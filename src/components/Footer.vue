@@ -40,14 +40,15 @@
         </RouterLink>
 
         <RouterLink class="footer-link" to="/mapa">Mapa</RouterLink>
-        <a class="footer-link" href="https://twitch.tv/jogaliaoficial">Transmissão ao Vivo <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon> </a>
+        <RouterLink class="footer-link" to="/transmissao">Transmissão ao Vivo</RouterLink>
       </div>
 
       <!-- Info column -->
       <div class="footer-col">
         <p class="footer-col-title">Informações</p>
         <RouterLink class="footer-link" to="parceiros">Parceiros</RouterLink>
-        <a class="footer-link" href="#faq">FAQ</a>
+        <RouterLink class="footer-link" to="/#como-chegar">Como Chegar</RouterLink>
+        <RouterLink class="footer-link" to="/equipas">Equipas</RouterLink>
 
         <a
           class="footer-link"
@@ -143,7 +144,9 @@
       <span class="footer-copy">© 2026 Jogália · NexEra & LAGE² · Todos os direitos reservados</span>
 
       <div class="footer-bottom-links">
-        <RouterLink class="footer-bottom-link" to="/">jogalia.pt</RouterLink>
+        <a class="footer-bottom-link" href="https://github.com/jogalia/jogalia-website">Source Code</a>
+        <span class="footer-dot">·</span>
+        <RouterLink class="footer-bottom-link" to="/">jogalia.tecnico.ulisboa.pt</RouterLink>
         <span class="footer-dot">·</span>
         <a class="footer-bottom-link" href="mailto:organizacao.jogalia@gmail.com">organizacao.jogalia@gmail.com</a>
       </div>
