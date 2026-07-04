@@ -566,23 +566,6 @@
   resolved "https://registry.yarnpkg.com/@rolldown/pluginutils/-/pluginutils-1.0.1.tgz#e3fcee093fbb5ce765e1ad088ff4de2889f6f9be"
   integrity sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==
 
-"@splidejs/splide-extension-auto-scroll@^0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide-extension-auto-scroll/-/splide-extension-auto-scroll-0.5.3.tgz#3d3f61229b27fae7923dba62bcd13f6e1b798410"
-  integrity sha512-vPJ8Tn4uebnHa6scBcIypW154HTDenkazX9Nw8T1na44n7OtLoz40R4RoirteV7taPWW7w7ZZPCiEpi2ReYFAQ==
-
-"@splidejs/splide@^4.1.3":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.1.4.tgz#02d029360569e7d75d28357a9727fc48322015a3"
-  integrity sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==
-
-"@splidejs/vue-splide@^0.6.12":
-  version "0.6.12"
-  resolved "https://registry.yarnpkg.com/@splidejs/vue-splide/-/vue-splide-0.6.12.tgz#063731cf8ec2d1f9a14ffacbe3a315db63ab6ff2"
-  integrity sha512-eQb8pnGMN8Tr0FVaQo1PUMZlMHl8fSqHNXPTx79eeE2dkZqbsvq6jRzXoT9ZF7hFkxdOEmB6qYNp93SUwV684g==
-  dependencies:
-    "@splidejs/splide" "^4.1.3"
-
 "@stylistic/eslint-plugin@^5.10.0":
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin/-/eslint-plugin-5.10.0.tgz#471bbd9f7a27ceaac4a217e7f5b3890855e5640c"
@@ -734,12 +717,26 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/node@*":
+  version "26.0.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.0.1.tgz#4a60e2c7a6d68bd261e265f8983bfe1601263ce3"
+  integrity sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw==
+  dependencies:
+    undici-types "~8.3.0"
+
 "@types/node@^24.12.0":
   version "24.13.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-24.13.2.tgz#3b9b280a7055128359f125eb1067d9a190f39854"
   integrity sha512-fRa09kZTgu8o71KFcDjUFuc7F+dEbZYZmkI0mg5YBTRs0yMKjYHsq/c0urDKeDb+D5qVgXOdFcuu+DZPKOITwA==
   dependencies:
     undici-types "~7.18.0"
+
+"@types/papaparse@^5.5.2":
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-5.5.2.tgz#cb450a1cd183deb43728e593eb1ac2da60f4fa4d"
+  integrity sha512-gFnFp/JMzLHCwRf7tQHrNnfhN4eYBVYYI897CGX4MY1tzY9l2aLkVyx2IlKZ/SAqDbB3I1AOZW5gTMGGsqWliA==
+  dependencies:
+    "@types/node" "*"
 
 "@typescript-eslint/eslint-plugin@8.61.0":
   version "8.61.0"
@@ -2150,6 +2147,11 @@ package-manager-detector@^1.6.0:
   resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-1.6.0.tgz#70d0cf0aa02c877eeaf66c4d984ede0be9130734"
   integrity sha512-61A5ThoTiDG/C8s8UMZwSorAGwMJ0ERVGj2OjoW5pAalsNOg15+iQiPzrLJ4jhZ1HJzmC2PIHT2oEiH3R5fzNA==
 
+papaparse@^5.5.4:
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.5.4.tgz#7923f375a5d43850fd313160371c9567e5608c11"
+  integrity sha512-SwzWD9gl/ElwYLCI0nUja1mFJzjq2D8ziShfNBa7zCHzkOozeOGDwHWQ+tvCzEZcewecWZ5U7kUopDnG+DFYEQ==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -2656,6 +2658,11 @@ undici-types@~7.18.0:
   version "7.18.2"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.18.2.tgz#29357a89e7b7ca4aef3bf0fd3fd0cd73884229e9"
   integrity sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==
+
+undici-types@~8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-8.3.0.tgz#44e9fc9f3244648cdea35e4f9bb2d681e9410809"
+  integrity sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==
 
 unplugin-fonts@^1.4.0:
   version "1.4.0"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-window.location.replace('https://forms.gle/mbrtKiZm8ARJDs9eA')
+  window.location.replace('https://forms.gle/mbrtKiZm8ARJDs9eA')
 </script>
 
 <template>

@@ -6,10 +6,13 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
-import Index from '@/pages/index.vue'
-import Mapa from '@/pages/mapa.vue'
-import Inscricoes from '@/pages/inscricoes.vue'
+import Equipas from '@/pages/equipas.vue'
 import Horarios from '@/pages/horarios.vue'
+import Index from '@/pages/index.vue'
+import Inscricoes from '@/pages/inscricoes.vue'
+import Mapa from '@/pages/mapa.vue'
+import Parceiros from '@/pages/parceiros.vue'
+import Transmissao from '@/pages/transmissao.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,21 +20,36 @@ const router = createRouter({
     {
       path: '/',
       component: Index,
-      meta: { isHero: true }
+      meta: { isHero: true },
     }, {
-      path: '/mapa',
-      component: Mapa,
-      meta: { isHero: false }
+      path: '/equipas',
+      component: Equipas,
+      meta: { isHero: false },
     }, {
       path: '/inscricoes',
       component: Inscricoes,
-      meta: { isHero: false }
+      meta: { isHero: false },
     }, {
       path: '/horarios',
       component: Horarios,
-      meta: { isHero: false }
-    }
+      meta: { isHero: false },
+    }, {
+      path: '/mapa',
+      component: Mapa,
+      meta: { isHero: false },
+    }, {
+      path: '/parceiros',
+      component: Parceiros,
+      meta: { isHero: false },
+    }, {
+      path: '/transmissao',
+      component: Transmissao,
+      meta: { isHero: false },
+    },
   ],
+  scrollBehavior (to, from, savedPosition) {
+    return savedPosition ?? { top: 0 }
+  },
 })
 
 export default router

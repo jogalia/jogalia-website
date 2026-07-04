@@ -3,3 +3,7 @@
     font-family: var(--font-mono);
   }
 }
+
+html, body {
+  background: rgba(var(--v-theme-background))
+}

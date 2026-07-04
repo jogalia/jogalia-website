@@ -4,21 +4,21 @@
     scroll-behavior="elevate"
     scroll-threshold="140"
   >
-    <div class="ml-6 flex-1 max-w-[150px] flex items-center"> <!-- se for isotopo eh 60px -->
+    <div class="ml-6 flex-1 flex max-w-[50px] items-center"> <!-- se for isotopo eh 60px, logo eh 150px -->
       <router-link class="w-full" to="/">
-        <v-img src="@/assets/logo.svg" />
+        <v-img src="@/assets/img/brand/icon.svg" width="50" />
       </router-link>
     </div>
 
     <v-spacer />
 
-    <div class="hidden md:flex gap-2 items-center">
+    <div class="hidden md:flex gap-2 items-center on-background">
       <v-btn
         class="italic bold uppercase"
         size="large"
-        to="/inscricoes"
+        to="/equipas"
         variant="text"
-      >Inscrições</v-btn>
+      >Equipas</v-btn>
 
       <v-btn
         class="italic bold uppercase"
@@ -33,11 +33,25 @@
         to="/mapa"
         variant="text"
       >Mapa</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
+        to="/parceiros"
+        variant="text"
+      >Parceiros</v-btn>
+
+      <v-btn
+        class="italic bold uppercase"
+        size="large"
+        to="/transmissao"
+        variant="text"
+      >Transmissão</v-btn>
     </div>
 
     <v-spacer />
 
-    <div class="mr-6 flex-1 max-w-[150px] hidden md:block" />
+    <div class="mr-6 flex-1 max-w-[50px] hidden md:block" />
 
     <div class="block md:hidden">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
@@ -51,9 +65,11 @@
     temporary
   >
     <v-list class="bg-midnightBlue pt-4">
-      <v-list-item class="italic bold uppercase py-3" to="/inscricoes">Inscrições</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/equipas">Equipas</v-list-item>
       <v-list-item class="italic bold uppercase py-3" to="/horarios">Horários</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/localizacao">Mapa</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/mapa">Mapa</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/parceiros">Parceiros</v-list-item>
+      <v-list-item class="italic bold uppercase py-3" to="/transmissao">Transmissao</v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

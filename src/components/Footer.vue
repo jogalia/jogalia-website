@@ -5,7 +5,7 @@
     <div class="footer-inner">
       <!-- Brand column -->
       <div class="footer-brand">
-        <v-img class="footer-logo" src="@/assets/logo.svg" />
+        <v-img class="footer-logo" src="@/assets/img/brand/logo.svg" />
 
         <p class="footer-tagline">
           Esports · Gaming · TCG<br>
@@ -19,11 +19,11 @@
         <v-container class="p-0">
           <v-row>
             <v-col cols="auto">
-              <v-img src="@/assets/lage.svg" width="60" />
+              <v-img src="@/assets/img/brand/lage.svg" width="60" />
             </v-col>
 
             <v-col cols="auto">
-              <v-img class="mt-1" src="@/assets/nexera.png" width="60" />
+              <v-img class="mt-1" src="@/assets/img/brand/nexera.png" width="60" />
             </v-col>
           </v-row>
         </v-container>
@@ -32,16 +32,21 @@
       <!-- Links column -->
       <div class="footer-col">
         <p class="footer-col-title">Evento</p>
-        <a class="footer-link" href="/horarios">Horários</a>
-        <a class="footer-link" href="/inscricoes">Incrições</a>
-        <a class="footer-link" href="/mapa">Mapa</a>
+        <RouterLink class="footer-link" to="/horarios">Horários</RouterLink>
+
+        <RouterLink class="footer-link" to="/inscricoes">
+          Incrições
+          <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon>
+        </RouterLink>
+
+        <RouterLink class="footer-link" to="/mapa">Mapa</RouterLink>
         <a class="footer-link" href="https://twitch.tv/jogaliaoficial">Transmissão ao Vivo <v-icon class="ml-1" size="12">mdi-open-in-new</v-icon> </a>
       </div>
 
       <!-- Info column -->
       <div class="footer-col">
         <p class="footer-col-title">Informações</p>
-        <a class="footer-link" href="#parceiros">Parceiros</a>
+        <RouterLink class="footer-link" to="parceiros">Parceiros</RouterLink>
         <a class="footer-link" href="#faq">FAQ</a>
         <a class="footer-link" href="#tickets">Entradas</a>
         <a class="footer-link" href="https://drive.google.com/file/d/1KbS_ORqzUfythkBkCd8JLCEoN2D2Pr0u/view">Regulamento</a>
@@ -149,14 +154,13 @@
 </template>
 
 <script lang="ts" setup>
-// No props needed - all links are static
 </script>
 
 <style scoped>
 .jogalia-footer {
   background: #0d0f1a;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  color: #a0a8c0;
+  border-top: 1px solid var(--v-border-color);
+  color: rgba(var(--v-theme-on-surface));
   font-family: inherit;
   margin-top: 4rem;
 }
@@ -186,7 +190,7 @@
 .footer-tagline {
   font-size: 0.85rem;
   line-height: 1.7;
-  color: #e2e8f0;
+  color: rgba(var(--v-theme-on-background));
   font-weight: 500;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -195,11 +199,11 @@
 
 .footer-organizers {
   font-size: 0.78rem;
-  color: #64748b;
+  color: rgba(var(--v-theme-on-surface-light));
 }
 
 .footer-organizers strong {
-  color: #94a3b8;
+  color: rgba(var(--v-theme-on-surface-light));
   font-weight: 600;
 }
 
@@ -221,7 +225,7 @@
 
 .footer-link {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: rgba(var(--v-theme-on-surface));
   text-decoration: none;
   transition: color 0.15s ease;
   display: flex;
@@ -229,7 +233,7 @@
 }
 
 .footer-link:hover {
-  color: white;
+  color: rgba(var(--v-theme-on-background));;
 }
 
 /* Social buttons */
@@ -249,7 +253,7 @@
   font-weight: 500;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
-  color: #94a3b8;
+  color: rgba(var(--v-theme-on-surface));
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
