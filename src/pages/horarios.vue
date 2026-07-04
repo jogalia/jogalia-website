@@ -26,6 +26,17 @@
     <div class="bracket-header">
       <div class="header-eyebrow">JOGÁLIA 2026 · {{ currentGame.label }}</div>
 
+		<a
+    v-if="randomizerLinks[selectedGame]"
+    :href="randomizerLinks[selectedGame]"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="randomizer-btn"
+  >
+    <v-icon size="16">mdi-shuffle-variant</v-icon>
+    Ver Randomizer
+  </a>
+
       <div class="sync-status" :class="syncState">
         <span class="sync-dot" />
         <span v-if="syncState === 'loading'">A carregar...</span>
@@ -156,6 +167,191 @@
 
           <MatchStatusBadge :is-live="isLive(match)" :match="match" />
         </div>
+      </div>
+
+	  <!-- FASE 1 · BO3 (1º vs 4º / 2º vs 3º) -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--red">PLAYOFFS · FASE 1 · BO3</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="val-ko-grid">
+        <div class="val-ko-semis">
+          <div
+            v-for="match in fcFase1Matches"
+            :key="'fcf1-' + match.match_id"
+            class="match-card match-card--bo3 val-ko-card"
+            :class="matchCardClass(match)"
+            @click="onMatchCardClick(match)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
+              <span v-if="isLive(match)" class="tag-live-dot" />
+              {{ isLive(match) ? 'LIVE' : ('JOGO ' + (match.label || '?')) }}
+            </div>
+
+            <div v-if="match.start_time && !isLive(match)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
+            </div>
+
+            <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
+                <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
+              <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
+            </div>
+
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
+                <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
+              <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(match)" :match="match" />
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 2 · BO3 (Final + 3º/4º lugar) -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--gold">PLAYOFFS · FASE 2 · BO3</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="val-final-grid">
+
+        <!-- 3.º / 4.º lugar -->
+        <div class="val-final-col">
+          <div class="val-final-col-label">3.º / 4.º LUGAR</div>
+          <div
+            v-if="fcThirdPlace"
+            class="match-card match-card--bo3"
+            :class="matchCardClass(fcThirdPlace)"
+            @click="onMatchCardClick(fcThirdPlace)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(fcThirdPlace) }">
+              <span v-if="isLive(fcThirdPlace)" class="tag-live-dot" />
+              {{ isLive(fcThirdPlace) ? 'LIVE' : 'BO3' }}
+            </div>
+
+            <div v-if="fcThirdPlace.start_time && !isLive(fcThirdPlace)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ fcThirdPlace.start_time }}
+            </div>
+
+            <div class="team-row" :class="[fcThirdPlace.status==='done'&&fcThirdPlace.winner===null?'draw':{winner:fcThirdPlace.status==='done'&&fcThirdPlace.winner===1,loser:fcThirdPlace.status==='done'&&fcThirdPlace.winner!==1,tbd:!fcThirdPlace.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="fcThirdPlace.team1 && fcThirdPlace.team1.logo && !brokenLogos.has(logoKey(fcThirdPlace.team1))" class="team-logo-img" :src="logoPath(fcThirdPlace.team1)" @error="brokenLogos.add(logoKey(fcThirdPlace.team1))">
+                <span v-else class="team-logo-placeholder">{{ fcThirdPlace.team1 ? fcThirdPlace.team1.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="fcThirdPlace.team1" class="seed">#{{ fcThirdPlace.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ fcThirdPlace.team1 ? fcThirdPlace.team1.name : 'Derrotado Jogo E' }}</span>
+              <span v-if="fcThirdPlace.status==='done'||isLive(fcThirdPlace)" class="score">{{ fcThirdPlace.score1 }}</span>
+            </div>
+
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[fcThirdPlace.status==='done'&&fcThirdPlace.winner===null?'draw':{winner:fcThirdPlace.status==='done'&&fcThirdPlace.winner===2,loser:fcThirdPlace.status==='done'&&fcThirdPlace.winner!==2,tbd:!fcThirdPlace.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="fcThirdPlace.team2 && fcThirdPlace.team2.logo && !brokenLogos.has(logoKey(fcThirdPlace.team2))" class="team-logo-img" :src="logoPath(fcThirdPlace.team2)" @error="brokenLogos.add(logoKey(fcThirdPlace.team2))">
+                <span v-else class="team-logo-placeholder">{{ fcThirdPlace.team2 ? fcThirdPlace.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="fcThirdPlace.team2" class="seed">#{{ fcThirdPlace.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ fcThirdPlace.team2 ? fcThirdPlace.team2.name : 'Derrotado Jogo F' }}</span>
+              <span v-if="fcThirdPlace.status==='done'||isLive(fcThirdPlace)" class="score">{{ fcThirdPlace.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(fcThirdPlace)" :match="fcThirdPlace" />
+          </div>
+          <div v-else class="val-tbd-card">
+            <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+            <span>A aguardar Fase 1</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="val-final-divider">
+          <div class="val-final-vs"></div>
+        </div>
+
+        <!-- Final -->
+        <div class="val-final-col">
+          <div class="val-final-col-label val-final-col-label--gold">FINAL</div>
+          <div
+            v-if="fcFinal"
+            class="match-card match-card--bo3 match-card--the-final"
+            :class="matchCardClass(fcFinal)"
+            @click="onMatchCardClick(fcFinal)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(fcFinal) }">
+              <span v-if="isLive(fcFinal)" class="tag-live-dot" />
+              {{ isLive(fcFinal) ? 'LIVE' : 'BO3' }}
+            </div>
+
+            <div v-if="fcFinal.start_time && !isLive(fcFinal)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ fcFinal.start_time }}
+            </div>
+
+            <div class="team-row" :class="[fcFinal.status==='done'&&fcFinal.winner===null?'draw':{winner:fcFinal.status==='done'&&fcFinal.winner===1,loser:fcFinal.status==='done'&&fcFinal.winner!==1,tbd:!fcFinal.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="fcFinal.team1 && fcFinal.team1.logo && !brokenLogos.has(logoKey(fcFinal.team1))" class="team-logo-img" :src="logoPath(fcFinal.team1)" @error="brokenLogos.add(logoKey(fcFinal.team1))">
+                <span v-else class="team-logo-placeholder">{{ fcFinal.team1 ? fcFinal.team1.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="fcFinal.team1" class="seed">#{{ fcFinal.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ fcFinal.team1 ? fcFinal.team1.name : 'Vencedor Jogo E' }}</span>
+              <span v-if="fcFinal.status==='done'||isLive(fcFinal)" class="score">{{ fcFinal.score1 }}</span>
+            </div>
+
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[fcFinal.status==='done'&&fcFinal.winner===null?'draw':{winner:fcFinal.status==='done'&&fcFinal.winner===2,loser:fcFinal.status==='done'&&fcFinal.winner!==2,tbd:!fcFinal.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="fcFinal.team2 && fcFinal.team2.logo && !brokenLogos.has(logoKey(fcFinal.team2))" class="team-logo-img" :src="logoPath(fcFinal.team2)" @error="brokenLogos.add(logoKey(fcFinal.team2))">
+                <span v-else class="team-logo-placeholder">{{ fcFinal.team2 ? fcFinal.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="fcFinal.team2" class="seed">#{{ fcFinal.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ fcFinal.team2 ? fcFinal.team2.name : 'Vencedor Jogo F' }}</span>
+              <span v-if="fcFinal.status==='done'||isLive(fcFinal)" class="score">{{ fcFinal.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(fcFinal)" :match="fcFinal" />
+          </div>
+          <div v-else class="val-tbd-card">
+            <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+            <span>A aguardar Fase 1</span>
+          </div>
+
+          <!-- Champion -->
+          <div v-if="fcChampion" class="champion-card" style="margin-top:12px">
+            <div class="champion-glow" />
+            <img v-if="fcChampion.logo && !brokenLogos.has(logoKey(fcChampion))" class="champion-logo" :src="logoPath(fcChampion)" @error="brokenLogos.add(logoKey(fcChampion))">
+            <v-icon v-else color="#FFB404" size="40">mdi-trophy</v-icon>
+            <div class="champion-seed">#{{ fcChampion.seed }}</div>
+            <div class="champion-name">{{ fcChampion.name }}</div>
+          </div>
+        </div>
+
       </div>
     </template>
 
@@ -300,7 +496,7 @@
                 <span class="gw-name">{{ entry.name }}</span>
 
                 <span class="gw-advances" :class="i === 0 ? 'gw-advances--mf1' : 'gw-advances--mf2'">
-                  {{ grp.id === 'A' ? (i === 0 ? 'MF1 · vs 2.ºB' : 'MF2 · vs 1.ºB') : (i === 0 ? 'MF2 · vs 2.ºA' : 'MF1 · vs 1.ºA') }}
+                  {{ i === 0 ? 'FASE 1 · Jogo E' : 'FASE 1 · Jogo F' }}
                 </span>
               </div>
             </div>
@@ -312,25 +508,25 @@
         </div>
       </div>
 
-      <!-- MEIAS-FINAIS BO1 -->
+      <!-- FASE 1 · BO1 -->
       <div class="phase-label phase-label--f4">
         <span class="phase-line" />
-        <span class="phase-text phase-text--red">MEIAS-FINAIS · BO1 · 22:10</span>
+        <span class="phase-text phase-text--red">PLAYOFFS · FASE 1 · BO1</span>
         <span class="phase-line" />
       </div>
 
       <div class="val-ko-grid">
         <div class="val-ko-semis">
           <div
-            v-for="match in valSemiFinals"
-            :key="'vsf-' + match.match_id"
+            v-for="match in valFase1Matches"
+            :key="'vf1-' + match.match_id"
             class="match-card val-ko-card"
             :class="matchCardClass(match)"
             @click="onMatchCardClick(match)"
           >
             <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
               <span v-if="isLive(match)" class="tag-live-dot" />
-              {{ isLive(match) ? 'LIVE' : 'BO1' }}
+              {{ isLive(match) ? 'LIVE' : ('JOGO ' + (match.label || '?')) }}
             </div>
 
             <div v-if="match.start_time && !isLive(match)" class="match-time-row">
@@ -368,93 +564,75 @@
         </div>
       </div>
 
-      <!-- FINAL + 3.º LUGAR -->
+      <!-- FASE 2 + FINAL -->
       <div class="phase-label phase-label--f4">
         <span class="phase-line" />
-        <span class="phase-text phase-text--gold">FINAL & 3.º LUGAR · BO3 · 23:10</span>
+        <span class="phase-text phase-text--gold">PLAYOFFS · FASE 2 & FINAL</span>
         <span class="phase-line" />
       </div>
 
       <div class="val-final-grid">
 
-        <!-- 3rd place -->
+        <!-- Fase 2 -->
         <div class="val-final-col">
-          <div class="val-final-col-label">3.º / 4.º LUGAR</div>
+          <div class="val-final-col-label">FASE 2 · BO1</div>
           <div
-            v-if="valThirdPlace"
-            class="match-card match-card--bo3"
-            :class="matchCardClass(valThirdPlace)"
-            @click="onMatchCardClick(valThirdPlace)"
+            v-if="valFase2"
+            class="match-card val-ko-card"
+            :class="matchCardClass(valFase2)"
+            @click="onMatchCardClick(valFase2)"
           >
-            <div class="match-format-tag" :class="{ 'tag-live': isLive(valThirdPlace) }">
-              <span v-if="isLive(valThirdPlace)" class="tag-live-dot" />
-              {{ isLive(valThirdPlace) ? 'LIVE' : 'BO3' }}
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(valFase2) }">
+              <span v-if="isLive(valFase2)" class="tag-live-dot" />
+              {{ isLive(valFase2) ? 'LIVE' : 'BO1' }}
             </div>
 
-            <div v-if="valThirdPlace.start_time && !isLive(valThirdPlace)" class="match-time-row">
-              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ valThirdPlace.start_time }}
+            <div v-if="valFase2.start_time && !isLive(valFase2)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ valFase2.start_time }}
             </div>
 
-            <div class="team-row" :class="[valThirdPlace.status==='done'&&valThirdPlace.winner===null?'draw':{winner:valThirdPlace.status==='done'&&valThirdPlace.winner===1,loser:valThirdPlace.status==='done'&&valThirdPlace.winner!==1,tbd:!valThirdPlace.team1}]">
+            <div class="team-row" :class="[valFase2.status==='done'&&valFase2.winner===null?'draw':{winner:valFase2.status==='done'&&valFase2.winner===1,loser:valFase2.status==='done'&&valFase2.winner!==1,tbd:!valFase2.team1}]">
               <span class="team-logo-wrap">
-                <img v-if="valThirdPlace.team1 && valThirdPlace.team1.logo && !brokenLogos.has(logoKey(valThirdPlace.team1))" class="team-logo-img" :src="logoPath(valThirdPlace.team1)" @error="brokenLogos.add(logoKey(valThirdPlace.team1))">
-                <span v-else class="team-logo-placeholder">{{ valThirdPlace.team1 ? valThirdPlace.team1.name.charAt(0) : '?' }}</span>
+                <img v-if="valFase2.team1 && valFase2.team1.logo && !brokenLogos.has(logoKey(valFase2.team1))" class="team-logo-img" :src="logoPath(valFase2.team1)" @error="brokenLogos.add(logoKey(valFase2.team1))">
+                <span v-else class="team-logo-placeholder">{{ valFase2.team1 ? valFase2.team1.name.charAt(0) : '?' }}</span>
               </span>
 
-              <span v-if="valThirdPlace.team1" class="seed">#{{ valThirdPlace.team1.seed }}</span>
+              <span v-if="valFase2.team1" class="seed">#{{ valFase2.team1.seed }}</span>
               <span v-else class="seed tbd-seed">?</span>
-              <span class="team-name">{{ valThirdPlace.team1 ? valThirdPlace.team1.name : 'TBD' }}</span>
-              <span v-if="valThirdPlace.status==='done'||isLive(valThirdPlace)" class="score">{{ valThirdPlace.score1 }}</span>
+              <span class="team-name">{{ valFase2.team1 ? valFase2.team1.name : 'Derrotado Jogo E' }}</span>
+              <span v-if="valFase2.status==='done'||isLive(valFase2)" class="score">{{ valFase2.score1 }}</span>
             </div>
 
             <div class="match-divider" />
 
-            <div class="team-row" :class="[valThirdPlace.status==='done'&&valThirdPlace.winner===null?'draw':{winner:valThirdPlace.status==='done'&&valThirdPlace.winner===2,loser:valThirdPlace.status==='done'&&valThirdPlace.winner!==2,tbd:!valThirdPlace.team2}]">
+            <div class="team-row" :class="[valFase2.status==='done'&&valFase2.winner===null?'draw':{winner:valFase2.status==='done'&&valFase2.winner===2,loser:valFase2.status==='done'&&valFase2.winner!==2,tbd:!valFase2.team2}]">
               <span class="team-logo-wrap">
-                <img v-if="valThirdPlace.team2 && valThirdPlace.team2.logo && !brokenLogos.has(logoKey(valThirdPlace.team2))" class="team-logo-img" :src="logoPath(valThirdPlace.team2)" @error="brokenLogos.add(logoKey(valThirdPlace.team2))">
-                <span v-else class="team-logo-placeholder">{{ valThirdPlace.team2 ? valThirdPlace.team2.name.charAt(0) : '?' }}</span>
+                <img v-if="valFase2.team2 && valFase2.team2.logo && !brokenLogos.has(logoKey(valFase2.team2))" class="team-logo-img" :src="logoPath(valFase2.team2)" @error="brokenLogos.add(logoKey(valFase2.team2))">
+                <span v-else class="team-logo-placeholder">{{ valFase2.team2 ? valFase2.team2.name.charAt(0) : '?' }}</span>
               </span>
 
-              <span v-if="valThirdPlace.team2" class="seed">#{{ valThirdPlace.team2.seed }}</span>
+              <span v-if="valFase2.team2" class="seed">#{{ valFase2.team2.seed }}</span>
               <span v-else class="seed tbd-seed">?</span>
-              <span class="team-name">{{ valThirdPlace.team2 ? valThirdPlace.team2.name : 'TBD' }}</span>
-              <span v-if="valThirdPlace.status==='done'||isLive(valThirdPlace)" class="score">{{ valThirdPlace.score2 }}</span>
+              <span class="team-name">{{ valFase2.team2 ? valFase2.team2.name : 'Vencedor Jogo F' }}</span>
+              <span v-if="valFase2.status==='done'||isLive(valFase2)" class="score">{{ valFase2.score2 }}</span>
             </div>
 
-            <MatchStatusBadge :is-live="isLive(valThirdPlace)" :match="valThirdPlace" />
+            <MatchStatusBadge :is-live="isLive(valFase2)" :match="valFase2" />
           </div>
-
           <div v-else class="val-tbd-card">
             <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
-            <span>A aguardar meias-finais</span>
-          </div>
-
-          <!-- 3rd place winner -->
-          <div v-if="valThirdPlaceWinner" class="val-podium-row val-podium-row--bronze">
-            <v-icon color="#94A3B8" size="13" style="flex-shrink:0">mdi-medal</v-icon>
-
-            <img
-              v-if="valThirdPlaceWinner.logo && !brokenLogos.has(logoKey(valThirdPlaceWinner))"
-              class="gw-logo"
-              :src="logoPath(valThirdPlaceWinner)"
-              @error="brokenLogos.add(logoKey(valThirdPlaceWinner))"
-            >
-
-            <span v-else class="gw-logo-placeholder">{{ valThirdPlaceWinner.name.charAt(0) }}</span>
-            <span class="gw-seed">#{{ valThirdPlaceWinner.seed }}</span>
-            <span class="gw-name">{{ valThirdPlaceWinner.name }}</span>
-            <span class="gw-advances gw-advances--bronze">3.º LUGAR</span>
+            <span>A aguardar Fase 1</span>
           </div>
         </div>
 
         <!-- Divider -->
         <div class="val-final-divider">
-          <div class="val-final-vs">VS</div>
+          <div class="val-final-vs"></div>
         </div>
 
         <!-- Final -->
         <div class="val-final-col">
-          <div class="val-final-col-label val-final-col-label--gold">FINAL</div>
+          <div class="val-final-col-label val-final-col-label--gold">FINAL · BO3</div>
           <div
             v-if="valFinal"
             class="match-card match-card--bo3 match-card--the-final"
@@ -478,7 +656,7 @@
 
               <span v-if="valFinal.team1" class="seed">#{{ valFinal.team1.seed }}</span>
               <span v-else class="seed tbd-seed">?</span>
-              <span class="team-name">{{ valFinal.team1 ? valFinal.team1.name : 'TBD' }}</span>
+              <span class="team-name">{{ valFinal.team1 ? valFinal.team1.name : 'Vencedor Jogo E' }}</span>
               <span v-if="valFinal.status==='done'||isLive(valFinal)" class="score">{{ valFinal.score1 }}</span>
             </div>
 
@@ -492,7 +670,7 @@
 
               <span v-if="valFinal.team2" class="seed">#{{ valFinal.team2.seed }}</span>
               <span v-else class="seed tbd-seed">?</span>
-              <span class="team-name">{{ valFinal.team2 ? valFinal.team2.name : 'TBD' }}</span>
+              <span class="team-name">{{ valFinal.team2 ? valFinal.team2.name : 'Vencedor Fase 2' }}</span>
               <span v-if="valFinal.status==='done'||isLive(valFinal)" class="score">{{ valFinal.score2 }}</span>
             </div>
 
@@ -501,7 +679,7 @@
 
           <div v-else class="val-tbd-card">
             <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
-            <span>A aguardar meias-finais</span>
+            <span>A aguardar Fase 1 / Fase 2</span>
           </div>
 
           <!-- Champion -->
@@ -518,7 +696,412 @@
 
     </template>
 
-    <!-- ══ BRACKET VIEW (CS2 / LoL / RL) ══ -->
+    <!-- ══ ROCKET LEAGUE VIEW ══ -->
+    <template v-else-if="selectedGame === 'rl'">
+
+      <!-- FASE DE GRUPOS -->
+      <div class="phase-label">
+        <span class="phase-line" />
+        <span class="phase-text">FASE DE GRUPOS · BO3 · 4 EQUIPAS POR GRUPO</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="val-groups-grid">
+        <div
+          v-for="grp in rlGroupList"
+          :key="grp.id"
+          class="group-block"
+          :style="{ '--grp-color': grp.color }"
+        >
+          <div class="group-header">
+            <span class="group-badge">GRUPO {{ grp.id }}</span>
+
+            <div class="group-standings-mini">
+              <span
+                v-for="(entry, i) in groupStandings(grp.id)"
+                :key="entry.seed"
+                class="standing-pip"
+                :class="{ 'pip-first': i === 0, 'pip-second': i === 1 || i === 2, 'pip-done': entry.played > 0 }"
+                :title="`#${entry.seed} ${entry.name} — ${entry.wins}V ${entry.losses}D`"
+              />
+            </div>
+          </div>
+
+          <div class="standings-table">
+            <div class="st-head">
+              <span class="st-team">Equipa</span>
+              <span class="st-stat">V</span>
+              <span class="st-stat">D</span>
+              <span class="st-stat">J</span>
+            </div>
+
+            <div
+              v-for="(entry, i) in groupStandings(grp.id)"
+              :key="'st-' + entry.seed"
+              class="st-row"
+              :class="{ 'st-first': i === 0 && groupComplete(grp.id), 'st-second': (i === 1 || i === 2) && groupComplete(grp.id) }"
+            >
+              <span class="st-pos" :class="{ 'st-pos--advance': i < 3 && groupComplete(grp.id) }">{{ i + 1 }}</span>
+
+              <span class="st-logo-wrap">
+                <img
+                  v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
+                  class="st-logo"
+                  :src="logoPath(entry.team)"
+                  @error="brokenLogos.add(logoKey(entry.team))"
+                >
+
+                <span v-else class="st-logo-placeholder">{{ entry.name.charAt(0) }}</span>
+              </span>
+
+              <span class="st-name">#{{ entry.seed }} {{ entry.name }}</span>
+              <span class="st-stat-val">{{ entry.wins }}</span>
+              <span class="st-stat-val">{{ entry.losses }}</span>
+              <span class="st-stat-val st-played">{{ entry.played }}</span>
+            </div>
+          </div>
+
+          <button class="matches-toggle" @click="toggleGroup(grp.id)">
+            <span>{{ collapsedGroups[grp.id] ? 'Ver jogos' : 'Esconder jogos' }}</span>
+            <v-icon size="14">{{ collapsedGroups[grp.id] ? 'mdi-chevron-down' : 'mdi-chevron-up' }}</v-icon>
+          </button>
+
+          <div v-show="!collapsedGroups[grp.id]" class="group-matches">
+            <div
+              v-for="match in groupMatches(grp.id)"
+              :key="'rgm-' + match.match_id"
+              class="match-card"
+              :class="matchCardClass(match)"
+              @click="onMatchCardClick(match)"
+            >
+              <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
+                <span v-if="isLive(match)" class="tag-live-dot" />
+                {{ isLive(match) ? 'LIVE' : 'BO3' }}
+              </div>
+
+              <div v-if="match.start_time && !isLive(match)" class="match-time-row">
+                <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
+              </div>
+
+              <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
+                <span class="team-logo-wrap">
+                  <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
+                  <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
+                </span>
+
+                <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
+                <span v-else class="seed tbd-seed">?</span>
+                <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
+                <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
+              </div>
+
+              <div class="match-divider" />
+
+              <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
+                <span class="team-logo-wrap">
+                  <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
+                  <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
+                </span>
+
+                <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
+                <span v-else class="seed tbd-seed">?</span>
+                <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
+                <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
+              </div>
+
+              <MatchStatusBadge :is-live="isLive(match)" :match="match" />
+            </div>
+          </div>
+
+          <div class="val-advances-wrap">
+            <div v-if="groupComplete(grp.id)" class="val-advances-list">
+              <div
+                v-for="(entry, i) in groupStandings(grp.id).slice(0,3)"
+                :key="'radv-'+entry.seed"
+                class="val-advance-row"
+                :class="i === 0 ? 'val-advance-row--first' : 'val-advance-row--second'"
+              >
+                <v-icon :color="i === 0 ? '#FFB404' : '#94A3B8'" size="11" style="flex-shrink:0">mdi-arrow-right-circle</v-icon>
+
+                <img
+                  v-if="entry.team && entry.team.logo && !brokenLogos.has(logoKey(entry.team))"
+                  class="gw-logo"
+                  :src="logoPath(entry.team)"
+                  @error="brokenLogos.add(logoKey(entry.team))"
+                >
+
+                <span v-else class="gw-logo-placeholder">{{ entry.name.charAt(0) }}</span>
+                <span class="gw-seed">#{{ entry.seed }}</span>
+                <span class="gw-name">{{ entry.name }}</span>
+                <span class="gw-advances" :class="i === 0 ? 'gw-advances--mf1' : 'gw-advances--mf2'">{{ i + 1 }}.º · AVANÇA</span>
+              </div>
+            </div>
+            <div v-else class="group-winner-tbd">
+              <v-icon size="12" style="opacity:0.3">mdi-help-circle-outline</v-icon>
+              <span>Apuramento a definir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 1 -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--gold">PLAYOFFS · FASE 1 · BO5</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="rl-stage-grid">
+        <div
+          v-for="match in rlPhase1"
+          :key="'rp1-' + match.match_id"
+          class="match-card match-card--bo3"
+          :class="matchCardClass(match)"
+          @click="onMatchCardClick(match)"
+        >
+          <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
+            <span v-if="isLive(match)" class="tag-live-dot" />
+            {{ isLive(match) ? 'LIVE' : ('JOGO ' + (match.label || '?')) }}
+          </div>
+
+          <div v-if="match.start_time && !isLive(match)" class="match-time-row">
+            <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
+          </div>
+
+          <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
+            <span class="team-logo-wrap">
+              <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
+              <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
+            <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
+          </div>
+
+          <div class="match-divider" />
+
+          <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
+            <span class="team-logo-wrap">
+              <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
+              <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
+            <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
+          </div>
+
+          <MatchStatusBadge :is-live="isLive(match)" :match="match" />
+        </div>
+      </div>
+
+      <!-- FASE 2 -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text">PLAYOFFS · FASE 2 · BO5</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="rl-stage-grid">
+        <div
+          v-for="match in rlPhase2"
+          :key="'rp2-' + match.match_id"
+          class="match-card match-card--bo3"
+          :class="matchCardClass(match)"
+          @click="onMatchCardClick(match)"
+        >
+          <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
+            <span v-if="isLive(match)" class="tag-live-dot" />
+            {{ isLive(match) ? 'LIVE' : ('JOGO ' + (match.label || '?')) }}
+          </div>
+
+          <div v-if="match.start_time && !isLive(match)" class="match-time-row">
+            <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
+          </div>
+
+          <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
+            <span class="team-logo-wrap">
+              <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
+              <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
+            <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
+          </div>
+
+          <div class="match-divider" />
+
+          <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
+            <span class="team-logo-wrap">
+              <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
+              <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
+            <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
+          </div>
+
+          <MatchStatusBadge :is-live="isLive(match)" :match="match" />
+        </div>
+      </div>
+
+      <!-- FASE 3 -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--red">PLAYOFFS · FASE 3 · BO5 · JOGO I</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="rl-stage-grid rl-stage-grid--single">
+        <div
+          v-if="rlPhase3"
+          class="match-card match-card--bo3"
+          :class="matchCardClass(rlPhase3)"
+          @click="onMatchCardClick(rlPhase3)"
+        >
+          <div class="match-format-tag" :class="{ 'tag-live': isLive(rlPhase3) }">
+            <span v-if="isLive(rlPhase3)" class="tag-live-dot" />
+            {{ isLive(rlPhase3) ? 'LIVE' : 'BO5' }}
+          </div>
+
+          <div v-if="rlPhase3.start_time && !isLive(rlPhase3)" class="match-time-row">
+            <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ rlPhase3.start_time }}
+          </div>
+
+          <div class="team-row" :class="[rlPhase3.status==='done'&&rlPhase3.winner===null?'draw':{winner:rlPhase3.status==='done'&&rlPhase3.winner===1,loser:rlPhase3.status==='done'&&rlPhase3.winner!==1,tbd:!rlPhase3.team1}]">
+            <span class="team-logo-wrap">
+              <img v-if="rlPhase3.team1 && rlPhase3.team1.logo && !brokenLogos.has(logoKey(rlPhase3.team1))" class="team-logo-img" :src="logoPath(rlPhase3.team1)" @error="brokenLogos.add(logoKey(rlPhase3.team1))">
+              <span v-else class="team-logo-placeholder">{{ rlPhase3.team1 ? rlPhase3.team1.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="rlPhase3.team1" class="seed">#{{ rlPhase3.team1.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ rlPhase3.team1 ? rlPhase3.team1.name : 'Vencedor Jogo J' }}</span>
+            <span v-if="rlPhase3.status==='done'||isLive(rlPhase3)" class="score">{{ rlPhase3.score1 }}</span>
+          </div>
+
+          <div class="match-divider" />
+
+          <div class="team-row" :class="[rlPhase3.status==='done'&&rlPhase3.winner===null?'draw':{winner:rlPhase3.status==='done'&&rlPhase3.winner===2,loser:rlPhase3.status==='done'&&rlPhase3.winner!==2,tbd:!rlPhase3.team2}]">
+            <span class="team-logo-wrap">
+              <img v-if="rlPhase3.team2 && rlPhase3.team2.logo && !brokenLogos.has(logoKey(rlPhase3.team2))" class="team-logo-img" :src="logoPath(rlPhase3.team2)" @error="brokenLogos.add(logoKey(rlPhase3.team2))">
+              <span v-else class="team-logo-placeholder">{{ rlPhase3.team2 ? rlPhase3.team2.name.charAt(0) : '?' }}</span>
+            </span>
+
+            <span v-if="rlPhase3.team2" class="seed">#{{ rlPhase3.team2.seed }}</span>
+            <span v-else class="seed tbd-seed">?</span>
+            <span class="team-name">{{ rlPhase3.team2 ? rlPhase3.team2.name : 'Vencedor Jogo H' }}</span>
+            <span v-if="rlPhase3.status==='done'||isLive(rlPhase3)" class="score">{{ rlPhase3.score2 }}</span>
+          </div>
+
+          <MatchStatusBadge :is-live="isLive(rlPhase3)" :match="rlPhase3" />
+        </div>
+        <div v-else class="val-tbd-card">
+          <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+          <span>A aguardar Fase 2</span>
+        </div>
+
+        <!-- 3rd place (automatic - loser of Fase 3, no extra match) -->
+        <div v-if="rl3rdPlace" class="val-podium-row val-podium-row--bronze" style="margin-top:10px">
+          <v-icon color="#94A3B8" size="13" style="flex-shrink:0">mdi-medal</v-icon>
+
+          <img
+            v-if="rl3rdPlace.logo && !brokenLogos.has(logoKey(rl3rdPlace))"
+            class="gw-logo"
+            :src="logoPath(rl3rdPlace)"
+            @error="brokenLogos.add(logoKey(rl3rdPlace))"
+          >
+
+          <span v-else class="gw-logo-placeholder">{{ rl3rdPlace.name.charAt(0) }}</span>
+          <span class="gw-seed">#{{ rl3rdPlace.seed }}</span>
+          <span class="gw-name">{{ rl3rdPlace.name }}</span>
+          <span class="gw-advances gw-advances--bronze">3.º LUGAR</span>
+        </div>
+      </div>
+
+      <!-- FINAL -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--gold">FINAL · BO5</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="final4-wrapper">
+        <div class="final4-grid">
+          <div class="f4-col">
+            <div v-if="rlFinal" class="f4-final">
+              <div
+                class="match-card match-card--bo3 match-card--the-final"
+                :class="matchCardClass(rlFinal)"
+                @click="onMatchCardClick(rlFinal)"
+              >
+                <div class="match-format-tag" :class="{ 'tag-live': isLive(rlFinal) }">
+                  <span v-if="isLive(rlFinal)" class="tag-live-dot" />
+                  {{ isLive(rlFinal) ? 'LIVE' : 'BO5' }}
+                </div>
+
+                <div v-if="rlFinal.start_time && !isLive(rlFinal)" class="match-time-row">
+                  <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ rlFinal.start_time }}
+                </div>
+
+                <div class="team-row" :class="[rlFinal.status==='done'&&rlFinal.winner===null?'draw':{winner:rlFinal.status==='done'&&rlFinal.winner===1,loser:rlFinal.status==='done'&&rlFinal.winner!==1,tbd:!rlFinal.team1}]">
+                  <span class="team-logo-wrap">
+                    <img v-if="rlFinal.team1 && rlFinal.team1.logo && !brokenLogos.has(logoKey(rlFinal.team1))" class="team-logo-img" :src="logoPath(rlFinal.team1)" @error="brokenLogos.add(logoKey(rlFinal.team1))">
+                    <span v-else class="team-logo-placeholder">{{ rlFinal.team1 ? rlFinal.team1.name.charAt(0) : '?' }}</span>
+                  </span>
+
+                  <span v-if="rlFinal.team1" class="seed">#{{ rlFinal.team1.seed }}</span>
+                  <span v-else class="seed tbd-seed">?</span>
+                  <span class="team-name">{{ rlFinal.team1 ? rlFinal.team1.name : 'Vencedor Jogo K' }}</span>
+                  <span v-if="rlFinal.status==='done'||isLive(rlFinal)" class="score">{{ rlFinal.score1 }}</span>
+                </div>
+
+                <div class="match-divider" />
+
+                <div class="team-row" :class="[rlFinal.status==='done'&&rlFinal.winner===null?'draw':{winner:rlFinal.status==='done'&&rlFinal.winner===2,loser:rlFinal.status==='done'&&rlFinal.winner!==2,tbd:!rlFinal.team2}]">
+                  <span class="team-logo-wrap">
+                    <img v-if="rlFinal.team2 && rlFinal.team2.logo && !brokenLogos.has(logoKey(rlFinal.team2))" class="team-logo-img" :src="logoPath(rlFinal.team2)" @error="brokenLogos.add(logoKey(rlFinal.team2))">
+                    <span v-else class="team-logo-placeholder">{{ rlFinal.team2 ? rlFinal.team2.name.charAt(0) : '?' }}</span>
+                  </span>
+
+                  <span v-if="rlFinal.team2" class="seed">#{{ rlFinal.team2.seed }}</span>
+                  <span v-else class="seed tbd-seed">?</span>
+                  <span class="team-name">{{ rlFinal.team2 ? rlFinal.team2.name : 'Vencedor Jogo I' }}</span>
+                  <span v-if="rlFinal.status==='done'||isLive(rlFinal)" class="score">{{ rlFinal.score2 }}</span>
+                </div>
+
+                <MatchStatusBadge :is-live="isLive(rlFinal)" :match="rlFinal" />
+              </div>
+            </div>
+            <div v-else class="val-tbd-card">
+              <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+              <span>A aguardar Fase 2 / Fase 3</span>
+            </div>
+          </div>
+
+          <div v-if="rlChampion" class="f4-col f4-col--champion">
+            <div class="f4-col-label">CAMPEÃO</div>
+            <div class="champion-card">
+              <div class="champion-glow" />
+              <img v-if="rlChampion.logo && !brokenLogos.has(logoKey(rlChampion))" class="champion-logo" :src="logoPath(rlChampion)" @error="brokenLogos.add(logoKey(rlChampion))">
+              <v-icon v-else color="#FFB404" size="40">mdi-trophy</v-icon>
+              <div class="champion-seed">#{{ rlChampion.seed }}</div>
+              <div class="champion-name">{{ rlChampion.name }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </template>
+
+    <!-- ══ BRACKET VIEW (CS2 / LoL) ══ -->
     <template v-else>
 
       <div class="phase-label">
@@ -658,149 +1241,189 @@
         </div>
       </div>
 
-      <!-- FINAL 4 -->
+      <!-- MEIAS-FINAIS -->
       <div class="phase-label phase-label--f4">
         <span class="phase-line" />
-        <span class="phase-text phase-text--gold">FINAL 4</span>
+        <span class="phase-text phase-text--red">MEIAS-FINAIS · BO1</span>
         <span class="phase-line" />
       </div>
 
-      <div class="final4-wrapper">
-        <div class="final4-grid">
-
-          <div class="f4-col">
-            <div class="f4-col-label">MEIAS-FINAIS · BO3</div>
-
-            <div class="f4-semis">
-              <div
-                v-for="match in semiFinals"
-                :key="'sf-' + match.match_id"
-                class="match-card match-card--bo3"
-                :class="matchCardClass(match)"
-                @click="onMatchCardClick(match)"
-              >
-                <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
-                  <span v-if="isLive(match)" class="tag-live-dot" />
-                  {{ isLive(match) ? 'LIVE' : 'BO3' }}
-                </div>
-
-                <div v-if="match.start_time && !isLive(match)" class="match-time-row">
-                  <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
-                </div>
-
-                <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
-                  <span class="team-logo-wrap">
-                    <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
-                    <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
-                  </span>
-
-                  <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
-                  <span v-else class="seed tbd-seed">?</span>
-                  <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
-                  <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
-                </div>
-
-                <div class="match-divider" />
-
-                <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
-                  <span class="team-logo-wrap">
-                    <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
-                    <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
-                  </span>
-
-                  <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
-                  <span v-else class="seed tbd-seed">?</span>
-                  <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
-                  <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
-                </div>
-
-                <MatchStatusBadge :is-live="isLive(match)" :match="match" />
-              </div>
+      <div class="val-ko-grid">
+        <div class="val-ko-semis">
+          <div
+            v-for="match in semiFinals"
+            :key="'sf-' + match.match_id"
+            class="match-card val-ko-card"
+            :class="matchCardClass(match)"
+            @click="onMatchCardClick(match)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(match) }">
+              <span v-if="isLive(match)" class="tag-live-dot" />
+              {{ isLive(match) ? 'LIVE' : ('JOGO ' + (match.label || '?')) }}
             </div>
-          </div>
 
-          <div class="f4-connector">
-            <svg preserveAspectRatio="none" style="width:100%;height:100%" viewBox="0 0 56 220">
-              <path
-                d="M0,55 L28,55 L28,110 L56,110"
-                fill="none"
-                stroke="rgba(6,134,243,0.22)"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-              />
-
-              <path
-                d="M0,165 L28,165 L28,110 L56,110"
-                fill="none"
-                stroke="rgba(6,134,243,0.22)"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-              />
-            </svg>
-          </div>
-
-          <div class="f4-col">
-            <div class="f4-col-label">FINAL · {{ selectedGame === 'rl' ? 'BO5' : 'BO3' }}</div>
-
-            <div v-if="theFinal" class="f4-final">
-              <div
-                class="match-card match-card--bo3 match-card--the-final"
-                :class="matchCardClass(theFinal)"
-                @click="onMatchCardClick(theFinal)"
-              >
-                <div class="match-format-tag" :class="{ 'tag-live': isLive(theFinal) }">
-                  <span v-if="isLive(theFinal)" class="tag-live-dot" />
-                  {{ isLive(theFinal) ? 'LIVE' : (selectedGame === 'rl' ? 'BO5' : 'BO3') }}
-                </div>
-
-                <div v-if="theFinal.start_time && !isLive(theFinal)" class="match-time-row">
-                  <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ theFinal.start_time }}
-                </div>
-
-                <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===1,loser:theFinal.status==='done'&&theFinal.winner!==1,tbd:!theFinal.team1}]">
-                  <span class="team-logo-wrap">
-                    <img v-if="theFinal.team1 && theFinal.team1.logo && !brokenLogos.has(logoKey(theFinal.team1))" class="team-logo-img" :src="logoPath(theFinal.team1)" @error="brokenLogos.add(logoKey(theFinal.team1))">
-                    <span v-else class="team-logo-placeholder">{{ theFinal.team1 ? theFinal.team1.name.charAt(0) : '?' }}</span>
-                  </span>
-
-                  <span v-if="theFinal.team1" class="seed">#{{ theFinal.team1.seed }}</span>
-                  <span v-else class="seed tbd-seed">?</span>
-                  <span class="team-name">{{ theFinal.team1 ? theFinal.team1.name : 'TBD' }}</span>
-                  <span v-if="theFinal.status==='done'||isLive(theFinal)" class="score">{{ theFinal.score1 }}</span>
-                </div>
-
-                <div class="match-divider" />
-
-                <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===2,loser:theFinal.status==='done'&&theFinal.winner!==2,tbd:!theFinal.team2}]">
-                  <span class="team-logo-wrap">
-                    <img v-if="theFinal.team2 && theFinal.team2.logo && !brokenLogos.has(logoKey(theFinal.team2))" class="team-logo-img" :src="logoPath(theFinal.team2)" @error="brokenLogos.add(logoKey(theFinal.team2))">
-                    <span v-else class="team-logo-placeholder">{{ theFinal.team2 ? theFinal.team2.name.charAt(0) : '?' }}</span>
-                  </span>
-
-                  <span v-if="theFinal.team2" class="seed">#{{ theFinal.team2.seed }}</span>
-                  <span v-else class="seed tbd-seed">?</span>
-                  <span class="team-name">{{ theFinal.team2 ? theFinal.team2.name : 'TBD' }}</span>
-                  <span v-if="theFinal.status==='done'||isLive(theFinal)" class="score">{{ theFinal.score2 }}</span>
-                </div>
-
-                <MatchStatusBadge :is-live="isLive(theFinal)" :match="theFinal" />
-              </div>
+            <div v-if="match.start_time && !isLive(match)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ match.start_time }}
             </div>
-          </div>
 
-          <div v-if="champion" class="f4-col f4-col--champion">
-            <div class="f4-col-label">CAMPEÃO</div>
+            <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===1,loser:match.status==='done'&&match.winner!==1,tbd:!match.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="match.team1 && match.team1.logo && !brokenLogos.has(logoKey(match.team1))" class="team-logo-img" :src="logoPath(match.team1)" @error="brokenLogos.add(logoKey(match.team1))">
+                <span v-else class="team-logo-placeholder">{{ match.team1 ? match.team1.name.charAt(0) : '?' }}</span>
+              </span>
 
-            <div class="champion-card">
-              <div class="champion-glow" />
-              <img v-if="champion.logo && !brokenLogos.has(logoKey(champion))" class="champion-logo" :src="logoPath(champion)" @error="brokenLogos.add(logoKey(champion))">
-              <v-icon v-else color="#FFB404" size="40">mdi-trophy</v-icon>
-              <div class="champion-seed">#{{ champion.seed }}</div>
-              <div class="champion-name">{{ champion.name }}</div>
+              <span v-if="match.team1" class="seed">#{{ match.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
+              <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score1 }}</span>
             </div>
-          </div>
 
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[match.status==='done'&&match.winner===null?'draw':{winner:match.status==='done'&&match.winner===2,loser:match.status==='done'&&match.winner!==2,tbd:!match.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="match.team2 && match.team2.logo && !brokenLogos.has(logoKey(match.team2))" class="team-logo-img" :src="logoPath(match.team2)" @error="brokenLogos.add(logoKey(match.team2))">
+                <span v-else class="team-logo-placeholder">{{ match.team2 ? match.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="match.team2" class="seed">#{{ match.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
+              <span v-if="match.status==='done'||isLive(match)" class="score">{{ match.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(match)" :match="match" />
+          </div>
         </div>
+      </div>
+
+      <!-- FINAL + 3.º LUGAR -->
+      <div class="phase-label phase-label--f4">
+        <span class="phase-line" />
+        <span class="phase-text phase-text--gold">FINAL & 3.º LUGAR · BO3</span>
+        <span class="phase-line" />
+      </div>
+
+      <div class="val-final-grid">
+
+        <!-- 3rd place -->
+        <div class="val-final-col">
+          <div class="val-final-col-label">3.º / 4.º LUGAR</div>
+          <div
+            v-if="thirdPlace"
+            class="match-card match-card--bo3"
+            :class="matchCardClass(thirdPlace)"
+            @click="onMatchCardClick(thirdPlace)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(thirdPlace) }">
+              <span v-if="isLive(thirdPlace)" class="tag-live-dot" />
+              {{ isLive(thirdPlace) ? 'LIVE' : 'BO3' }}
+            </div>
+
+            <div v-if="thirdPlace.start_time && !isLive(thirdPlace)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ thirdPlace.start_time }}
+            </div>
+
+            <div class="team-row" :class="[thirdPlace.status==='done'&&thirdPlace.winner===null?'draw':{winner:thirdPlace.status==='done'&&thirdPlace.winner===1,loser:thirdPlace.status==='done'&&thirdPlace.winner!==1,tbd:!thirdPlace.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="thirdPlace.team1 && thirdPlace.team1.logo && !brokenLogos.has(logoKey(thirdPlace.team1))" class="team-logo-img" :src="logoPath(thirdPlace.team1)" @error="brokenLogos.add(logoKey(thirdPlace.team1))">
+                <span v-else class="team-logo-placeholder">{{ thirdPlace.team1 ? thirdPlace.team1.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="thirdPlace.team1" class="seed">#{{ thirdPlace.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ thirdPlace.team1 ? thirdPlace.team1.name : 'Derrotado Jogo E' }}</span>
+              <span v-if="thirdPlace.status==='done'||isLive(thirdPlace)" class="score">{{ thirdPlace.score1 }}</span>
+            </div>
+
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[thirdPlace.status==='done'&&thirdPlace.winner===null?'draw':{winner:thirdPlace.status==='done'&&thirdPlace.winner===2,loser:thirdPlace.status==='done'&&thirdPlace.winner!==2,tbd:!thirdPlace.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="thirdPlace.team2 && thirdPlace.team2.logo && !brokenLogos.has(logoKey(thirdPlace.team2))" class="team-logo-img" :src="logoPath(thirdPlace.team2)" @error="brokenLogos.add(logoKey(thirdPlace.team2))">
+                <span v-else class="team-logo-placeholder">{{ thirdPlace.team2 ? thirdPlace.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="thirdPlace.team2" class="seed">#{{ thirdPlace.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ thirdPlace.team2 ? thirdPlace.team2.name : 'Derrotado Jogo F' }}</span>
+              <span v-if="thirdPlace.status==='done'||isLive(thirdPlace)" class="score">{{ thirdPlace.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(thirdPlace)" :match="thirdPlace" />
+          </div>
+          <div v-else class="val-tbd-card">
+            <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+            <span>A aguardar meias-finais</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="val-final-divider">
+          <div class="val-final-vs"></div>
+        </div>
+
+        <!-- Final -->
+        <div class="val-final-col">
+          <div class="val-final-col-label val-final-col-label--gold">FINAL</div>
+          <div
+            v-if="theFinal"
+            class="match-card match-card--bo3 match-card--the-final"
+            :class="matchCardClass(theFinal)"
+            @click="onMatchCardClick(theFinal)"
+          >
+            <div class="match-format-tag" :class="{ 'tag-live': isLive(theFinal) }">
+              <span v-if="isLive(theFinal)" class="tag-live-dot" />
+              {{ isLive(theFinal) ? 'LIVE' : 'BO3' }}
+            </div>
+
+            <div v-if="theFinal.start_time && !isLive(theFinal)" class="match-time-row">
+              <v-icon size="11" style="opacity:0.5">mdi-clock-outline</v-icon> {{ theFinal.start_time }}
+            </div>
+
+            <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===1,loser:theFinal.status==='done'&&theFinal.winner!==1,tbd:!theFinal.team1}]">
+              <span class="team-logo-wrap">
+                <img v-if="theFinal.team1 && theFinal.team1.logo && !brokenLogos.has(logoKey(theFinal.team1))" class="team-logo-img" :src="logoPath(theFinal.team1)" @error="brokenLogos.add(logoKey(theFinal.team1))">
+                <span v-else class="team-logo-placeholder">{{ theFinal.team1 ? theFinal.team1.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="theFinal.team1" class="seed">#{{ theFinal.team1.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ theFinal.team1 ? theFinal.team1.name : 'Vencedor Jogo E' }}</span>
+              <span v-if="theFinal.status==='done'||isLive(theFinal)" class="score">{{ theFinal.score1 }}</span>
+            </div>
+
+            <div class="match-divider" />
+
+            <div class="team-row" :class="[theFinal.status==='done'&&theFinal.winner===null?'draw':{winner:theFinal.status==='done'&&theFinal.winner===2,loser:theFinal.status==='done'&&theFinal.winner!==2,tbd:!theFinal.team2}]">
+              <span class="team-logo-wrap">
+                <img v-if="theFinal.team2 && theFinal.team2.logo && !brokenLogos.has(logoKey(theFinal.team2))" class="team-logo-img" :src="logoPath(theFinal.team2)" @error="brokenLogos.add(logoKey(theFinal.team2))">
+                <span v-else class="team-logo-placeholder">{{ theFinal.team2 ? theFinal.team2.name.charAt(0) : '?' }}</span>
+              </span>
+
+              <span v-if="theFinal.team2" class="seed">#{{ theFinal.team2.seed }}</span>
+              <span v-else class="seed tbd-seed">?</span>
+              <span class="team-name">{{ theFinal.team2 ? theFinal.team2.name : 'Vencedor Jogo F' }}</span>
+              <span v-if="theFinal.status==='done'||isLive(theFinal)" class="score">{{ theFinal.score2 }}</span>
+            </div>
+
+            <MatchStatusBadge :is-live="isLive(theFinal)" :match="theFinal" />
+          </div>
+          <div v-else class="val-tbd-card">
+            <v-icon size="20" style="opacity:0.2">mdi-help-circle-outline</v-icon>
+            <span>A aguardar meias-finais</span>
+          </div>
+
+          <!-- Champion -->
+          <div v-if="champion" class="champion-card" style="margin-top:12px">
+            <div class="champion-glow" />
+            <img v-if="champion.logo && !brokenLogos.has(logoKey(champion))" class="champion-logo" :src="logoPath(champion)" @error="brokenLogos.add(logoKey(champion))">
+            <v-icon v-else color="#FFB404" size="40">mdi-trophy</v-icon>
+            <div class="champion-seed">#{{ champion.seed }}</div>
+            <div class="champion-name">{{ champion.name }}</div>
+          </div>
+        </div>
+
       </div>
 
     </template>
@@ -810,71 +1433,6 @@
 <script setup>
   import { computed, defineComponent, onMounted, onUnmounted, reactive, ref } from 'vue'
   import * as XLSX from 'xlsx'
-
-  // ── Shared sub-components ─────────────────────────────────────────────────────
-  const TeamLogo = defineComponent({
-    props: ['team', 'brokenLogos'],
-    emits: ['broken'],
-    setup (props, { emit }) {
-      function logoPath (t) {
-        return t?.logo ? String(t.logo).trim() : ''
-      }
-      function logoKey (t) {
-        return t?.logo ? String(t.logo).trim() : (t?.name || 'no-logo')
-      }
-      return { logoPath, logoKey }
-    },
-    template: `
-    <span class="team-logo-wrap">
-      <template v-if="team">
-        <img v-if="team.logo && !brokenLogos.has(logoKey(team))"
-          :src="logoPath(team)" class="team-logo-img" :alt="team.name"
-          @error="$emit('broken', logoKey(team))" />
-        <span v-else class="team-logo-placeholder">{{ team.name.charAt(0).toUpperCase() }}</span>
-      </template>
-      <span v-else class="team-logo-placeholder team-logo-tbd">?</span>
-    </span>
-  `,
-  })
-
-  // Reusable team rows for match cards
-  const MatchTeamRows = defineComponent({
-    components: { TeamLogo },
-    props: ['match', 'brokenLogos'],
-    emits: ['broken'],
-    setup (props) {
-      function teamRowClass (m, slot) {
-        if (m.status === 'done' && m.winner === null) return { draw: true }
-        return {
-          winner: m.status === 'done' && m.winner === slot,
-          loser: m.status === 'done' && m.winner !== slot,
-          tbd: !(slot === 1 ? m.team1 : m.team2),
-        }
-      }
-      function showScore (m, slot) {
-        const score = slot === 1 ? m.score1 : m.score2
-        return (m.status === 'done' || (m.live && m.live !== '' && m.live !== '0' && m.live !== 'false' && m.live !== 'FALSE' && m.live !== false && m.live !== 0)) && score != null && score !== ''
-      }
-      return { teamRowClass, showScore }
-    },
-    template: `
-    <div class="team-row" :class="teamRowClass(match, 1)">
-      <TeamLogo :team="match.team1" :broken-logos="brokenLogos" @broken="$emit('broken', $event)" />
-      <span class="seed" v-if="match.team1">#{{ match.team1.seed }}</span>
-      <span class="seed tbd-seed" v-else>?</span>
-      <span class="team-name">{{ match.team1 ? match.team1.name : 'TBD' }}</span>
-      <span class="score" v-if="showScore(match, 1)">{{ match.score1 }}</span>
-    </div>
-    <div class="match-divider"></div>
-    <div class="team-row" :class="teamRowClass(match, 2)">
-      <TeamLogo :team="match.team2" :broken-logos="brokenLogos" @broken="$emit('broken', $event)" />
-      <span class="seed" v-if="match.team2">#{{ match.team2.seed }}</span>
-      <span class="seed tbd-seed" v-else>?</span>
-      <span class="team-name">{{ match.team2 ? match.team2.name : 'TBD' }}</span>
-      <span class="score" v-if="showScore(match, 2)">{{ match.score2 }}</span>
-    </div>
-  `,
-  })
 
   // Reusable status badge
   const MatchStatusBadge = defineComponent({
@@ -887,7 +1445,14 @@
   })
 
   // ── Config ────────────────────────────────────────────────────────────────────
-  // CS2/LoL/RL: 4 groups of 4
+  const randomizerLinks = {
+  cs2: 'https://app-sorteos.com/w/49P25MQ',
+  lol: 'https://app-sorteos.com/w/49P6ZPJ',
+  val: 'https://app-sorteos.com/w/75M776E',
+  rl: 'https://app-sorteos.com/w/D5KV31O'
+}
+
+  // CS2/LoL: 4 groups of 4
   const groupList = [
     { id: 'A', color: '#F4A723' },
     { id: 'B', color: '#A855F7' },
@@ -901,6 +1466,12 @@
     { id: 'B', color: '#BD3944', arena: 'ARENA EXSAD' },
   ]
 
+  // Rocket League: 2 groups of 4
+  const rlGroupList = [
+    { id: 'A', color: '#0286F7' },
+    { id: 'B', color: '#22C55E' },
+  ]
+
   const games = [
     { id: 'cs2', label: 'CS2', color: '#F4A723', icon: '/icons/cs2.png' },
     { id: 'lol', label: 'LoL', color: '#C89B3C', icon: '/icons/lol.png' },
@@ -910,9 +1481,7 @@
   ]
 
   // ── Logos ─────────────────────────────────────────────────────────────────────
-  // Logos now come straight from the "logo" column in teams.xlsx (Google Sheets
-  // export), which itself contains a direct image URL (e.g. a Google Drive
-  // lh3.googleusercontent.com link). No more local /logos/*.png slugify lookup.
+  // Logos come straight from the "logo" column in the Google Sheet (a direct image URL).
   const brokenLogos = reactive(new Set())
   function logoPath (t) {
     return t?.logo ? String(t.logo).trim() : ''
@@ -979,7 +1548,7 @@
   }
 
   // ── Data ──────────────────────────────────────────────────────────────────────
-  // All teams/matches for every game now live in ONE Google Sheets workbook,
+  // All teams/matches for every game live in ONE Google Sheets workbook,
   // with one sheet per game named "<gameId>_teams" / "<gameId>_matches"
   // (e.g. "cs2_teams", "cs2_matches", "fc_teams", "fc_matches", ...).
   const SHEET_ID = '1IlDuefwslDPL5kf5P63fwtwpudzlX-YoF3jS7_oeCaI'
@@ -1060,7 +1629,8 @@
       if (s1 > s2) winner = 1
       else if (s2 > s1) winner = 2
     }
-    return { ...m, score1: s1, score2: s2, team1: t1, team2: t2, winner, start_time: formatStartTime(m.start_time) }
+    const label = m.label != null ? String(m.label).trim() : ''
+    return { ...m, score1: s1, score2: s2, team1: t1, team2: t2, winner, label, start_time: formatStartTime(m.start_time) }
   }
 
   function matchCardClass (m) {
@@ -1073,7 +1643,23 @@
     }
   }
 
-  // ── CS2/LoL/RL group helpers (4 groups of 4, 6 matches per group) ─────────────
+  // ── Round + label helpers (used across CS2/LoL/RL/Val playoff stages) ────────
+  // Every match belongs to a numeric `round` (phase). Within a phase there can be
+  // several matches (e.g. RL Fase 1 has jogos E, F, G at once) so we tell them
+  // apart with the `label` column filled in manually in the Google Sheet.
+  function matchesInRound (round) {
+    return matches.value.filter(m => Number(m.round) === round).map(enrichMatch)
+  }
+  function matchByLabel (round, label) {
+    const ms = matchesInRound(round)
+    if (label) {
+      const found = ms.find(m => m.label.toUpperCase() === label.toUpperCase())
+      if (found) return found
+    }
+    return ms[0] || null
+  }
+
+  // ── Group helpers (CS2/LoL: 4 groups of 4 · RL: 2 groups of 4 · round=1, 6 matches/grupo) ─
   function groupMatches (grpId) {
     return matches.value
       .filter(m => String(m.group) === String(grpId) && Number(m.round) === 1)
@@ -1116,14 +1702,11 @@
     return groupStandings(grpId)[0]?.team ?? null
   }
 
-  // ── CS2/LoL/RL Final 4 (round=2 semis, round=3 final) ────────────────────────
-  const semiFinals = computed(() =>
-    matches.value.filter(m => Number(m.round) === 2).map(enrichMatch),
-  )
-  const theFinal = computed(() => {
-    const m = matches.value.find(m => Number(m.round) === 3)
-    return m ? enrichMatch(m) : null
-  })
+  // ── CS2/LoL Playoffs ──────────────────────────────────────────────────────────
+  // round=1 grupos · round=2 meias-finais (jogos E/F) · round=3 3º lugar · round=4 final
+  const semiFinals = computed(() => matchesInRound(2))
+  const thirdPlace = computed(() => matchByLabel(3))
+  const theFinal = computed(() => matchByLabel(4))
   const champion = computed(() => {
     const f = theFinal.value
     if (!f || f.status !== 'done') return null
@@ -1175,32 +1758,48 @@
     }
   }
 
-  // ── Valorant knockout (round=2 semis BO1, round=3 third place BO3, round=4 final BO3)
-  const valSemiFinals = computed(() => matches.value.filter(m => m.round === 2).map(enrichMatch))
-  const valThirdPlace = computed(() => {
-    const m = matches.value.find(m => m.round === 3); return m ? enrichMatch(m) : null
-  })
-  const valFinal = computed(() => {
-    const m = matches.value.find(m => m.round === 4); return m ? enrichMatch(m) : null
-  })
+  // ── Valorant Playoffs ─────────────────────────────────────────────────────────
+  // round=1 grupos · round=2 Fase 1 (jogos E: 1ºA-1ºB / F: 2ºA-2ºB)
+  // round=3 Fase 2 (derrotado E vs vencedor F) · round=4 Final (vencedor E vs vencedor Fase 2)
+  // 3º lugar = derrotado da Fase 2, sem jogo próprio.
+  const valFase1Matches = computed(() => matchesInRound(2))
+  const valFase2 = computed(() => matchByLabel(3))
+  const valFinal = computed(() => matchByLabel(4))
   const valChampion = computed(() => {
     const f = valFinal.value
     if (!f || f.status !== 'done') return null
     return f.winner === 1 ? f.team1 : f.team2
   })
-  const valThirdPlaceWinner = computed(() => {
-    const f = valThirdPlace.value
+
+  // ── Rocket League Playoffs ────────────────────────────────────────────────────
+  // round=1 grupos (top 3 de 4 avançam) · round=2 Fase 1 (E: 1ºA-2ºB / F: 1ºB-2ºA / G: 3ºB-3ºA)
+  // round=3 Fase 2 (K: vencedorE-vencedorF / J: derrotadoE-derrotadoF / H: derrotadoJ-vencedorG)
+  // round=4 Fase 3 (I: vencedorJ-vencedorH, derrotado I = 3º lugar) · round=5 Final (vencedorK-vencedorI)
+  const rlPhase1 = computed(() => matchesInRound(2))
+  const rlPhase2 = computed(() => matchesInRound(3))
+  const rlPhase3 = computed(() => matchByLabel(4))
+  const rlFinal = computed(() => matchByLabel(5))
+  const rlChampion = computed(() => {
+    const f = rlFinal.value
     if (!f || f.status !== 'done') return null
     return f.winner === 1 ? f.team1 : f.team2
+  })
+  const rl3rdPlace = computed(() => {
+    const f = rlPhase3.value
+    if (!f || f.status !== 'done') return null
+    return f.winner === 1 ? f.team2 : f.team1
   })
 
   // ── EA FC League helpers ──────────────────────────────────────────────────────
   const leagueMatches = computed(() =>
-    matches.value.map(enrichMatch).sort((a, b) => {
-      if (a.status === 'done' && b.status !== 'done') return -1
-      if (b.status === 'done' && a.status !== 'done') return 1
-      return (a.match_id ?? 0) - (b.match_id ?? 0)
-    }),
+    matches.value
+      .filter(m => Number(m.round) === 1)
+      .map(enrichMatch)
+      .sort((a, b) => {
+        if (a.status === 'done' && b.status !== 'done') return -1
+        if (b.status === 'done' && a.status !== 'done') return 1
+        return (a.match_id ?? 0) - (b.match_id ?? 0)
+      }),
   )
 
   const leagueStandings = computed(() => {
@@ -1250,6 +1849,18 @@
   function leaguePosClass (i) {
     return i === 0 ? 'lt-pos--gold' : ''
   }
+
+  // ── EA FC Playoffs ────────────────────────────────────────────────────────
+  // round=2 Fase 1 BO3 (label E: 1º-4º · label F: 2º-3º)
+  // round=3 Fase 2 BO3 (label FINAL: vencedor E - vencedor F · label 3RD: derrotado E - derrotado F)
+  const fcFase1Matches = computed(() => matchesInRound(2))
+  const fcFinal = computed(() => matchByLabel(3, 'FINAL'))
+  const fcThirdPlace = computed(() => matchByLabel(3, '3RD'))
+  const fcChampion = computed(() => {
+    const f = fcFinal.value
+    if (!f || f.status !== 'done') return null
+    return f.winner === 1 ? f.team1 : f.team2
+  })
 </script>
 
 <style scoped>
@@ -1271,7 +1882,14 @@
 .game-start-time { font-size: 8px; font-weight: 700; color: rgba(255,255,255,.3); }
 
 /* Header */
-.bracket-header { text-align: center; margin-bottom: 24px; }
+.bracket-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  text-align: center;
+}
 .header-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .2em; color: #FFB404; margin-bottom: 8px; }
 .sync-status { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; letter-spacing: .08em; padding: 5px 14px; border-radius: 20px; border: 1px solid transparent; }
 .sync-status.loading { color: rgba(255,255,255,.4); border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); }
@@ -1296,54 +1914,6 @@
 .phase-text--gold  { color: rgba(255,180,4,.85); }
 .phase-text--red   { color: rgba(255,70,85,.85); }
 
-/* ── VALORANT SCHEDULE STRIP ─────────────────────────────────────────────── */
-.val-schedule-strip {
-  margin-bottom: 24px;
-  background: rgba(255,70,85,.04);
-  border: 1px solid rgba(255,70,85,.15);
-  border-radius: 10px;
-  overflow-x: auto;
-  padding: 10px 12px;
-}
-.val-schedule-inner {
-  display: flex;
-  gap: 0;
-  min-width: max-content;
-}
-.val-sched-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 4px 10px;
-  border-right: 1px solid rgba(255,255,255,.06);
-  min-width: 100px;
-}
-.val-sched-item:last-child { border-right: none; }
-.val-sched-item--break {
-  background: rgba(255,255,255,.03);
-  opacity: 0.5;
-}
-.val-sched-item--ko {
-  background: rgba(255,180,4,.04);
-}
-.val-sched-time {
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: .1em;
-  color: rgba(255,70,85,.8);
-}
-.val-sched-item--break .val-sched-time { color: rgba(255,255,255,.3); }
-.val-sched-item--ko .val-sched-time { color: #FFB404; }
-.val-sched-desc {
-  font-size: 9px;
-  font-weight: 600;
-  color: rgba(255,255,255,.4);
-  text-align: center;
-  line-height: 1.3;
-}
-.val-sched-item--ko .val-sched-desc { color: rgba(255,180,4,.7); }
-
 /* ── VALORANT GROUPS (2-col side by side) ────────────────────────────────── */
 .val-groups-grid {
   display: grid;
@@ -1363,11 +1933,11 @@
   margin-left: 6px;
 }
 
-/* 2nd place advance styling in standings */
+/* 2nd/3rd place advance styling in standings */
 .st-row.st-second { background: rgba(6,134,243,.05); }
 .st-pos--advance { color: #FF4655 !important; }
 
-/* Val advances strip */
+/* advances strip (val + rl) */
 .val-advances-wrap { margin-top: 2px; }
 .val-advances-list { display: flex; flex-direction: column; gap: 5px; }
 .val-advance-row {
@@ -1382,7 +1952,7 @@
 .gw-advances--mf2 { color: #00DDFE; background: rgba(0,221,254,.08); border: 1px solid rgba(0,221,254,.2); }
 .gw-advances--bronze { color: #94A3B8; background: rgba(148,163,184,.08); border: 1px solid rgba(148,163,184,.2); }
 
-/* ── VALORANT SEMI-FINALS ────────────────────────────────────────────────── */
+/* ── PLAYOFF SEMIS / SINGLE-STAGE GRIDS (Val/CS2/LoL) ───────────────────────── */
 .val-ko-grid { margin-bottom: 4px; }
 .val-ko-semis {
   display: grid;
@@ -1392,9 +1962,25 @@
 @media (min-width: 540px) {
   .val-ko-semis { grid-template-columns: 1fr 1fr; }
 }
+.val-ko-semis--single { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
 .val-ko-card { border-color: rgba(255,70,85,.3) !important; }
 
-/* ── VALORANT FINAL GRID ─────────────────────────────────────────────────── */
+/* ── ROCKET LEAGUE MULTI-STAGE GRID ──────────────────────────────────────── */
+.rl-stage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+@media (min-width: 540px) {
+  .rl-stage-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .rl-stage-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.rl-stage-grid--single { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+
+/* ── FINAL GRID (Val / CS2 / LoL) ────────────────────────────────────────── */
 .val-final-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -1441,7 +2027,7 @@
   text-align: center;
 }
 
-/* Podium row (3rd place) */
+/* Podium row (3rd place, automatic) */
 .val-podium-row {
   display: flex;
   align-items: center;
@@ -1455,7 +2041,7 @@
   border-color: rgba(148,163,184,.2);
 }
 
-/* Groups grid (CS2/LoL/RL) */
+/* Groups grid (CS2/LoL) */
 .groups-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (min-width: 640px)  { .groups-grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1100px) {
@@ -1512,20 +2098,19 @@
 .match-format-tag.tag-live { background: #7F1D1D; border-color: rgba(220,38,38,.6); color: #FCA5A5; }
 .tag-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #F87171; animation: pulse-dot 1.2s ease-in-out infinite; flex-shrink: 0; }
 .match-time-row { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.4); padding: 4px 10px 0; }
-:deep(.team-row) { display: flex; align-items: center; gap: 7px; padding: 8px 10px; transition: background .15s; }
-:deep(.team-row.winner) { background: rgba(0,221,254,.08); }
-:deep(.team-row.loser)  { opacity: .4; }
-:deep(.team-row.draw)   { opacity: .7; }
-:deep(.team-row.tbd)    { opacity: .35; }
-:deep(.team-name) { flex: 1; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-:deep(.seed) { font-size: 9px; font-weight: 800; color: #FFB404; min-width: 20px; }
-:deep(.seed.tbd-seed) { color: rgba(255,255,255,.3); }
-:deep(.score) { font-size: 14px; font-weight: 900; color: #00DDFE; min-width: 20px; text-align: right; font-variant-numeric: tabular-nums; }
-:deep(.match-divider) { height: 1px; background: rgba(255,255,255,.07); margin: 0 10px; }
-:deep(.team-logo-wrap) { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; }
-:deep(.team-logo-img)  { width: 22px; height: 22px; object-fit: contain; border-radius: 3px; }
-:deep(.team-logo-placeholder) { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: rgba(6,134,243,.15); border: 1px solid rgba(6,134,243,.2); border-radius: 3px; font-size: 10px; font-weight: 900; color: rgba(255,255,255,.5); }
+.team-row { display: flex; align-items: center; gap: 7px; padding: 8px 10px; transition: background .15s; }
+.team-row.winner { background: rgba(0,221,254,.08); }
+.team-row.loser  { opacity: .4; }
+.team-row.draw   { opacity: .7; }
+.team-row.tbd    { opacity: .35; }
+.team-name { flex: 1; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.seed { font-size: 9px; font-weight: 800; color: #FFB404; min-width: 20px; }
+.seed.tbd-seed { color: rgba(255,255,255,.3); }
+.score { font-size: 14px; font-weight: 900; color: #00DDFE; min-width: 20px; text-align: right; font-variant-numeric: tabular-nums; }
 .match-divider { height: 1px; background: rgba(255,255,255,.07); margin: 0 10px; }
+.team-logo-wrap { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; }
+.team-logo-img  { width: 22px; height: 22px; object-fit: contain; border-radius: 3px; }
+.team-logo-placeholder { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: rgba(6,134,243,.15); border: 1px solid rgba(6,134,243,.2); border-radius: 3px; font-size: 10px; font-weight: 900; color: rgba(255,255,255,.5); }
 .match-status-badge { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; letter-spacing: .1em; padding: 4px 10px; border-top: 1px solid rgba(255,255,255,.05); }
 .match-status-badge.done       { color: rgba(0,221,254,.6); }
 .match-status-badge.pending    { color: rgba(255,255,255,.25); }
@@ -1542,17 +2127,14 @@
 .gw-advances { font-size: 8px; font-weight: 900; letter-spacing: .1em; color: #FFB404; background: rgba(255,180,4,.1); border: 1px solid rgba(255,180,4,.25); border-radius: 3px; padding: 1px 5px; white-space: nowrap; }
 .group-winner-tbd { display: flex; align-items: center; gap: 6px; padding: 6px 10px; font-size: 11px; color: rgba(255,255,255,.2); font-weight: 600; }
 
-/* Final 4 (CS2/LoL/RL) */
+/* Final (RL champion block reuses this) */
 .final4-wrapper { overflow-x: auto; padding-bottom: 8px; }
-.final4-grid { display: flex; align-items: center; justify-content: center; min-width: max-content; margin: 0 auto; }
+.final4-grid { display: flex; align-items: center; justify-content: center; gap: 24px; min-width: max-content; margin: 0 auto; }
 .f4-col { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 8px; }
 .f4-col-label { font-size: 10px; font-weight: 800; letter-spacing: .18em; color: rgba(255,255,255,.3); text-align: center; white-space: nowrap; }
-.f4-col:first-child { width: 220px; }
-.f4-col:nth-child(3) { width: 220px; }
+.f4-col:first-child { width: 260px; }
 .f4-col--champion   { width: 150px; }
-.f4-semis { display: flex; flex-direction: column; gap: 20px; width: 100%; }
 .f4-final { width: 100%; }
-.f4-connector { width: 56px; height: 220px; flex-shrink: 0; }
 
 /* Champion */
 .champion-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px 16px; background: rgba(255,180,4,.06); border: 1px solid rgba(255,180,4,.4); border-radius: 10px; overflow: hidden; width: 100%; }
@@ -1595,4 +2177,24 @@
 @media (min-width: 540px) { .league-matches-grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) { .league-matches-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1200px) { .league-matches-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.randomizer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 172, 237, 0.15);
+  border: 1px solid rgba(0, 172, 237, 0.35);
+  transition: all .15s ease;
+}
+
+.randomizer-btn:hover {
+  background: rgba(0, 172, 237, 0.25);
+  border-color: rgba(0, 172, 237, 0.6);
+}
 </style>
