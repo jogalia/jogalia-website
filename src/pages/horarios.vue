@@ -75,7 +75,7 @@
     { id: Game.FCSports, label: 'EA FC Sports', color: '#00ACED', icon: fcImage },
   ]
 
-  const selectedGame = ref<Game>(Game.Valorant)
+  const selectedGame = ref<Game>(Game.CS2)
   const isLoading = ref(true)
 
   const teams = ref<Partial<Record<Game, Team[]>>>({})
