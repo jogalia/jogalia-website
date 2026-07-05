@@ -59,4 +59,10 @@ yarn build
 
 with support from:
 
+- Contribute to Vuetify and ecosystem projects: https://github.com/vuetifyjs
+- Request enterprise support: https://support.vuetifyjs.com/
+- Sponsor on GitHub: https://github.com/sponsors/vuetifyjs
+- Support on Open Collective: https://opencollective.com/vuetify
+
+[Google Sheets Todos](https://docs.google.com/spreadsheets/d/1IlDuefwslDPL5kf5P63fwtwpudzlX-YoF3jS7_oeCaI/edit)
 <img src="src/assets/img/partners/ist.svg" alt="Project Logo" width="200">
