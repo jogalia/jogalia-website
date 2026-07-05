@@ -16,7 +16,7 @@
     </v-btn>
   </div>
 
-  <div class="m-auto text-center mt-25 max-w-200">
+  <div id="como-chegar" class="m-auto text-center mt-25 max-w-200">
     <h3 class="text-3xl uppercase bold italic text-secondary">Como Chegar</h3>
 
     <h4 class="text-2xl bold text-on-background text-left">Carris Metropolitana</h4>

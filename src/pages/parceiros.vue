@@ -134,7 +134,9 @@
     <section class="partner-section">
       <div class="section-label section-label--blue">Casters</div>
 
-      <div class="partner-grid">
+      <h3 class="m-auto text-1xl text-secondary uppercase bold italic w-[151px]">POR ANUNCIAR</h3>
+
+      <!--<div class="partner-grid">
         <component
           :is="p.url ? 'a' : 'div'"
           v-for="p in casters"
@@ -148,7 +150,7 @@
           <div v-else class="logo-placeholder placeholder-medium">{{ p.name[0] }}</div>
           <span class="photo-name">{{ p.name }}</span>
         </component>
-      </div>
+      </div>-->
     </section>
 
   </div>
