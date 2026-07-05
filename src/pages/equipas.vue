@@ -3,19 +3,7 @@
     <EditionBadge />
 
     <!-- Game selector -->
-    <div class="game-selector">
-      <button
-        v-for="game in games"
-        :key="game.id"
-        class="game-card"
-        :class="{ active: selectedGame === game.id }"
-        :style="{ '--game-color': game.color }"
-        @click="selectedGame = game.id"
-      >
-        <img :alt="game.label" class="game-icon" :src="game.icon">
-        <span class="game-label">{{ game.label }}</span>
-      </button>
-    </div>
+    <GameSelector v-model="selectedGame" :game-details="games" />
 
     <!-- Sub-header -->
     <div class="teams-header">
@@ -24,18 +12,7 @@
       </div>
     </div>
 
-    <!-- ── LOADING OVERLAY ── -->
-    <div v-if="isLoading" class="loading-state">
-      <v-progress-circular
-        class="loading-spinner"
-        color="secondary"
-        indeterminate
-        size="48"
-        width="4"
-      />
-
-      <span class="loading-text">A carregar equipas...</span>
-    </div>
+    <LoadingComponent v-if="isLoading" />
 
     <!-- EA FC: lista vertical -->
     <div v-else-if="selectedGame === Game.FCSports" class="fc-list">
@@ -119,13 +96,15 @@
 
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue'
+  import { Game, getTeamMembers, type Team } from '@/api/sheets.ts'
   import cs2Image from '@/assets/img/games/cs2.png'
   import fcImage from '@/assets/img/games/fc.png'
   import lolImage from '@/assets/img/games/lol.png'
   import rlImage from '@/assets/img/games/rl.png'
   import valImage from '@/assets/img/games/val.png'
   import EditionBadge from '@/components/EditionBadge.vue'
-  import { Game, getTeamMembers, type Team } from '@/sheets/sheets.ts'
+  import GameSelector from '@/components/GameSelector.vue'
+  import LoadingComponent from '@/components/LoadingComponent.vue'
 
   const games = [
     { id: Game.CS2, label: 'CS2', color: '#F4A723', icon: cs2Image },
@@ -135,10 +114,10 @@
     { id: Game.FCSports, label: 'EA FC Sports', color: '#00ACED', icon: fcImage },
   ]
 
-  const sheetTeams = ref<Record<string, Team[]>>({})
+  const sheetTeams = ref<Partial<Record<Game, Team[]>>>({})
   const isLoading = ref(true)
 
-  const selectedGame = ref<string>(Game.CS2)
+  const selectedGame = ref<Game>(Game.CS2)
   const brokenLogos = ref(new Set<string>())
 
   onMounted(async () => {
@@ -156,87 +135,10 @@
 </script>
 
 <style scoped>
-/* ── Loading Viewport Styles ───────────────────────────────────────────────── */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 24px;
-  gap: 16px;
-}
-
-.loading-state :deep(.loading-spinner .v-progress-circular__underlay) {
-  stroke: rgba(255, 255, 255, 0.1) !important;
-}
-
-.loading-text {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: rgba(var(--v-theme-on-surface));
-  text-transform: uppercase;
-}
-
 /* ── Page ──────────────────────────────────────────────────────────────────── */
 .teams-page {
   min-height: 100vh;
   padding-bottom: 80px;
-}
-
-/* ── Game selector ─────────────────────────────────────────────────────────── */
-.game-selector {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  padding: 20px 24px 0;
-  flex-wrap: wrap;
-}
-
-.game-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  width: 120px;
-  height: 88px;
-  border-radius: 10px;
-  border-color: var(--v-border-color);
-  background: rgba(var(--v-theme-surface));
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  flex-shrink: 0;
-}
-
-.game-card:hover {
-  border-color: var(--game-color, var(--v-border-color-highlight));
-  background: rgba(var(--v-theme-surface-light));
-}
-
-.game-card.active {
-  border-color: var(--game-color);
-  background: color-mix(in srgb, var(--game-color) 14%, transparent);
-}
-
-.game-icon {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-}
-
-.game-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: rgba(var(--v-theme-on-surface));
-  text-align: center;
-  line-height: 1.2;
-}
-
-.game-card.active .game-label {
-  color: rgba(var(--v-theme-on-background));
 }
 
 /* ── Sub-header ────────────────────────────────────────────────────────────── */

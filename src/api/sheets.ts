@@ -31,6 +31,23 @@ export type Team = {
   logo?: string
 }
 
+export enum MatchStatus {
+  Done = 'Done',
+  Happening = 'Happening',
+  Waiting = 'Waiting',
+}
+
+export type Match = {
+  round: string
+  group?: string
+  team1: string
+  team2: string
+  score1: number
+  score2: number
+  status: MatchStatus
+  startTime: string
+}
+
 interface RawRow {
   [key: string]: any
 }
@@ -49,12 +66,11 @@ async function fetchSheet (sheet: string) {
   }
 
   const text = await response.text()
-  const results = Papa.parse<RawRow>(text, {
+  return Papa.parse<RawRow>(text, {
     header: true,
     skipEmptyLines: true,
     dynamicTyping: true,
   })
-  return results
 }
 
 export async function getTeams () {
@@ -112,4 +128,30 @@ export async function getTeamMembers () {
   }
 
   return teamsRecord
+}
+
+export async function getMatches () {
+  const matches: Partial<Record<Game, Match[]>> = {}
+
+  for (const game of Object.values(Game)) {
+    const gameMatches = await fetchSheet(sheetsURL(`Jogos | ${game}`))
+    if (!matches[game]) {
+      matches[game] = []
+    }
+
+    for (const m of gameMatches.data) {
+      matches[game].push({
+        round: m['Ronda'],
+        group: m['Grupo'] ?? undefined,
+        team1: m['Equipa 1'],
+        team2: m['Equipa 2'],
+        score1: m['Score Equipa 1'],
+        score2: m['Score Equipa 2'],
+        status: m['Estado'],
+        startTime: m['Horario'],
+      })
+    }
+  }
+
+  return matches
 }
