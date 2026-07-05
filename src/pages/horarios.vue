@@ -47,6 +47,8 @@
         </v-row>
       </v-container>
     </div>
+
+    <v-btn v-if="randomizerLinks[selectedGame]" class="mx-auto block mt-8" color="neonBlue" @click="openRandomizer()">Randomizer</v-btn>
   </div>
 
 </template>
@@ -97,6 +99,19 @@
     ?.filter(m => m.round === GROUPS_ROUND_NAME && m.group)
     .map((m: Match) => m.group!)),
   ])
+
+  const randomizerLinks: Partial<Record<Game, string>> = {
+    [Game.CS2]: 'https://app-sorteos.com/w/49P25MQ',
+    [Game.LoL]: 'https://app-sorteos.com/w/49P6ZPJ',
+    [Game.Valorant]: 'https://app-sorteos.com/w/75M776E',
+    [Game.RocketLeague]: 'https://app-sorteos.com/w/D5KV31O',
+  }
+
+  function openRandomizer () {
+    if (randomizerLinks[selectedGame.value]) {
+      window.open(randomizerLinks[selectedGame.value], '_blank', 'noopener')
+    }
+  }
 </script>
 
 <style scoped>
