@@ -41,7 +41,7 @@
       <MatchView
         v-for="(match, i) in groupMatches"
         :key="i"
-        label="BO1"
+        :label="game === Game.RocketLeague ? 'BO3' : 'BO1'"
         :match="match"
         :team1="teams.find(t => t.name === match.team1)"
         :team2="teams.find(t => t.name === match.team2)"
@@ -52,7 +52,8 @@
 
 <script setup lang="ts">
   import { computed } from 'vue'
-  import { type Match, MatchStatus, type Team } from '@/api/sheets.ts'
+  import { Game, type Match, type Team } from '@/api/sheets.ts'
+  import { MatchStatus } from '@/api/sheets.ts'
   import MatchView from '@/components/horarios/MatchView.vue'
 
   type Standing = {
@@ -68,6 +69,7 @@
     groupCustomLabel?: string
     groupMatches: Match[]
     teams: Team[]
+    game: Game
   }>(), {})
 
   const groupLabel = props.groupCustomLabel || props.groupId

@@ -20,7 +20,7 @@
       <v-container v-if="round === GROUPS_ROUND_NAME">
         <v-row>
           <v-col v-for="group in groups" :key="group">
-            <GroupView :group-id="group" :group-matches="matches[selectedGame]!.filter(m => m.group === group)" :teams="teams[selectedGame]!" />
+            <GroupView :game="selectedGame" :group-id="group" :group-matches="matches[selectedGame]!.filter(m => m.group === group)" :teams="teams[selectedGame]!" />
           </v-col>
         </v-row>
       </v-container>
