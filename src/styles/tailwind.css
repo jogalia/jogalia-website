@@ -31,7 +31,6 @@
 @theme {
   --font-heading: "Garet", sans-serif;
   --font-body: "Garet", sans-serif;
-  --font-mono: "Roboto Mono", monospace;
 
   --color-background: rgb(var(--v-theme-background));
   --color-surface: rgb(var(--v-theme-surface));

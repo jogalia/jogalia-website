@@ -13,8 +13,6 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
-    "@fontsource/roboto": "^5.2.10",
-    "@fontsource/roboto-mono": "^5.2.8",
     "@mdi/font": "7.4.47",
     "papaparse": "^5.5.4",
     "vue": "^3.5.30",
@@ -35,14 +33,8 @@
     "sass-embedded": "^1.98.0",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
-    "unplugin-fonts": "^1.4.0",
     "vite": "^8.0.0",
     "vite-plugin-vuetify": "^2.1.3",
     "vue-tsc": "^3.2.5"
-  },
-  "overrides": {
-    "unplugin-fonts": {
-      "vite": "^8.0.0"
-    }
   }
 }
