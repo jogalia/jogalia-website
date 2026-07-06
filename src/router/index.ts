@@ -20,31 +20,50 @@ const router = createRouter({
     {
       path: '/',
       component: Index,
-      meta: { isHero: true },
+      meta: {
+        isHero: true,
+        description: 'A Jogália é um evento de Esports, gaming e TCG em Oeiras de 9 a 12 de Julho de 2026, organizado'
+          + ' pela NexEra e pelo LAGE². Quatro dias de competições, transmissões em direto, TCG, workshops e atividades'
+          + ' abertas ao público.',
+      },
     }, {
       path: '/equipas',
       component: Equipas,
-      meta: { isHero: false },
+      meta: {
+        title: 'Equipas',
+        description: 'Descobre as equipas do Jogália 2026 que vão participar nos torneios dos teus jogos favoritos.',
+      },
     }, {
       path: '/inscricoes',
       component: Inscricoes,
-      meta: { isHero: false },
     }, {
       path: '/horarios',
       component: Horarios,
-      meta: { isHero: false },
+      meta: {
+        title: 'Horários',
+        description: 'Consulta os horários oficiais dos torneios dos teus jogos favoritos.',
+      },
     }, {
       path: '/mapa',
       component: Mapa,
-      meta: { isHero: false },
+      meta: {
+        title: 'Mapa',
+        description: 'Não te percas no maior evento Gaming o IST Oeiras! Explora o mapa para o Jogália 2026 e descobre onde são as tuas atividades favoritas.',
+      },
     }, {
       path: '/parceiros',
       component: Parceiros,
-      meta: { isHero: false },
+      meta: {
+        title: 'Parceiros',
+        description: 'Conhece as marcas e entidades que tornam o Jogália 2026 possível. Descobre os parceiros oficiais que apoiam o maior evento de Gaming do IST Oeiras.',
+      },
     }, {
       path: '/transmissao',
       component: Transmissao,
-      meta: { isHero: false },
+      meta: {
+        title: 'Transmissão',
+        description: 'Segue os jogos dos diversos torneios que a Jogália 2026 oferece, LIVE na Twitch.',
+      },
     },
   ],
   scrollBehavior (to, from, savedPosition) {
