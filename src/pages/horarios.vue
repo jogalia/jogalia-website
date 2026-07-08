@@ -17,13 +17,13 @@
         <span class="phase-line" />
       </div>
 
-      <div v-if="selectedGame === Game.FCSports && round.toLowerCase().startsWith('liga')" class="w-4/5 mx-auto mb-5">
+      <v-container v-if="selectedGame === Game.FCSports && round.toLowerCase().startsWith('liga')">
         <Leaderboard
           :matches="matches[selectedGame]!"
           :points="{win: 3, lose: 1, draw: 2}"
           :teams="teams[selectedGame]!"
         />
-      </div>
+      </v-container>
 
       <v-container v-if="round === GROUPS_ROUND_NAME">
         <v-row>
