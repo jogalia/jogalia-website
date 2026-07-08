@@ -31,7 +31,8 @@ const router = createRouter({
       component: Equipas,
       meta: {
         title: 'Equipas',
-        description: 'Descobre as equipas do Jogália 2026 que vão participar nos torneios dos teus jogos favoritos.',
+        description: 'Descobre as equipas do Jogália 2026 que vão participar nos torneios dos teus jogos favoritos. '
+          + 'A Jogália é um evento de Esports, gaming e TCG, organizado pela NexEra e pelo LAGE².',
       },
     }, {
       path: '/inscricoes',
@@ -41,7 +42,8 @@ const router = createRouter({
       component: Horarios,
       meta: {
         title: 'Horários',
-        description: 'Consulta os horários oficiais dos torneios dos teus jogos favoritos.',
+        description: 'Consulta os horários oficiais dos torneios dos teus jogos favoritos.'
+          + 'A Jogália é um evento de Esports, gaming e TCG, organizado pela NexEra e pelo LAGE².',
       },
     }, {
       path: '/mapa',
@@ -62,7 +64,8 @@ const router = createRouter({
       component: Transmissao,
       meta: {
         title: 'Transmissão',
-        description: 'Segue os jogos dos diversos torneios que a Jogália 2026 oferece, LIVE na Twitch.',
+        description: 'Segue os jogos dos diversos torneios que a Jogália 2026 oferece, LIVE na Twitch.'
+          + 'A Jogália é um evento de Esports, gaming e TCG, organizado pela NexEra e pelo LAGE².',
       },
     },
   ],
