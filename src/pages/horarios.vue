@@ -17,6 +17,14 @@
         <span class="phase-line" />
       </div>
 
+      <div v-if="selectedGame === Game.FCSports && round.toLowerCase().startsWith('liga')" class="w-4/5 mx-auto mb-5">
+        <Leaderboard
+          :matches="matches[selectedGame]!"
+          :points="{win: 3, lose: 1, draw: 2}"
+          :teams="teams[selectedGame]!"
+        />
+      </div>
+
       <v-container v-if="round === GROUPS_ROUND_NAME">
         <v-row>
           <v-col v-for="group in groups" :key="group">
@@ -64,6 +72,7 @@
   import EditionBadge from '@/components/EditionBadge.vue'
   import GameSelector from '@/components/GameSelector.vue'
   import GroupView from '@/components/horarios/GroupView.vue'
+  import Leaderboard from '@/components/horarios/Leaderboard.vue'
   import MatchView from '@/components/horarios/MatchView.vue'
   import LoadingComponent from '@/components/LoadingComponent.vue'
 
@@ -135,8 +144,4 @@
   color: rgba(var(--v-theme-secondary));
   white-space: nowrap;
 }
-
-.phase-label--f4   { margin-top: 32px; }
-.phase-text--gold  { color: rgba(255,180,4,.85); }
-.phase-text--red   { color: rgba(255,70,85,.85); }
 </style>
