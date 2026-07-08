@@ -60,16 +60,18 @@
 
   <v-navigation-drawer
     v-model="drawer"
-    class="bg-midnightBlue text-white"
+    color="midnightBlue"
+    floating
     location="right"
+    :order="-1"
     temporary
   >
-    <v-list class="bg-midnightBlue pt-4">
-      <v-list-item class="italic bold uppercase py-3" to="/equipas">Equipas</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/horarios">Horários</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/mapa">Mapa</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/parceiros">Parceiros</v-list-item>
-      <v-list-item class="italic bold uppercase py-3" to="/transmissao">Transmissao</v-list-item>
+    <v-list class="pt-4">
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/equipas">Equipas</v-list-item>
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/horarios">Horários</v-list-item>
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/mapa">Mapa</v-list-item>
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/parceiros">Parceiros</v-list-item>
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/transmissao">Transmissao</v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
