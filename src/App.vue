@@ -9,7 +9,7 @@
     </v-main>
   </v-app>
 </template>
-Esports, Gaming, Tecnologia e TC
+
 <script lang="ts" setup>
   import { useHead, useSeoMeta } from '@unhead/vue'
   import { computed } from 'vue'
