@@ -19,7 +19,7 @@
 
       <v-container v-if="selectedGame === Game.FCSports && round.toLowerCase().startsWith('liga')">
         <Leaderboard
-          :matches="matches[selectedGame]!"
+          :matches="matches[selectedGame]!.filter(m => m.round.toLowerCase().startsWith('liga'))"
           :points="{win: 3, lose: 1, draw: 2}"
           :teams="teams[selectedGame]!"
         />
