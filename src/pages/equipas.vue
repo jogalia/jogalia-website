@@ -51,19 +51,7 @@
       >
         <!-- Front: logo + name -->
         <div class="card-front">
-          <div class="team-logo-wrap">
-            <img
-              v-if="team.logo && !brokenLogos.has(team.name)"
-              :alt="team.name"
-              class="team-logo"
-              :src="team.logo"
-              @error="brokenLogos.add(team.name)"
-            >
-
-            <div v-else class="team-logo-placeholder">
-              <v-icon color="rgba(255,255,255,0.18)" size="38">mdi-shield-outline</v-icon>
-            </div>
-          </div>
+          <TeamLogo :team="team" />
 
           <div class="team-name">{{ team.name }}</div>
         </div>
@@ -103,6 +91,7 @@
   import rlImage from '@/assets/img/games/rl.png'
   import valImage from '@/assets/img/games/val.png'
   import EditionBadge from '@/components/EditionBadge.vue'
+  import TeamLogo from '@/components/equipas/TeamLogo.vue'
   import GameSelector from '@/components/GameSelector.vue'
   import LoadingComponent from '@/components/LoadingComponent.vue'
 
@@ -118,7 +107,6 @@
   const isLoading = ref(true)
 
   const selectedGame = ref<Game>(Game.CS2)
-  const brokenLogos = ref(new Set<string>())
 
   onMounted(async () => {
     try {
@@ -198,32 +186,6 @@
 .team-card:hover .card-front {
   opacity: 0;
   transform: scale(0.94);
-}
-
-.team-logo-wrap {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.team-logo {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
-}
-
-.team-logo-placeholder {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .team-name {
