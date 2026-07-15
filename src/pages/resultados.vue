@@ -11,36 +11,72 @@
   <div v-else>
     <v-container class="mt-10">
       <div class="podium-wrapper">
+        <!-- 2nd Place -->
         <div class="podium-column">
-          <TeamLogo :team="secondPlace" />
-          <h3 class="text-center m-2">{{ secondPlace?.name ?? '???' }}</h3>
+          <div class="d-flex align-center gap-4">
+            <TeamLogo :team="secondPlace" />
+            <h3 class="m-2 text-center">{{ secondPlace?.name ?? '???' }}</h3>
+          </div>
 
           <div class="podium h-[150px]">
-            <div class="podium-badge">2</div>
+            <div class="podium-badge">2º</div>
           </div>
         </div>
 
+        <!-- 1st Place -->
         <div class="podium-column">
-          <TeamLogo :team="firstPlace" />
-          <h3 class="text-center m-2">{{ firstPlace?.name ?? '???' }}</h3>
+          <div class="d-flex align-center gap-4">
+            <TeamLogo :team="firstPlace" />
+            <h3 class="m-2 text-center">{{ firstPlace?.name ?? '???' }}</h3>
+          </div>
 
           <div class="podium h-[200px]">
-            <div class="podium-badge">1</div>
+            <div class="podium-badge">1º</div>
           </div>
         </div>
 
+        <!-- 3rd Place -->
         <div class="podium-column">
-          <TeamLogo :team="thirdPlace" />
-          <h3 class="text-center m-2">{{ thirdPlace?.name ?? '???' }}</h3>
+          <div class="d-flex align-center gap-4">
+            <TeamLogo :team="thirdPlace" />
+            <h3 class="m-2 text-center">{{ thirdPlace?.name ?? '???' }}</h3>
+          </div>
 
           <div class="podium h-[100px]">
-            <div class="podium-badge">3</div>
+            <div class="podium-badge">3º</div>
           </div>
         </div>
       </div>
+
+      <v-row class="mt-5" justify="center">
+        <v-col cols="auto">
+          <RouterLink class="on-surface-light no-underline uppercase bold" to="/horarios">Mais Resultados</RouterLink>
+        </v-col>
+      </v-row>
+
+      <v-row class="mt-10" justify="center">
+        <v-col cols="auto">
+          <v-btn color="neonBlue" @click="shareResults()">
+            Partilha os Resultados
+            <template #append>
+              <v-icon>mdi-share-variant</v-icon>
+            </template>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 
+  <v-snackbar
+    v-model="snackbar"
+    class="mb-10"
+    color="neonBlue"
+    location="bottom"
+    rounded="pill"
+    :timeout="1500"
+  >
+    Copiado com sucesso.
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">
@@ -82,30 +118,33 @@
       isLoading.value = false
     }
   })
+
+  const snackbar = ref(false)
+
+  async function shareResults () {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: 'Descobre os resultados da edição do evento Jogália 2026.',
+          url: window.location.href,
+        })
+      } catch (error) {
+        console.log('Share canceled or failed:', error)
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(window.location.href)
+
+        snackbar.value = true
+      } catch (error) {
+        console.error('Failed to copy link:', error)
+      }
+    }
+  }
 </script>
 
 <style scoped>
-/* Phase dividers */
-.phase-label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 30px 0 20px;
-}
-.phase-line  {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(var(--v-theme-secondary)), transparent);
-}
-
-.phase-text  {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .25em;
-  color: rgba(var(--v-theme-secondary));
-  white-space: nowrap;
-}
-
 /* Header */
 
 .page-title {
@@ -126,35 +165,38 @@
 
 /* Podium */
 .podium-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .podium-column {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  background: rgba(var(--v-theme-surface));
+  border: 1px solid var(--v-border-color-highlight);
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
 }
 
 .podium {
-  position: relative;
+  background: transparent;
+  border: none;
   display: flex;
+  align-items: center;
   justify-content: center;
-  width: 200px;
-  background: rgba(var(--v-theme-surface));
-  border: 1px solid var(--v-border-color-highlight);
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
 
 .podium-badge {
-  position: absolute;
-  bottom: 16px;
-  width: 50px;
-  height: 50px;
+  position: static;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -163,7 +205,43 @@
   color: rgba(var(--v-theme-on-surface));
   background-color: rgba(var(--v-theme-surface-light));
   border: 2px solid rgba(var(--v-theme-secondary));
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Gives the circle its own depth */
 }
 
+@media (min-width: 640px) {
+  .podium-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 24px;
+    max-width: 100%;
+  }
+
+  .podium-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: auto;
+  }
+
+  .podium {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    width: 180px;
+    background: rgba(var(--v-theme-surface));
+    border: 1px solid var(--v-border-color-highlight);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  .podium-badge {
+    position: absolute;
+    bottom: 16px;
+    width: 50px;
+    height: 50px;
+  }
+}
 </style>
