@@ -13,7 +13,7 @@
       <div class="podium-wrapper">
         <!-- 2nd Place -->
         <div class="podium-column">
-          <div class="d-flex align-center gap-4">
+          <div class="flex items-center sm:flex-col sm:justify-center">
             <TeamLogo :team="secondPlace" />
             <h3 class="m-2 text-center">{{ secondPlace?.name ?? '???' }}</h3>
           </div>
@@ -25,7 +25,7 @@
 
         <!-- 1st Place -->
         <div class="podium-column">
-          <div class="d-flex align-center gap-4">
+          <div class="flex items-center sm:flex-col sm:justify-center">
             <TeamLogo :team="firstPlace" />
             <h3 class="m-2 text-center">{{ firstPlace?.name ?? '???' }}</h3>
           </div>
@@ -37,9 +37,12 @@
 
         <!-- 3rd Place -->
         <div class="podium-column">
-          <div class="d-flex align-center gap-4">
+          <div class="flex items-center sm:flex-col sm:justify-center">
             <TeamLogo :team="thirdPlace" />
-            <h3 class="m-2 text-center">{{ thirdPlace?.name ?? '???' }}</h3>
+
+            <h3 class="m-2 text-center sm:text-left">
+              {{ thirdPlace?.name ?? '???' }}
+            </h3>
           </div>
 
           <div class="podium h-[100px]">
