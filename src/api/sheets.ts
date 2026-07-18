@@ -29,6 +29,7 @@ export type Team = {
   name: string
   roster: RosterSlot[]
   logo?: string
+  finalPlace?: number
 }
 
 export enum MatchStatus {
@@ -92,6 +93,7 @@ export async function getTeams () {
       name: t['Equipa'],
       roster: [],
       logo: t['LogoURL'],
+      finalPlace: t['Lugar Final'],
     })
   }
 

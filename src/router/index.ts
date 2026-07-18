@@ -12,6 +12,7 @@ import Index from '@/pages/index.vue'
 import Inscricoes from '@/pages/inscricoes.vue'
 import Mapa from '@/pages/mapa.vue'
 import Parceiros from '@/pages/parceiros.vue'
+import Resultados from '@/pages/resultados.vue'
 import Transmissao from '@/pages/transmissao.vue'
 
 const router = createRouter({
@@ -43,6 +44,14 @@ const router = createRouter({
       meta: {
         title: 'Horários',
         description: 'Consulta os horários oficiais dos torneios dos teus jogos favoritos.'
+          + 'A Jogália é um evento de Esports, gaming e TCG, organizado pela NexEra e pelo LAGE².',
+      },
+    }, {
+      path: '/resultados',
+      component: Resultados,
+      meta: {
+        title: 'Resultados',
+        description: 'Consulta os resultados finais oficiais do Jogália 2026 para os teus jogos favoritos.'
           + 'A Jogália é um evento de Esports, gaming e TCG, organizado pela NexEra e pelo LAGE².',
       },
     }, {

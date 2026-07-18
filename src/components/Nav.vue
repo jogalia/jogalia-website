@@ -23,9 +23,9 @@
       <v-btn
         class="italic bold uppercase"
         size="large"
-        to="/horarios"
+        to="/resultados"
         variant="text"
-      >Horários</v-btn>
+      >Resultados</v-btn>
 
       <v-btn
         class="italic bold uppercase"
@@ -68,7 +68,7 @@
   >
     <v-list class="pt-4">
       <v-list-item class="italic bold uppercase py-3 on-background" to="/equipas">Equipas</v-list-item>
-      <v-list-item class="italic bold uppercase py-3 on-background" to="/horarios">Horários</v-list-item>
+      <v-list-item class="italic bold uppercase py-3 on-background" to="/resultados">Resultados</v-list-item>
       <v-list-item class="italic bold uppercase py-3 on-background" to="/mapa">Mapa</v-list-item>
       <v-list-item class="italic bold uppercase py-3 on-background" to="/parceiros">Parceiros</v-list-item>
       <v-list-item class="italic bold uppercase py-3 on-background" to="/transmissao">Transmissao</v-list-item>

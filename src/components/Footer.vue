@@ -33,6 +33,7 @@
       <div class="footer-col">
         <p class="footer-col-title">Evento</p>
         <RouterLink class="footer-link" to="/horarios">Horários</RouterLink>
+        <RouterLink class="footer-link" to="/resultados">Resultados</RouterLink>
 
         <RouterLink class="footer-link" to="/inscricoes">
           Incrições
